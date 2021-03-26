@@ -1,0 +1,71 @@
+Entry Points: 
+EALXNJTC:Alexandra Dock Jn. T.C.
+ELWERXSGE:Llanwern Exchange Sdgs East
+EPATCHWY:Patchway,Patchway [PWY]
+EALXNJTCD:Alexandra Dock Jn. T.C. Down
+EEUSKBDP:East Usk Branch
+ENWPRTAB:Newport Docks
+EMSHFILD:Marshfield
+EAWRE:Awre
+ELWERXSG:Llanwern Exchange Sdgs
+EPANTEG:Panteg
+EEUSKJNYD:East Usk Jn. N. Y.
+ELTTLMLJ:Little Mill Jn
+EMAINCE:Maindee Depot Isu (Ce)
+EMSHFILDR:Marshfield
+EEUSKJNY:East Usk Jn. N. Y.
+EMACHENQ:Machen Quarry
+Locations: 
+EBWVPWY:Ebbw Vale Parkway,Ebbw Vale Parkway [EBV]
+LTTLMLJ:Little Mill Jn
+LWERXSG:Llanwern Exchange Sdgs
+EUSKJN:East Usk Jn.
+CRSKEYS:Crosskeys,Crosskeys [CKY]
+LYDNEY:Lydney,Lydney [LYD]
+MAINDNJ:Maindee North Jn
+ALXNJTC:Alexandra Dock Jn. T.C.,Alexandra Dock Junction Terminal Complex
+LWERWJN:Llanwern West Jn
+SEVTUGL:Severn Tunnel Ugl
+MSHFILD:Marshfield
+PATCHWY:Patchway,Patchway [PWY]
+NWPTRTG:Newport,Newport (South Wales) [NWP],Newport (South Wales)
+LLHLETH:Llanhilleth,Llanhilleth [LTH]
+NBRWGE:Newbridge,Newbridge [NBE]
+AWRE:Awre
+EUSKJNY:East Usk Jn. N. Y.,East Usk Yard (Fhh)
+NWPTCOU:Newport Courtybella Sdgs
+CWMBRAN:Cwmbran,Cwmbran [CWM]
+MAGOR:Magor
+U10:U10,Sig U10,East Usk U10
+PRKJNTH:Park North Jcn
+SEVTNLW:Severn Tunnel West
+CRSKYJN:Cross Keys Jcn,Cross Keys Jn.Cross Keys Junction
+SEVTNLJ:Severn Tunnel Junction,Severn Tunnel Junction [STJ]
+SEVTNLE:Severn Tunnel East
+CDCOT:Caldicot,Caldicot [CDT]
+ROGRSTN:Rogerstone,Rogerstone [ROR]
+RISCA:Risca and Pontymister,Risca & Pontymister [RCA]
+LYDNDUL:Lydney Up Goods Loop
+CHEPSTW:Chepstow,Chepstow [CPW]
+EUSKBDP:East Usk Branch Birdport,East Usk Branch,East Usk Branch Alphasteel
+SEVT730:Severn Tunnel S730
+SEVTJNS:Severn Tunnel Jcn Sidings
+EBBWJ:Ebbw Jn
+PONTYPL:Pontypool & New Inn [PPL],Pontypool & New Inn [PPL]
+PILNINGDG:Down Pilning Loop
+GAERJ:Gaer Jn
+PILNING:Pilning,Pilning [PIL]
+NWPT273:Newport Signal Nt1273
+MAINCE:Maindee Depot Isu (Ce)
+PANTEG:Panteg
+MAINDHS:Newport P1 Up dir
+PYECRNR:Pye Corner,Pye Corner [PYE]
+NWPRTAB:Newport Docks
+RISCASJ:Risca South Jn,Risca South Junction
+PILNINGUG:Up Pilning Loop
+LLWESWE:Llanwern Steelworks East
+ALXNUDG:Alexandra Docks Udg
+MAINDWJ:Maindee West Jn
+MACHENQ:Machen Quarry
+MAINDEJ:Maindee East Jn
+PRKJT:Park Jn

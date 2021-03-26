@@ -1,0 +1,115 @@
+Entry Points: 
+ETAPMAIN:Tapton Jn
+EHORBURY:Horbury Jn
+EMORTHRP:Moorthorpe [MRP]
+EBRW1019:Barrow Hill Up Sdgs No 2-3
+EBRCLEJN:Brancliffe East Jn
+EBRW1010:Barrow Hill Roundhouse
+EROTHGBR:Rotherham Booths GB Railfreight,Masboro Booths P S
+ETINSLEY:Tinsley Yard Gbrf
+EGRIND:Grindleford [GRN]
+ESHEFFHS:Sheffield H.S.
+EMBROSTY:Masborough F.D.
+EHUDD:Huddersfield [HUD]
+EDONC:Hexthorpe Jn
+ETINSMEA:Tinsley Meadowhall [TIN]
+ETAPBAR:Tapton Jn
+EALDWNWS:Aldwarke U.E.S.
+EWDHOFHH:Woodhouse Junction Sidings Freightliner Heavy Haul,Woodhouse Junc Sdgs (Fhh)
+Locations: 
+W402:Woodburn Jn Signal W402
+DONCHJN:Hexthorpe Jn
+WDHOUSE:Woodhouse [WDH]
+BRHLRC:Barrow Hill Roundhouse?
+BERRYB:Berry Brow [BBW]
+ALDWRKJ:Aldwarke Jn
+BRHLRS:Barrow Hill Reception Siding,Barrow Hill Reception 4
+CONBCAD:Conisbrough Up Goods Loop
+MORTHRP:Moorthorpe [MRP]
+BRGLJN:Broughton Lane Jn
+PENISTN:Penistone [PNS]
+CONBRGH:Conisbrough [CNS]
+ELSC:Elsecar [ELR]
+ROTHGBR:Rotherham Booths GB Railfreight,Masboro Booths P S
+KLNHUGL:Kilnhurst Up Gds Loop
+DNDL:Denby Dale [DBD]
+ALDW109:Aldwarke Jn Sig S109
+WNCOJN:Wincobank Jn.,Wincobank Jn
+BRHLFHH:Barrow Hill Up Sdgs No 2-3
+HORBRYJ:Horbury Jn
+HEELEY:Heeley Up Loop
+KVTNBDG:Kiveton Bridge [KIV]
+SHEFFLD:Sheffield [SHF]
+BRH1005:Barrow Hill Signal 1003
+THBGJN:Thrybergh Jn
+BRHLDGF:Barrow Hill Dn Gds (Flhh)
+TOTLYTE:Totley Tunnel East
+BLTNODR:Bolton-on-Dearne [BTD]
+DORESJ:Dore South Jn
+MBROSSJ:Masborough Sorting Sidings Jn,Masbro S.S. Jn
+CLYTNWJ:Clayton West Junction
+DEEPSW:Deepcar Stocksbridge Works,Stocksbridge Works
+SHEFS77:Sheffield Signal S77
+BTSDSJN:Brightside Jn,Brightside Station Jn
+WOLEYCS:Woolley Coal Sdgs S.B.
+SHEFS81:Sheffield Signal S81
+SHEFFHS:Sheffield H.S.
+WDHOFHH:Woodhouse Junction Sidings Freightliner Heavy Haul,Woodhouse Junc Sdgs (Fhh)
+ECLSFLW:Ecclesfield West Signal Box,Ecclesfield West S.B.
+MBRONJN:Masborough Jn
+TINSLNJ:Tinsley North Jn
+BEGHTJN:Beighton Jn
+BRHLSJN:Barrow Hill South Jn.,Barrow Hill South Jn
+TREETGL:Treeton Goods Loop
+TINSLEJ:Tinsley East Jn
+SWINTN:Swinton (South Yorkshire) [SWN]
+SHPCTLJ:Shepcote Lane Jn
+ATTREWS:Attercliffe Sdgs Fhh,Attercliffe Sdgs Ews
+SHEFCS:Sheffield Centre Siding
+DRONFLD:Dronfield [DRO]
+ROTHCEN:Rotherham Central [RMC]
+STKSMR:Stocksmoor [SSM]
+BRHLSGF:Barrow Hill Staveley Flhh
+MILLRJ:Mill Race Jn
+ALDWNWS:Aldwarke U.E.S.
+GRNDLFD:Grindleford [GRN]
+CHPLTWN:Chapeltown [CLN]
+MEADWHL:Meadowhall [MHS]
+TINSMEA:Tinsley Meadowhall [TIN]
+DORESNJ:Dore Station Jn
+SHEF142:Sheffield Signal S142
+WOMBWEL:Wombwell [WOM]
+CANKLOW:Canklow Loop
+BKHLS:Brockholes [BHS]
+HDRSFLD:Huddersfield [HUD]
+WDHOUSJ:Woodhouse Jn
+ALDW738:Aldwarke Jn Sig S738
+TAPTONJ:Tapton Jn
+DORE:Dore & Totley [DOR]
+TINSLYY:Tinsley Yard Gbrf
+MORTHGL:Moorthorpe Goods Loop
+BRHLJN:Barrow Hill North Jn
+BEGHTSJ:Beighton Station Jn
+SHEFFSS:Sheffield Station Sidings
+SKSCMN:Silkstone Common [SLK]
+SHEFS80:Sheffield Signal S80,Sheffield Signal S82
+SPLY:Shepley [SPY]
+ROTHHJN:Holmes Jn,Rotherham Holmes Junction
+GLDTHRP:Goldthorpe [GOE]
+WDBRNJN:Woodburn Jn
+MBROSTY:Masborough F.D.
+DODWRTH:Dodworth [DOD]
+BRCLEJN:Brancliffe East Jn
+DOREWJ:Dore West Jn
+LKWD:Lockwood [LCK]
+DARNALL:Darnall [DAN]
+TREETNJ:Treeton Jn
+BNSLY:Barnsley [BNY]
+TINSLSJ:Tinsley South Jn
+HONLEY:Honley [HOY]
+MEXBRGH:Mexborough [MEX]
+DRTN:Darton [DRT]
+NNRYMLJ:Nunnery Main Line Jn
+KVTNPK:Kiveton Park [KVP]
+TRNO:Thurnscoe [THC]
+PARKGAT:Parkgate [PAQ]

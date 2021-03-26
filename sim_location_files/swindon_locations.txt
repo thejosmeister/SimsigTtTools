@@ -1,0 +1,68 @@
+Entry Points:
+EUPMAIN:Bathampton Jn
+ECOCKD:Swindon Cocklebury Down
+ECOCKU:Swindon Cocklebury Up
+EUPBAD:Badminton
+E920:Didcot TC Up,Didcot T.C.
+E6411:Didcot TC Dn #1,Didcot T.C.
+EUPOX:Kennington Jn
+EARC:Appleford Sidings,Appleford Fhh,Appleford Sidings
+EWOOTT:Wootton Bassett F.Y. (Flhh,Wootton Bassett F.Y. (Flhh),Wootton Bassett F.Y.
+EDNRLF:Reading Relief
+EDNMAIN:Reading Main
+EDNTROW:Trowbridge [TRO]
+E6413:Didcot TC Dn #2,Didcot T.C.
+EUPKEMB:Kemble [KEM]
+Locations:
+DIDCWE:Didcot West End
+CHOLSEY:Cholsey [CHO]
+RUSHEYP:Rushey Platt
+DNGDS:Swindon Down Goods,Swindon DG
+SN30:SN30
+HGHWTHJ:Highworth Junction,Highworth Jn
+MILTJN:Milton Junction
+DIDCTEJ:Didcot East Jn
+WTNBSTJ:Wootton Bassett Jn,Wootton Bassett Junction
+GORASTR:Goring & Streatley [GOR]
+STVTN:Steventon
+KEMBLE:Kemble [KEM]
+SDONCBY:Swindon Cocklebury
+TRWBRDG:Trowbridge [TRO]
+RDLEY:Radley [RAD]
+CHIPNHM:Chippenham [CPM]
+DIDCTFP:Didcot Fuelling Point
+DIDCTTC:Didcot Terminal Complex,Didcot TC,Didcot T.C.
+CHALLOW:Challow
+FOXHALJ:Foxhall Jn [XJF]
+BRDFDJN:Bradford Jn,Bradford Junction
+MRTNCUT:Moreton Cutting
+THNGLYJ:Thingley Jn
+HLVNGTN:Hullavington
+KNNGTNJ:Kennington Jn
+REDGWJN:Reading West Junction,Reading West Jn,Reading Main Line West
+BOURTON:Bourton
+APPLEFS:Appleford Sidings,Appleford Fhh,Appleford Sidings
+SDONLY:Swindon Loco Yard
+STRUMLC:St. Mary's Level Crossing
+STRUD:Stroud [STD]
+RDNGSTN:Reading [RDG],Reading
+DIDCTNJ:Didcot North Jn
+DIDCOTP:Didcot Parkway [DID]
+DIDCWCJ:Didcot West Curve Jn
+SDON:Swindon [SWI],Swindon
+TILHRST:Tilehurst [TLH],Tilehurst
+WSTLGHJ:Westerleigh Junction,Westerleigh Jn
+STNDSHJ:Standish Jn
+PANGBRN:Pangbourne [PAN]
+BTHMPTJ:Bathampton Jn
+WANTRD:Wantage Road
+APPLEFD:Appleford [APF]
+MELKSHM:Melksham [MKM]
+THNGLEJ:Thingley East Junction
+STNHSE:Stonehouse [SHU]
+CULHAM:Culham [CUM]
+WTNBSFY:Wootton Bassett F.Y. (Flhh,Wootton Bassett F.Y. (Flhh),Wootton Bassett F.Y.
+UFNGTN:Uffington (Oxfordshire)
+SWINE:Swindon East
+CHPSDBY:Chipping Sodbury
+SN645:Wootton Bassett Gf,Swindon S645

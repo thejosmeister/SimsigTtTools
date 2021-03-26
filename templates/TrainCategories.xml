@@ -1,0 +1,2762 @@
+<TrainCategories>
+    <TrainCategory ID="6F19108D">
+      <Description>Cl 57/6</Description>
+      <AccelBrakeIndex>4</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>19</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="BB3E534B">
+      <Description>Cl57 + 7 Mk3 Night Riviera</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>180</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="E3A50EE3">
+      <Description>HST - 2 + 4 Castle</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>127</TrainLength>
+      <SpeedClass>4</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>120</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>180</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="35033E21">
+      <Description>IEP 802/0 - Bi Mode - 5 Car</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>130</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>120</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>180</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="D561FB16">
+      <Description>IEP 800/3 - Bi Mode - 9 Car</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>234</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="C39F0D78">
+      <Description>IEP 800/0 - Bi Mode - 5 Car</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>130</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>120</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>180</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="F332D201">
+      <Description>IEP 802/1 - Bi Mode - 9 Car</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>234</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="AD8AD2CE">
+      <Description>Cl 43 x 2</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>38</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6491A8C0">
+      <Description>Cl 143</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>31</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="C10AFDDE">
+      <Description>Cl 150/2 - 2 Car</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>40</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6ACEC8AF">
+      <Description>Cl 150/0 - 150001</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>60</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="09B918A4">
+      <Description>Cl 153</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>24</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="FBE40B6B">
+      <Description>Cl 158/2</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>90</MaxSpeed>
+      <TrainLength>47</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="BC87C35C">
+      <Description>Cl 158/3</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>90</MaxSpeed>
+      <TrainLength>71</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="043876D0">
+      <Description>Cl 165/2</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>90</MaxSpeed>
+      <TrainLength>46</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="A43CF083">
+      <Description>Cl 165/3</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>90</MaxSpeed>
+      <TrainLength>69</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="59F018F8">
+      <Description>Cl 166/3</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>90</MaxSpeed>
+      <TrainLength>69</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="DD9E60D4">
+      <Description>Cl 387/4</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>100</MaxSpeed>
+      <TrainLength>81</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>45</StationForward>
+        <StationReverse>120</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>180</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="D2A42440">
+      <Description>IEP 800/0 - Bi Mode -10 Car</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>247</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="93CC5F4B">
+      <Description>IEP 802/0 - Bi Mode -10 Car</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>260</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="DF9F4B45">
+      <Description>Cl 387/8</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>100</MaxSpeed>
+      <TrainLength>162</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>45</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4786BD25">
+      <Description>Cl 387/12</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>100</MaxSpeed>
+      <TrainLength>243</TrainLength>
+      <SpeedClass>24</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>45</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="85FA5CE2">
+      <Description>Cl 165 + 166</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>90</MaxSpeed>
+      <TrainLength>114</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <StationForward>60</StationForward>
+        <StationReverse>180</StationReverse>
+        <TerminateForward>120</TerminateForward>
+        <TerminateReverse>240</TerminateReverse>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="9A580DDD">
+      <Description>Cl57 + 7 Mk3 </Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>95</MaxSpeed>
+      <TrainLength>180</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="CB352034">
+      <Description>Cl 170/2</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>100</MaxSpeed>
+      <TrainLength>47</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="BFE3232E">
+      <Description>Cl 170/3</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>100</MaxSpeed>
+      <TrainLength>71</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="E6277096">
+      <Description>Cl 170/4</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>100</MaxSpeed>
+      <TrainLength>94</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="08CEC916">
+      <Description>Cl 220</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>95</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="9C6699A4">
+      <Description>Cl 221</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>118</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2D0BC1D2">
+      <Description>Cl 220/8</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>190</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="C47AF33A">
+      <Description>Cl 221/10</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>236</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="517101DA">
+      <Description>HST 2 + 7</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>198</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="DF81BD74">
+      <Description>Cl 220 + 221</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>213</TrainLength>
+      <SpeedClass>16</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="49B89FAB">
+      <Description>(1) - NMT 43 + 5 + 43 - 152m</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>152</TrainLength>
+      <SpeedClass>4</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="22CADFD4">
+      <Description>(4) - FLIM - 66 + 30 Flats - 640m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>640</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="22244248">
+      <Description>(4) - GBRF - 66 + 29 Flats - 623m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>623</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="156A7F2F">
+      <Description>(4) - GBRF - 66 + 22 F*A + IKA - 600m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>600</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="472190E8">
+      <Description>(4) - FLIM - 86 x 2 + 28 Flats - 615m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>615</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3ACFD7A7">
+      <Description>(4) - DB - 66 + 20 F*A - 629m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>629</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="23C1E580">
+      <Description>(4) - FLIM - 66 + 28 Flats - 600m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>600</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4E8727B5">
+      <Description>(4) - FLIM - 70 + 30 Flats - 644m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>644</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="306BE589">
+      <Description>(4) - FLIM - 86 x 2 + 21 Flats - 452m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>452</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6ACFFD66">
+      <Description>(4) - FLIM - 66 + 24 Flats - 531m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>531</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6A23B9EE">
+      <Description>(4) - FLIM - 86 x 2 + 24 Flats - 546m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>546</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="59B85D99">
+      <Description>(4) - FLIM - 86 x 2 + 20 Flats - 451m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>451</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="296A52F5">
+      <Description>(4) - FLIM - 70 + 26 Flats - 475m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>475</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4B9CB43F">
+      <Description>(4) - GBRF - 66 + 14 JPA - 277m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>277</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="5B176DA7">
+      <Description>(4) - DB - 90 x 2 + 11 FKA - 441m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>441</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="63A58BDA">
+      <Description>(4) - DB - 90 x 2 + 10 FKA - 416m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>416</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4AE4FED5">
+      <Description>(4) - DB - 90 x 2 + 15 IKA/FLA - 587m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>587</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4644AF2E">
+      <Description>(4) - DRS - 88 + 15 IDA/IKA - 541m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>541</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="61BEA012">
+      <Description>(4) - DB - 66 + 13 FKA - 513m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>513</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="1D21D32E">
+      <Description>(4) - DB - 66 + 7 FXA / 4 KFA - 433m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>433</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="367561A6">
+      <Description>(4) - FLIM - 66 + 29 Flats - 634m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>634</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4DC1E73D">
+      <Description>(4) - FLIM - 70 + 27 Flats - 471m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>471</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="59F2EB68">
+      <Description>(4) - GBRF - 66 + 14 IKA - 538m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>538</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="48037916">
+      <Description>(4) - FLIM - 66 + 16 Flats - 349m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>349</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="37A5ECD2">
+      <Description>(4) - FLIM - 70 + 15 FEA / IKA - 474m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>474</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="18449063">
+      <Description>(4) - FLIM - 90 + 14 Flats - 368m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>368</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="381F342E">
+      <Description>(4) - GBRF - 66 + 17 JPA - 383m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>383</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="5290E126">
+      <Description>(4) - FLHH - 66 + 3 IKA - 131m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>131</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6A31D4C1">
+      <Description>(4) - FLIM - 66 + 10 IKA - 387m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>387</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2C48B58B">
+      <Description>(4) - FLIM - 66 + 28 Flats - 562m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>562</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2C379DAE">
+      <Description>(4) - FLIM - 66 + 27 Flats - 558m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>558</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="533C8CE7">
+      <Description>(4) - GBRF - 66 + 23 HYA - 444m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>444</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="56FD517D">
+      <Description>(4) - DRS - 88 + 16 IKA/FLA/5 IDA - 764m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>764</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2CCCFD40">
+      <Description>(4) - DRS - 88 + 19 IDA/IKA - 679m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>679</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4C44F15B">
+      <Description>(4) - FLIM - 90 x 2 + 15 IKA/FLA - 587m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>587</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3B516DCE">
+      <Description>(4) - DRS - 88 + 15 IKA - 569m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>569</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="617D0F98">
+      <Description>(4) - DB - 90 + 11 FKA - 441m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>441</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="34C0D30E">
+      <Description>(4) - DB - 66 + 14 FKA - 538m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>538</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6BB905F3">
+      <Description>(6) - GBRF - 66 + 10 FCA - 275m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>275</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="62C91B43">
+      <Description>(6) - GBRF - 66 + 19 JRA - 300m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>300</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="422C596D">
+      <Description>(6) - GBRF - 66 + 22 IOA - 350m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>350</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3EAC14CB">
+      <Description>(6) - Colas  - 70 + 20 MRA - 363m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>363</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="48D0440C">
+      <Description>(6) - FLHH - 66 + KFA/ZOA/YWA - 74m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>74</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4D521D5D">
+      <Description>(6) - FLHH - 66 + 23 JPA - 393m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>393</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="1586B48F">
+      <Description>(6) - DB - 66 + 10 IFA/IPA - 518m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>518</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6224B5B9">
+      <Description>(6) - GBRF - 66 + 20 IFA/IPA - 744m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>744</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3D2740FC">
+      <Description>(6) - DB - 66 + 20 HOA - 327m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>327</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="604B2868">
+      <Description>(6) - DB - 66 + 14 IFA/IWB/FIA - 429m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>429</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3F6EC9D2">
+      <Description>(6) - DB - 66 + 10 IPA - 564m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>564</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="19CBC0D9">
+      <Description>(6) - GBRF - 66 + 20 ICA - 310m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>310</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2C061BC0">
+      <Description>(6) - DRS - 68 x 2 + 2 FNA - 66m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>66</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3DB84F71">
+      <Description>(6) - GBRF - 66 + 17 JPA - 296</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>296</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3C1C725B">
+      <Description>(6) - GBRF - 66 + 20 IFA/IPA - 750m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>750</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="169C0AB8">
+      <Description>(6) - GBRF - 66 + 17 IFA/IPA - 725m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>725</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="63D34AF7">
+      <Description>(6) - DRS - 68 + 1 KFA - 42m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>42</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="28DB99F0">
+      <Description>(6) - DB - 66 + 20 IOA - 302m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>313</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="27A08006">
+      <Description>(6) - DB - 66 + 20 JGA - 313m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>313</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="184416D7">
+      <Description>(3) - FLHH - 68 + 5 Mk5 - 132m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>100</MaxSpeed>
+      <TrainLength>132</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3163EC1D">
+      <Description>(0) - Class 66</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>21</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3E2624D9">
+      <Description>(0) - Class 68</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>21</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="424206AF">
+      <Description>(0) - Class 70</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>22</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="55E9B9CA">
+      <Description>(0) - Class 90</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>19</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="35CB2822">
+      <Description>(0) - Class 88</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>21</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6DBED831">
+      <Description>(0) - Class 37</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>19</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="26074C8D">
+      <Description>(0) - Class 90 x 2</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>38</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6A1A774F">
+      <Description>(0) - Class 325</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>80</TrainLength>
+      <SpeedClass>536</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="68CFC072">
+      <Description>(0) - Class 47</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>20</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4197899F">
+      <Description>(0) - Class 20 x 2</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>30</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3233FF9B">
+      <Description>(0) - Class 92</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>22</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O3</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="576E1B43">
+      <Description>(0) - Class 60</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>22</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="16A7ED88">
+      <Description>(0) - Class 57</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>20</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="55112972">
+      <Description>(0) - Class 56</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>20</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="45EB4FA8">
+      <Description>(0) - Class 73</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>17</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>3D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2C37E139">
+      <Description>(0) - Class 86</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>18</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="57CA1BB6">
+      <Description>(0) - Class 86 x 2</Description>
+      <AccelBrakeIndex>3</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>36</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="59211405">
+      <Description>(6) - DB - 66 + 22 HTA - 412m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>412</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="24036FCF">
+      <Description>(3)   Colas  - 37 + 3 - UTU-R</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>30</MaxSpeed>
+      <TrainLength>100</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4A4C7E9E">
+      <Description>(3)   Colas  - 37 + 3 - UTU-T</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>100</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="5AB00711">
+      <Description>(4) - GBRF - 66 + 26 FEA / 2 ECO - 669m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>669</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="444EC9FB">
+      <Description>(4) - GBRF - 66 + 13 IKA - 203m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>203</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4B65275A">
+      <Description>(4) - GBRF - 66 + 23 HTA - 429m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>429</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="231DFD60">
+      <Description>(6) - GBRF - 66 + 23 HTA - 447m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>447</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="55833F16">
+      <Description>(4) - GBRF - 66 + 18 JPA - 404m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>404</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="44B2A85C">
+      <Description>(6) - FL66 + 42 JHA/HOA/IIA/HTA - 685m</Description>
+      <AccelBrakeIndex>0</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>685</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="36162F02">
+      <Description>(4) - GBRF - 66 + 19 FEA / 5 ECO - 647m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>647</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4B3C5099">
+      <Description>(4) - DB - 66 + 10 FKA/ 6 FXA /4KFA - 600m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>600</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="564705A5">
+      <Description>(4) - DB - 66 + 9 FKA/ 8 FXA /5 KFA - 623m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>623</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3F4B8029">
+      <Description>(4) - DB - 66 + 10 FKA/ 6 FXA /5 KFA - 621m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>621</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="341F587A">
+      <Description>(4) - DB - 66 + 12 FKA/ 6 FXA /1 KFA - 614m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>614</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="10ADA996">
+      <Description>(4) - DB - 66 + 10 IKAJ - 386m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>386</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2315F1A9">
+      <Description>(4) - DRS - 66 + 15 IKA - 569m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>569</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6C01D819">
+      <Description>(6) - GBRF - 66 + 18 ICA - 281m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>281</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="22F38BED">
+      <Description>(6) - GBRF - 66 + 18 JNAT - 273m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>273</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="62EF905C">
+      <Description>(6) - GBRF - 66 + 20 JGA/JRA - 311m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>311</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2E3965C2">
+      <Description>(6) - DB - 66 + 18 MMA - 273m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>273</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2BC6BEBD">
+      <Description>(6) - GBRF - 66 + 22 MWA - 329m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>329</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="54C319E6">
+      <Description>(6) - FLHH - 66 + 22 MWA - 329m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>329</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="60173C9C">
+      <Description>(4) - DRS - 88 x 2 + 15 IKA - 587m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>587</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>OD</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3A9D37FB">
+      <Description>(6) - DB - 66 + 23  JNA JXA KEA - 400m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>400</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="28E2D3AA">
+      <Description>(6) - GBRF - 66 - MOD VAR - 15 - 323m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>323</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="30C7C8E0">
+      <Description>(6) - FLHH - 66 + 23 HIA/JGA - 329m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>329</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="10381948">
+      <Description>(6) - FLHH - 66 + 20 MWA - 301m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>301</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4DD410AF">
+      <Description>(6) - DB - 66 + 21 BLA - 363m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>363</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4DD410AF">
+      <Description>(6) - DB - 60 + 19 TEA - 363m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>363</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="51696B99">
+      <Description>(6) - DB - 66 + 22 IWA - 498m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>498</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="56A402E9">
+      <Description>(6) - DRS - 66 + 20 MMA - 301m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>301</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4F60D72C">
+      <Description>(4) - DB - 66 + 13 FKA/ 6 FXA /2 KFA - 696m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>696</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="41A0F57E">
+      <Description>(6) - GBRF - 66 - SCO VAR - 203mm</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>203</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="56C2741D">
+      <Description>(6) - DB - 66 + 40 PHA - 338m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>338</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="220C2367">
+      <Description>(6) - DRS - 66 + 25 MRA - 448m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>448</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="4D62BF8E">
+      <Description>(6) - Colas  - 70 + 20 MLA - 362m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>362</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="22789C0F">
+      <Description>(3) - TPE - Class 397</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>0</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>125</MaxSpeed>
+      <TrainLength>118</TrainLength>
+      <SpeedClass>8</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes>
+        <Join>240</Join>
+        <Divide>240</Divide>
+        <CrewChange>120</CrewChange>
+      </DwellTimes>
+      <Electrification>O</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="088272E9">
+      <Description>(4) - GBRF - 66 + 24 HTA - 447m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>447</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="26ABF597">
+      <Description>(4) - FL66 + 70 + 30 FEA/FLA/FSA/KTA - 566m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>566</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="A7674261">
+      <Description>(4)  - FL66 + 30 FEA/FRA/FSA/FTA/KFA - 642m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>642</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="ACD3D1D1">
+      <Description>(4) - DB - 66 + 10 IPA - 628m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>628</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="F5A4DBF2">
+      <Description>(4) - FLIM - 70 + 36 Flats - 527m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>527</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="9F03BA95">
+      <Description>(4) - DB - 66 + 9 FKA/ 8 FXA /5 KFA - 623m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>623</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="93963A82">
+      <Description>(7) - FLHH - 66 + 42 JHA/HOA/IIA/HTA - 685m</Description>
+      <AccelBrakeIndex>0</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>45</MaxSpeed>
+      <TrainLength>685</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>2</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="D7089A33">
+      <Description>(6) - GBRF - 66 + 18 KVA - 422m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>422</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="951E7656">
+      <Description>(6) - FLHH - 66 + 24 HIA - 357m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>357</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="5C755843">
+      <Description>(4) - DB - 66 + 12 FCA - 262m</Description>
+      <AccelBrakeIndex>2</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>262</TrainLength>
+      <SpeedClass>0</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="9AA08552">
+      <Description>(6) - FLHH - 66 + 21 JNA (Boxes) - 315m</Description>
+      <AccelBrakeIndex>0</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>315</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="C6273F42">
+      <Description>(6) - DB - 66 + 12 FCA - 262m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>262</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6EBA6BAE">
+      <Description>(6) - DB - 66 + 18 MBA - 138m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>138</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="5FC260B4">
+      <Description>(4) - DB - 66 +  5 IPA - 326m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>326</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6FA9056B">
+      <Description>(6) - DB - 66 + 21 JNA - 378m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>378</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6XA9056B">
+      <Description>(6) - FLHH - 66 + 21 JNA - 378m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>378</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6XT4056B">
+      <Description>(6) - FLHH - 66 + 19 JNA - 346m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>378</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6YA9056B">
+      <Description>(6) - FLHH - 66 + 18 MRA - 341m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>378</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2C9D65E4">
+      <Description>(6) - FLHH - 66 + 17 HHA - 259m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>259</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="285B9CE3">
+      <Description>(6) - DB - 66 + 18 YEA - 350m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>350</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="2XXB9CE3">
+      <Description>(6) - FLHH - 66 + 18 YEA - 350m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>350</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="BA925380">
+      <Description>(6) - DCR - 60 + 21 JRA - 378m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>378</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="61013907">
+      <Description>(6) - GBRF - 66 + 20 IHA - 283m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>283</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="6C8DB7D6">
+      <Description>(6) - GBRF - 66 + 17 KVA - 398m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>398</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="E0EB9F41">
+      <Description>(6) - FLHH - 66 + 18 HIA - 305m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>305</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="3A00BA71">
+      <Description>(6) - DB - 66 + 18 YEA + 1 YWA - 445m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>445</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="C7DAA81C">
+      <Description>(6) - Colas - 66 - SCO VAR - 203mm</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>445</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="BACD5FEC">
+      <Description>(7) - FLHH - 59 + 20 JHA - 315m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>45</MaxSpeed>
+      <TrainLength>315</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>2</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="8CFB3A79">
+      <Description>(4) - FLHH - 66 + 15 YEA - 296m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>296</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="8XFB3A79">
+      <Description>(4) - GBRF - 66 + 15 MJA - 296m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>75</MaxSpeed>
+      <TrainLength>296</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+    <TrainCategory ID="BB93E8BF">
+      <Description>(6) - DB - 66 + 26 JGA/JNA - 386m</Description>
+      <AccelBrakeIndex>1</AccelBrakeIndex>
+      <IsFreight>-1</IsFreight>
+      <CanUseGoodsLines>0</CanUseGoodsLines>
+      <MaxSpeed>60</MaxSpeed>
+      <TrainLength>386</TrainLength>
+      <SpeedClass>512</SpeedClass>
+      <PowerToWeightCategory>0</PowerToWeightCategory>
+      <DwellTimes/>
+      <Electrification>D</Electrification>
+    </TrainCategory>
+  </TrainCategories>
