@@ -1,0 +1,6 @@
+- Parse CH data for Full, summary locations and individual trains
+- A way of filtering locations (conditions for directions?)
+- Sort pathing info (just delete from data?)
+- Unzip .WTT files for parsing and update correctly on compile
+- Category defaults/ can we determine it from the data?
+- Partially ammend TT times (lower priority)
