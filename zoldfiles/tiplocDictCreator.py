@@ -41,7 +41,7 @@ def pull_tiploc_out_of_xml(files_to_pull_tiploc_out: list, out_filename):
 pull_tiploc_out_of_xml(['future_planning/Newport SO 21 11 2015 0000 Start/SavedTimetable.xml',
                         'future_planning/Newport SX 08 04 2015 0000 Start/SavedTimetable.xml',
                         'future_planning/Newport  FEB 2020 PLUS/SavedTimetable.xml'],
-                       'sim_location_files/newport_locations.txt')
+                       '../sim_location_files/newport_locations.txt')
 
 def pull_train_categories_out_of_xml_string(categories_string: str) -> dict:
     root = ET.fromstring(categories_string)

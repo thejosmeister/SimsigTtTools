@@ -4,3 +4,14 @@
 - Unzip .WTT files for parsing and update correctly on compile
 - Category defaults/ can we determine it from the data?
 - Partially ammend TT times (lower priority)
+
+
+
+To Test
+- Merging TTs
+- Having no train cat
+- Putting dwell times in all locations
+
+
+Issues
+- Sched table seems to have some bad html missing </tr> tag on header

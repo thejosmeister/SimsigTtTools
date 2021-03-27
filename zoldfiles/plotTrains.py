@@ -6,7 +6,7 @@ import re
 
 
 def dist_rgd_to_bad():
-    f = open('assorted_files/dist_from_rdg_to_bad.txt', "r")
+    f = open('../assorted_files/dist_from_rdg_to_bad.txt', "r")
     distances = ast.literal_eval(f.read())
     f.close()
 
@@ -53,7 +53,7 @@ def dist_rgd_to_bad():
 
 
 def dist_rgd_to_bth():
-    f = open('assorted_files/dist_from_rdg_to_bth.txt', "r")
+    f = open('../assorted_files/dist_from_rdg_to_bth.txt', "r")
     distances = ast.literal_eval(f.read())
     f.close()
 
