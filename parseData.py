@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+
 def parse_location_times(times_string: str) -> dict:
     formatted_times_string = times_string.replace('&half', '.5')
     dep = re.match('.*d\\. (\\d{2}:\\d{2}(?:\\.5)?)', formatted_times_string)
@@ -39,7 +40,6 @@ def parse_allowances(allow_string: str) -> dict:
     return out
 
 
-
 def parse_sched_table(table) -> list:
     """
     :param table: Beautiful Soup version of the sched-table
@@ -68,8 +68,6 @@ def parse_sched_table(table) -> list:
                     # Set the number of columns for our table
                     n_columns = len(td_tags)
 
-
-
     # Safeguard on Column Titles
     if len(column_names) > 0 and len(column_names) != n_columns:
         raise Exception("Column titles do not match the number of columns")
@@ -87,7 +85,7 @@ def parse_sched_table(table) -> list:
 
             a_tag = column.find('a')
             if a_tag is not None and 'href' in a_tag.attrs:
-                tiploc = re.match('.*/sum/([A-Z0-9]+)/.*',a_tag['href']).group(1)
+                tiploc = re.match('.*/sum/([A-Z0-9]+)/.*', a_tag['href']).group(1)
                 row_to_add[column_names[column_marker]] = tiploc
 
             elif 'Times WTT(Public)' in column_names[column_marker]:
@@ -188,12 +186,10 @@ def parse_train_header(header_text: str) -> dict:
     match = re.match('Train (\\d+) \\(.+\\) (?:[0-9][A-Z][0-9]{2})? (\\d{2}:\\d{2}) (.+) to (.+)', header_text)
 
     return {'ch_id': match.group(1), 'origin_time': match.group(2).replace(':', ''), 'origin_name': match.group(3),
-           'dest_name': match.group(4)}
-
+            'dest_name': match.group(4)}
 
 
 def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
-
     if 'train_id' in kwargs:
         train_file_as_string = ''
 
@@ -235,6 +231,56 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     print(train_info)
 
 
+def parse_summary_page(start_time: str, end_time: str, summary_page) -> list:
+    summary_tables = summary_page.find_all('table', class_='summ-table')
+
+    list_of_times = []
+    for summary_table in summary_tables:
+        for row in summary_table.find_all('tr'):
+            fields = row.find_all('td')
+            if len(fields) > 0:
+                list_of_times.append(
+                    [float(re.match('.*(\\d{2}:\\d{2}(?:\\.5)?)', fields[1].get_text().replace('&half', '.5').replace('\n','')).group(
+                        1).replace(':', '')), fields[2].find('a')['href']])
+
+    start_time_num = float(start_time)
+    end_time_num = float(end_time)
+    list_of_times = list(filter(lambda x: (x[0] >= start_time_num), list_of_times))
+    list_of_times = list(filter(lambda x: (x[0] <= end_time_num), list_of_times))
+
+    return [x[1] for x in list_of_times]
+
+
+def parse_full_page(start_time: str, end_time: str, full_page) -> list:
+    tables_on_page = full_page.find_all('table')
+
+    locations_table = None
+
+    for table in tables_on_page:
+        if table.find('tr', {'class': 'small-table'}):
+            locations_table = table
+            break
+
+    if locations_table is None:
+        print('could not find locations table')
+        return []
+
+    list_of_times = []
+
+    for row in locations_table.find_all('tr'):
+        fields = row.find_all('td')
+        if len(fields) > 0:
+            list_of_times.append(
+                [float(re.match('.*(\\d{2}:\\d{2}(?:\\.5)?)', fields[7].get_text().replace('&half', '.5').replace('\n','')).group(
+                    1).replace(':', '')), fields[0].find('a')['href']])
+
+    start_time_num = float(start_time)
+    end_time_num = float(end_time)
+    list_of_times = list(filter(lambda x: (x[0] >= start_time_num), list_of_times))
+    list_of_times = list(filter(lambda x: (x[0] <= end_time_num), list_of_times))
+
+    return [x[1] for x in list_of_times]
+
 
 def parse_charlwood_house_location_file(start_time: str, end_time: str, location_of_file: str) -> list:
     """
@@ -244,13 +290,61 @@ def parse_charlwood_house_location_file(start_time: str, end_time: str, location
     :param location_of_file: relative path to locations file.
     :return: list of train ids to parse the individual files.
     """
-    return None
 
-def parse_charlwood_house_location_page():
-    return None
+    # parse location
+    location_page_as_string = ''
+
+    f = open(location_of_file, "r")
+    for file_line in f:
+        location_page_as_string += file_line.rstrip()
+    f.close()
+
+    if '/sum/' in location_of_file:
+
+        summary_page = BeautifulSoup(location_page_as_string, 'html.parser')
+
+        list_of_links = parse_summary_page(start_time, end_time, summary_page)
+
+        return [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]
+
+    elif '/full/' in location_of_file:
+
+        full_page = BeautifulSoup(location_page_as_string, 'html.parser')
+
+        list_of_links = parse_full_page(start_time, end_time, full_page)
+
+        return [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]
+    else:
+        print('Could not determine location file type: ' + location_of_file)
+        return []
+
+
+def parse_charlwood_house_location_page(start_time: str, end_time: str, location_page_link: str):
+
+    response = requests.get(location_page_link)
+
+    if '/sum/' in location_page_link:
+
+        summary_page = BeautifulSoup(response.content, 'html.parser')
+
+        list_of_links = parse_summary_page(start_time, end_time, summary_page)
+
+        return [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]
+
+    elif '/full/' in location_page_link:
+
+        full_page = BeautifulSoup(response.content, 'html.parser')
+
+        list_of_links = parse_full_page(start_time, end_time, full_page)
+
+        return [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]
+    else:
+        print('Could not determine location page type: ' + location_page_link)
+        return []
 
 
 def parse_rtt_location_page():
     return None
 
-parse_charlwood_train('', '', train_link='http://charlwoodhouse.co.uk/rail/liverail/train/23598269/28/03/21')
+
+print(parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))
