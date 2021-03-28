@@ -2,7 +2,8 @@
 Will be a pretty long file for taking TT data from a list of location sources, fetching all trains within a window,
 parsing them and creating Json TTs to put into a DB. This file will pass back a list of Json TTs for parsing.
 """
-
+import requests
+from bs4 import BeautifulSoup
 import re
 
 def parse_location_times(times_string: str) -> dict:
@@ -124,6 +125,7 @@ def parse_sched_table(table) -> list:
 
     return df
 
+
 def parse_train_table(train_info_table) -> dict:
     """
 
@@ -181,9 +183,57 @@ def parse_train_table(train_info_table) -> dict:
 
     return out
 
-def parse_train_table(train_info_table)
 
-def parse_charlwood_train(train_id: str, sim_id: str, train_cat):
+def parse_train_header(header_text: str) -> dict:
+    match = re.match('Train (\\d+) \\(.+\\) (?:[0-9][A-Z][0-9]{2})? (\\d{2}:\\d{2}) (.+) to (.+)', header_text)
+
+    return {'ch_id': match.group(1), 'origin_time': match.group(2).replace(':', ''), 'origin_name': match.group(3),
+           'dest_name': match.group(4)}
+
+
+
+def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
+
+    if 'train_id' in kwargs:
+        train_file_as_string = ''
+
+        # f = open(f'charlwoodhouse.co.uk/rail/liverail/train/{kwargs['train_id']}/14/02/20.html', "r")
+        f = open('assorted_files/charlwoodhousesimsig/t20.html', "r")
+        for file_line in f:
+            train_file_as_string += file_line.rstrip()
+        f.close()
+
+        train_page = BeautifulSoup(train_file_as_string, 'html.parser')
+    elif 'train_link' in kwargs:
+        response = requests.get(kwargs['train_link'])
+        train_page = BeautifulSoup(response.content, 'html.parser')
+    else:
+        print('No train passed in')
+        return None
+
+    # Fetch ch id and origin time location and dest from top of page <h2>
+    header_data = parse_train_header(train_page.find('h2').get_text())
+
+    # Fetch train info from train table
+    train_info = parse_train_table(train_page.find('table', {'class': 'train-table'}))
+
+    # Sort headcode
+    if 'headcode' not in train_info:
+        train_info['headcode'] = header_data['ch_id'][:4]
+
+    # Fetch location data from sched table
+    initial_locations = parse_sched_table(train_page.find('table', {'class': 'sched-table'}))
+
+    # Work out other fields for train from train cat dict
+
+    # Filter locations out via sim locations and translate TIPLOC to readable
+
+    # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
+
+    print(initial_locations)
+    print(header_data)
+    print(train_info)
+
 
 
 def parse_charlwood_house_location_file(start_time: str, end_time: str, location_of_file: str) -> list:
@@ -194,12 +244,13 @@ def parse_charlwood_house_location_file(start_time: str, end_time: str, location
     :param location_of_file: relative path to locations file.
     :return: list of train ids to parse the individual files.
     """
-
+    return None
 
 def parse_charlwood_house_location_page():
-
+    return None
 
 
 def parse_rtt_location_page():
+    return None
 
-
+parse_charlwood_train('', '', train_link='http://charlwoodhouse.co.uk/rail/liverail/train/23598269/28/03/21')

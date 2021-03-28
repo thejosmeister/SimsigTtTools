@@ -2,14 +2,25 @@
 - A way of filtering locations (conditions for directions?)
 - Sort pathing info (just delete from data?)
 - Unzip .WTT files for parsing and update correctly on compile
-- Category defaults/ can we determine it from the data?
+- Category defaults/ can we determine it from the data - **Pull out all timing load, power type, speed, status combos from all trains**
+- Add properties to XML parser/writer :
+        for train TT:
+            <ShuntPhone>-1</ShuntPhone>
+      <ShuntInterpose>0</ShuntInterpose>
+      <ClassOfService>3</ClassOfService>
+      <CanUseGoodsLines>-1</CanUseGoodsLines>
+
+      for train categories:
+      <PowerToWeightCategory>2</PowerToWeightCategory>
+
 - Partially ammend TT times (lower priority)
 
 
 
+
 To Test
-- Merging TTs
-- Having no train cat
+- Merging TTs - trains get brought in regardless of UID, maybe need to make my own version
+- Having no train cat - Will mean template descr does not have stock
 - Putting dwell times in all locations
 
 
