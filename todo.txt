@@ -1,28 +1,73 @@
-- Parse CH data for Full, summary locations and individual trains
-- A way of filtering locations (conditions for directions?)
-- Sort pathing info (just delete from data?)
-- Unzip .WTT files for parsing and update correctly on compile
-- Category defaults/ can we determine it from the data - **Pull out all timing load, power type, speed, status combos from all trains**
-- Add properties to XML parser/writer :
-        for train TT:
-            <ShuntPhone>-1</ShuntPhone>
-      <ShuntInterpose>0</ShuntInterpose>
-      <ClassOfService>3</ClassOfService>
-      <CanUseGoodsLines>-1</CanUseGoodsLines>
+Design Notes
 
-      for train categories:
-      <PowerToWeightCategory>2</PowerToWeightCategory>
+.py files:
 
-- Partially ammend TT times (lower priority)
+BuildXmlTtFromSource.py 
+- will take a yaml spec that gives: the usual tt headers (name of tt, simid ....), source location, source type, filters on source, what category logic we want to use, whether to overwrite tt with same name?
+- Then will manage data extraction via parseData.py and submit Json data to a TT db.
+- Then will use WriteXmlTt.py to create XML TT.
 
 
+WriteXmlTt.py
+- writes XML TT from what is stored in Json TT db. 
+- will use much of what is already present in other repo but will tidy up usage of methods from other files and just use ones from common.py
 
 
-To Test
-- Merging TTs - trains get brought in regardless of UID, maybe need to make my own version
-- Having no train cat - Will mean template descr does not have stock
-- Putting dwell times in all locations
+ParseXmlTt.py
+- parse a .WTT file to a Json TT db with the same name. **poss look into versioning here**
 
 
-Issues
-- Sched table seems to have some bad html missing </tr> tag on header
+parseData.py 
+- will parse data from source and manage processing to the point that the data is ready for a Json TT.
+- parse source
+- apply general location filtering and categories logic
+- farm out to customLocationLogic.py
+- return train TT ready for db
+
+
+customLocationLogic.py
+- take yaml spec with rules about sim locations
+- apply rules as per spec and return modified locations
+
+
+common.py
+- will contain all common functions used in different bits like convert_time_to_secs
+
+
+File struct:
+All .py files on root to stop python interpreter throwing a wobly
+Directories present for spec/templates:
+- db/${tt_name}/main_header.json
+               /rules.json
+               /train_tts.json 
+    /${tt_name}/main_header.json
+               /rules.json
+               /train_tts.json
+    ...
+- location_maps/${sim_id}_locations.txt
+               /${sim_id}_locations.txt
+               ...
+- templates/categories/default_cat_map.txt
+                      /train_categories_1.xml
+                      ...
+           /tt_templates/defaultTimetableNoEP.txt
+                        /defaultTimetableSeedPoint.txt
+                        /defaultTimetableWithEntryPoint.txt
+           /activity_templates/crewChangeTemplate.txt
+                              /detatchFrontTemplate.txt
+                              /detatchRearTemplate.txt
+                              ...
+- spec_files/old_yaml_tt_specs/${tt_name}.yaml
+                              /${tt_name}.yaml
+                              ...
+            /source_to_xml_tt_specs/${tt_name}.yaml
+                                   /${tt_name}.yaml
+                                   ...
+            /sim_custom_location_logic/${sim_id}.yaml
+                                      /${sim_id}.yaml
+                                      ...
+- old_spec_tt_data/${tt_name}/train_key_location_files
+                             /train_location_files
+
+
+
