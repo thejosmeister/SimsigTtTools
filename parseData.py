@@ -42,7 +42,7 @@ def parse_allowances(allow_string: str) -> dict:
 
 def parse_sched_table(table) -> list:
     """
-    :param table: Beautiful Soup version of the sched-table
+    :param table: BeautifulSoup instance of the sched-table
     :return: list of locations for the train to then tidy up with futher logic.
     """
     n_columns = 0
@@ -126,8 +126,7 @@ def parse_sched_table(table) -> list:
 
 def parse_train_table(train_info_table) -> dict:
     """
-
-    :param train_info_table:
+    :param train_info_table: BeautifulSoup instance of the ch train info table.
     :return: map like: { uid, operator_code, headcode?, Train category?, Power type?, Timing Load?, max_speed?, Train Status? }
     """
     rows_interested_in = ['Train UID', 'ATOC code', 'Signalling ID', 'Train category', 'Power type', 'Timing Load',
@@ -135,9 +134,6 @@ def parse_train_table(train_info_table) -> dict:
     out = {}
     for row in train_info_table.find_all('tr'):
 
-        # want UID 0, ATOC 0 if present, sig ID 0 if present, train cat 0 if present, power type 0 if present, timing load 0 and 1 if present
-        # speed 0 if present
-        # train status 1 if present
         fields = row.find_all('td')
         row_name = fields[0].get_text()
         if row_name not in rows_interested_in:
@@ -183,6 +179,10 @@ def parse_train_table(train_info_table) -> dict:
 
 
 def parse_train_header(header_text: str) -> dict:
+    """
+    :param header_text: text in charlwoodhouse train page header.
+    :return: map { 'ch_id', 'origin_time', 'origin_name', 'dest_name' }
+    """
     match = re.match('Train (\\d+) \\(.+\\) (?:[0-9][A-Z][0-9]{2})? (\\d{2}:\\d{2}) (.+) to (.+)', header_text)
 
     return {'ch_id': match.group(1), 'origin_time': match.group(2).replace(':', ''), 'origin_name': match.group(3),
@@ -231,7 +231,15 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     print(train_info)
 
 
+# Part of the file for parsing charlwoodhouse location pages.
+
 def parse_summary_page(start_time: str, end_time: str, summary_page) -> list:
+    """
+    :param start_time: start of period to look for trains in format hhmm
+    :param end_time: end of period to look for trains in format hhmm
+    :param summary_page: the BeautifulSoup summary page.
+    :return: list of links to train pages.
+    """
     summary_tables = summary_page.find_all('table', class_='summ-table')
 
     list_of_times = []
@@ -239,9 +247,10 @@ def parse_summary_page(start_time: str, end_time: str, summary_page) -> list:
         for row in summary_table.find_all('tr'):
             fields = row.find_all('td')
             if len(fields) > 0:
+                formatted_times_field = fields[1].get_text().replace('&half', '.5').replace('\n', '')
+                time_match_obj = re.match('.*(\\d{2}:\\d{2}(?:\\.5)?)', formatted_times_field)
                 list_of_times.append(
-                    [float(re.match('.*(\\d{2}:\\d{2}(?:\\.5)?)', fields[1].get_text().replace('&half', '.5').replace('\n','')).group(
-                        1).replace(':', '')), fields[2].find('a')['href']])
+                    [float(time_match_obj.group(1).replace(':', '')), fields[2].find('a')['href']])
 
     start_time_num = float(start_time)
     end_time_num = float(end_time)
@@ -252,6 +261,12 @@ def parse_summary_page(start_time: str, end_time: str, summary_page) -> list:
 
 
 def parse_full_page(start_time: str, end_time: str, full_page) -> list:
+    """
+    :param start_time: start of period to look for trains in format hhmm
+    :param end_time: end of period to look for trains in format hhmm
+    :param full_page: the BeautifulSoup full page.
+    :return: list of links to train pages.
+    """
     tables_on_page = full_page.find_all('table')
 
     locations_table = None
@@ -270,9 +285,10 @@ def parse_full_page(start_time: str, end_time: str, full_page) -> list:
     for row in locations_table.find_all('tr'):
         fields = row.find_all('td')
         if len(fields) > 0:
+            formatted_times_field = fields[1].get_text().replace('&half', '.5').replace('\n', '')
+            time_match_obj = re.match('.*(\\d{2}:\\d{2}(?:\\.5)?)', formatted_times_field)
             list_of_times.append(
-                [float(re.match('.*(\\d{2}:\\d{2}(?:\\.5)?)', fields[7].get_text().replace('&half', '.5').replace('\n','')).group(
-                    1).replace(':', '')), fields[0].find('a')['href']])
+                [float(time_match_obj.group(1).replace(':', '')), fields[2].find('a')['href']])
 
     start_time_num = float(start_time)
     end_time_num = float(end_time)
@@ -284,14 +300,11 @@ def parse_full_page(start_time: str, end_time: str, full_page) -> list:
 
 def parse_charlwood_house_location_file(start_time: str, end_time: str, location_of_file: str) -> list:
     """
-
-    :param start_time:
-    :param end_time:
-    :param location_of_file: relative path to locations file.
+    :param start_time: start of period to look for trains in format hhmm
+    :param end_time: end of period to look for trains in format hhmm
+    :param location_of_file: relative path to charlwoodhouse locations file.
     :return: list of train ids to parse the individual files.
     """
-
-    # parse location
     location_page_as_string = ''
 
     f = open(location_of_file, "r")
@@ -300,17 +313,13 @@ def parse_charlwood_house_location_file(start_time: str, end_time: str, location
     f.close()
 
     if '/sum/' in location_of_file:
-
         summary_page = BeautifulSoup(location_page_as_string, 'html.parser')
-
         list_of_links = parse_summary_page(start_time, end_time, summary_page)
 
         return [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]
 
     elif '/full/' in location_of_file:
-
         full_page = BeautifulSoup(location_page_as_string, 'html.parser')
-
         list_of_links = parse_full_page(start_time, end_time, full_page)
 
         return [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]
@@ -319,22 +328,24 @@ def parse_charlwood_house_location_file(start_time: str, end_time: str, location
         return []
 
 
-def parse_charlwood_house_location_page(start_time: str, end_time: str, location_page_link: str):
+def parse_charlwood_house_location_page(start_time: str, end_time: str, location_page_link: str) -> list:
+    """
+    :param start_time: start of period to look for trains in format hhmm
+    :param end_time: end of period to look for trains in format hhmm
+    :param location_page_link: relative path to charlwoodhouse locations page.
+    :return: list of links to charlwoodhouse train pages.
+    """
 
     response = requests.get(location_page_link)
 
     if '/sum/' in location_page_link:
-
         summary_page = BeautifulSoup(response.content, 'html.parser')
-
         list_of_links = parse_summary_page(start_time, end_time, summary_page)
 
         return [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]
 
     elif '/full/' in location_page_link:
-
         full_page = BeautifulSoup(response.content, 'html.parser')
-
         list_of_links = parse_full_page(start_time, end_time, full_page)
 
         return [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]
@@ -347,4 +358,5 @@ def parse_rtt_location_page():
     return None
 
 
-print(parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))
+print(
+    parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))
