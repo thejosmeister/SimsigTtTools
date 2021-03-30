@@ -234,6 +234,22 @@ def convert_train_locations(sim_id: str, initial_locations: list) -> list:
     return [new_locations, potential_entry_point]
 
 
+def refine_headcode(train_info: dict) -> str:
+    if 'max_speed' in train_info:
+        max_speed = train_info['max_speed']
+
+        if max_speed == 75:
+            return f"4{train_info['uid'][:3]}"
+        if max_speed == 60:
+            return f"6{train_info['uid'][:3]}"
+        if max_speed == 45:
+            return f"7{train_info['uid'][:3]}"
+        if max_speed == 35:
+            return f"8{train_info['uid'][:3]}"
+
+    return train_info['uid'][:4]
+
+
 def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     if 'train_id' in kwargs:
         train_file_as_string = ''
@@ -260,7 +276,8 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
 
     # Sort headcode
     if 'headcode' not in train_info:
-        train_info['headcode'] = header_data['ch_id'][:4]
+        train_info['headcode'] = refine_headcode(train_info)
+
 
     # Fetch location data from sched table
     initial_locations = parse_sched_table(train_page.find('table', {'class': 'sched-table'}))
