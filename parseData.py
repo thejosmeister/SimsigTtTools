@@ -189,6 +189,22 @@ def parse_train_header(header_text: str) -> dict:
             'dest_name': match.group(4)}
 
 
+def convert_train_locations(sim_id: str, initial_locations: list) -> list:
+    # get the map of sim locations
+
+    # filter out locations not on sim
+
+    # Entry point logic
+
+    # Convert to readable locations
+
+
+
+
+
+    pass
+
+
 def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     if 'train_id' in kwargs:
         train_file_as_string = ''
@@ -223,6 +239,7 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     # Work out other fields for train from train cat dict
 
     # Filter locations out via sim locations and translate TIPLOC to readable
+    [readable_locations, entry_point] = convert_train_locations(sim_id, initial_locations)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
 

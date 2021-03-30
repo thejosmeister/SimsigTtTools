@@ -195,4 +195,4 @@ def parse_full_xml_tt(file: str, locations_file: str, overwrite_existing: bool):
                 rules_db.add_rule_if_not_present(parse_individual_xml_rule(rule))
 
 
-parse_full_xml_tt('Swindon February 2021/SavedTimetable.xml', '../sim_location_files/swindon_locations.txt', True)
+parse_full_xml_tt('Swindon February 2021/SavedTimetable.xml', '../sim_location_files/swindid.txt', True)
