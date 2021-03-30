@@ -351,10 +351,10 @@ def parse_full_page(start_time: str, end_time: str, full_page) -> list:
     for row in locations_table.find_all('tr'):
         fields = row.find_all('td')
         if len(fields) > 0:
-            formatted_times_field = fields[1].get_text().replace('&half', '.5').replace('\n', '')
+            formatted_times_field = fields[7].get_text().replace('&half', '.5').replace('\n', '')
             time_match_obj = re.match('.*(\\d{2}:\\d{2}(?:\\.5)?)', formatted_times_field)
             list_of_times.append(
-                [float(time_match_obj.group(1).replace(':', '')), fields[2].find('a')['href']])
+                [float(time_match_obj.group(1).replace(':', '')), fields[0].find('a')['href']])
 
     start_time_num = float(start_time)
     end_time_num = float(end_time)

@@ -71,3 +71,7 @@ Directories present for spec/templates:
 
 
 
+
+
+Categories Research:
+    AccelBrakeIndex: 0 - 4 - 7 class, 6 AND 4 class, most long dist pass, 3 commuter, 4 light engine
