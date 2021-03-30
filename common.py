@@ -20,7 +20,7 @@ def create_location_map_from_file(sim_id: str) -> list:
     entry_points = {}
     is_entry_points = False
     is_locations = False
-    f = open(file_location, "r")
+    f = open(f'location_maps/{sim_id}.txt', "r")
     for file_line in f:
         if 'Entry Points' in file_line:
             is_entry_points = True

@@ -5,6 +5,7 @@ parsing them and creating Json TTs to put into a DB. This file will pass back a 
 import requests
 from bs4 import BeautifulSoup
 import re
+import common
 
 
 def parse_location_times(times_string: str) -> dict:
@@ -43,7 +44,8 @@ def parse_allowances(allow_string: str) -> dict:
 def parse_sched_table(table) -> list:
     """
     :param table: BeautifulSoup instance of the sched-table
-    :return: list of locations for the train to then tidy up with futher logic.
+    :return: list of locations for the train to then tidy up with futher logic. Example location keys
+     { 'Location', 'dep', 'arr', 'path', 'line', 'plat', 'pth allow', .. , 'Activities' }
     """
     n_columns = 0
     n_rows = 0
@@ -190,19 +192,46 @@ def parse_train_header(header_text: str) -> dict:
 
 
 def convert_train_locations(sim_id: str, initial_locations: list) -> list:
+    """
+    :param sim_id: temporarily provided, will be locations and entry point map.
+    :param initial_locations: the list of locations scraped from source.
+    :return: [ readable list of locations on sim, the potential entry point for the train ]
+    """
+    # TODO move map creation out to main file so we are not doing this every time.
     # get the map of sim locations
+    [entry_points, locations_map] = common.create_location_map_from_file(sim_id)
 
-    # filter out locations not on sim
+    # create list of entry point names
+    list_of_entry_points = []
+    for lis in entry_points.values():
+        for elt in lis:
+            list_of_entry_points.append(elt)
 
-    # Entry point logic
+    # for each location check if potential entry point then check if in locations (both sides)
+    potential_entry_point = None
+    new_locations = []
+    for location in initial_locations:
 
-    # Convert to readable locations
+        if location['Location'] in list_of_entry_points and potential_entry_point is None:
+            for entry_point in entry_points.keys():
+                if location['Location'] in entry_points[entry_point]:
+                    potential_entry_point = entry_point
 
+        # check l keys
+        if location['Location'] in locations_map:
+            location['location'] = locations_map[location.pop('Location')][0]
+            new_locations.append(location)
+            continue
 
+        # check l values
+        for location_name in locations_map.keys():
+            if location['Location'] in locations_map[location_name]:
+                location['location'] = locations_map[location_name][0]
+                location.pop('Location')
+                new_locations.append(location)
+                continue
 
-
-
-    pass
+    return [new_locations, potential_entry_point]
 
 
 def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
@@ -239,14 +268,17 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     # Work out other fields for train from train cat dict
 
     # Filter locations out via sim locations and translate TIPLOC to readable
-    [readable_locations, entry_point] = convert_train_locations(sim_id, initial_locations)
+    [readable_locations, potential_entry_point] = convert_train_locations(sim_id, initial_locations)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
 
-    print(initial_locations)
+    for l in readable_locations:
+        print(l)
+    print(potential_entry_point)
     print(header_data)
     print(train_info)
 
+# parse_charlwood_train('newport', None, train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/20995225/30/03/21' )
 
 # Part of the file for parsing charlwoodhouse location pages.
 
@@ -375,5 +407,4 @@ def parse_rtt_location_page():
     return None
 
 
-print(
-    parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))
+# print(parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))

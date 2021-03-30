@@ -1,20 +1,20 @@
 Entry Points: 
-EALXNJTC:Alexandra Dock Jn. T.C.
+EALXNJTC:Alexandra Dock Jn. T.C.,ALXNJTC
 ELWERXSGE:Llanwern Exchange Sdgs East
-EPATCHWY:Patchway,Patchway [PWY]
-EALXNJTCD:Alexandra Dock Jn. T.C. Down
-EEUSKBDP:East Usk Branch
-ENWPRTAB:Newport Docks
-EMSHFILD:Marshfield
-EAWRE:Awre
-ELWERXSG:Llanwern Exchange Sdgs
-EPANTEG:Panteg
-EEUSKJNYD:East Usk Jn. N. Y.
-ELTTLMLJ:Little Mill Jn
-EMAINCE:Maindee Depot Isu (Ce)
-EMSHFILDR:Marshfield
-EEUSKJNY:East Usk Jn. N. Y.
-EMACHENQ:Machen Quarry
+EPATCHWY:Patchway,Patchway [PWY],PATCHWY
+EALXNJTCD:Alexandra Dock Jn. T.C. Down,ALXNJTCD
+EEUSKBDP:East Usk Branch,USKBDP
+ENWPRTAB:Newport Docks.NWPRTAB
+EMSHFILD:Marshfield,MSHFILD
+EAWRE:Awre,AWRE
+ELWERXSG:Llanwern Exchange Sdgs,LWERXSG
+EPANTEG:Panteg,PANTEG
+EEUSKJNYD:East Usk Jn. N. Y.,EUSKJNYD
+ELTTLMLJ:Little Mill Jn,LTTLMLJ
+EMAINCE:Maindee Depot Isu (Ce),MAINCE
+EMSHFILDR:Marshfield,MSHFILDR
+EEUSKJNY:East Usk Jn. N. Y.,EUSKJNY
+EMACHENQ:Machen Quarry,MACHENQ
 Locations: 
 EBWVPWY:Ebbw Vale Parkway,Ebbw Vale Parkway [EBV]
 LTTLMLJ:Little Mill Jn
