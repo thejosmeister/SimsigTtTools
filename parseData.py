@@ -224,8 +224,7 @@ def info_passes_field(field_name: str, field_criteria: dict, train_info: dict):
     return re.fullmatch(field_criteria['match'], value_in_info.strip()) is not None
 
 
-def match_category(train_info: dict, categories_map: dict) -> list :
-
+def match_category(train_info: dict, categories_map: dict) -> list:
     for category in categories_map.keys():
         criteria = categories_map[category]['criteria']
 
@@ -253,7 +252,8 @@ def complete_train_info(sim_id: str, train_info: dict) -> dict:
 
     out = {}
     # stick in values we already know
-    for prop in ['headcode', 'uid', 'is_freight', 'origin_name', 'origin_time', 'destination_name', 'operator_code']:
+    for prop in ['headcode', 'uid', 'is_freight', 'origin_name', 'origin_time', 'destination_name', 'operator_code',
+                 'destination_time']:
         out[prop] = train_info[prop]
 
     category_name, matched_category = match_category(train_info, categories_map)
@@ -351,9 +351,13 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     if 'headcode' not in train_info:
         train_info['headcode'] = refine_headcode(train_info)
 
-
     # Fetch location data from sched table
     initial_locations = parse_sched_table(train_page.find('table', {'class': 'sched-table'}))
+
+    if 'arr' in initial_locations[-1]:
+        train_info['destination_time'] = initial_locations[-1]['arr']
+    else:
+        train_info['destination_time'] = initial_locations[-1]['dep']
 
     # Work out other fields for train from train cat dict
     train_info = complete_train_info(sim_id, train_info)
@@ -363,14 +367,16 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
 
-
     for l in readable_locations:
         print(l)
     print(potential_entry_point)
     print(header_data)
     print(train_info)
 
-parse_charlwood_train('newport', None, train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/22398631/31/03/21' )
+
+parse_charlwood_train('newport', None,
+                      train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/23593273/31/03/21')
+
 
 # Part of the file for parsing charlwoodhouse location pages.
 
@@ -497,6 +503,5 @@ def parse_charlwood_house_location_page(start_time: str, end_time: str, location
 
 def parse_rtt_location_page():
     return None
-
 
 # print(parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))
