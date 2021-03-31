@@ -72,29 +72,39 @@ def create_categories_map_from_yaml(categories_yaml_location: str) -> dict:
     return category_data
 
 
-def find_tiploc_from_readable_location(readable_location: str, locations_map: dict) -> str:
+def find_tiploc_for_location(location_name: str, locations_map: dict) -> str:
     """
-    :param readable_location: readable version of a location.
+    :param location_name: readable version of a location (can also be tiploc).
     :param locations_map: the locations map to find tiploc from.
     :return: the tiploc version if present, if not then empty string.
     """
 
     for tiploc in locations_map:
-        if readable_location in locations_map[tiploc]:
+        if location_name in locations_map[tiploc]:
             return tiploc
+
+    # could have already passed in tiploc
+    if location_name in locations_map:
+        return location_name
 
     return ''
 
 
-def find_readable_from_tiploc_location(tiploc_location: str, locations_map: dict) -> str:
+def find_readable_location(location_name: str, locations_map: dict) -> str:
     """
-    :param tiploc_location: tiploc version of a location.
+    :param location_name: a readable or tiploc version of a location.
     :param locations_map: the locations map to find readable version from.
     :return: the first readable version if present, if not then empty string.
     """
 
-    if tiploc_location in locations_map:
-        return locations_map[tiploc_location][0]
+    # if we pass in tiploc
+    if location_name in locations_map:
+        return locations_map[location_name][0]
+
+    # if we pass in same or another readable location
+    for tiploc in locations_map:
+        if location_name in locations_map[tiploc]:
+            return locations_map[tiploc][0]
 
     return ''
 
