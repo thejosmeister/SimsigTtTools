@@ -4,59 +4,76 @@
   criteria:
     # This term will be split by **, the last term is always regex, the terms before exclude certain values.
     # e.g. the expression below will match a number that is not 43, 68 or 802
-    Timing_Load: '!43**!68**!802**^\\d+$'
+    Timing_Load: '!43**!68**!802**^\d+$'
     # Regex that only matches D
     Power_type: '^D$'
     Train_Status: 'Freight'
-  ID: 'A0000001'
-  AccelBrakeIndex: '1'
-  IsFreight: '-1'
-  CanUseGoodsLines: '-1'
-  MaxSpeed: '60'
-  TrainLength: '300'
-  SpeedClass: '512'
-  PowerToWeightCategory: '0'
-  DwellTimes:
-    Join: '240'
-    Divide: '240'
-    CrewChange: '120'
-  Electrification: 'D'
+  id: 'A0000001'
+  accel_brake_index: '1'
+  is_freight: '-1'
+  can_use_goods_lines: '-1'
+  max_speed: '60'
+  train_length: '300'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
 
 'standard electric freight':
   criteria:
     # Same as diesel freight
-    Timing_Load: '!43**!68**!802**^\\d+$'
+    Timing_Load: '!43**!68**!802**^\d+$'
     # Regex that only matches E
     Power_type: '^E$'
     Train_Status: 'Freight'
-  ID: 'A0000002'
-  AccelBrakeIndex: '1'
-  IsFreight: '-1'
-  CanUseGoodsLines: '-1'
-  MaxSpeed: '60'
-  TrainLength: '300'
-  SpeedClass: '512'
-  PowerToWeightCategory: '0'
-  DwellTimes:
-    Join: '240'
-    Divide: '240'
-    CrewChange: '120'
-  Electrification: 'D'
+  id: 'A0000002'
+  accel_brake_index: '1'
+  is_freight: '-1'
+  can_use_goods_lines: '-1'
+  max_speed: '60'
+  train_length: '300'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'E'
 
 'Class 158':
   criteria:
     # Standard class 158 timing load
     Timing_Load: '^E$'
-  ID: 'A0000003'
-  AccelBrakeIndex: '2'
-  IsFreight: '0'
-  CanUseGoodsLines: '0'
-  MaxSpeed: '90'
-  TrainLength: '47'
-  SpeedClass: '16'
-  PowerToWeightCategory: '0'
-  DwellTimes:
-    Join: '240'
-    Divide: '240'
-    CrewChange: '120'
-  Electrification: 'D'
+  id: 'A0000003'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '47'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'HST - 2 + 4 Castle':
+  criteria:
+    Timing_Load: '^43$'
+  id: 'A0000004'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '47'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'

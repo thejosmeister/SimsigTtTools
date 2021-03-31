@@ -2,6 +2,8 @@
 A file containing common functions used in multiple files.
 """
 
+import yaml
+
 def create_location_map_from_file(sim_id: str) -> list:
     """
     Takes a file containing a map of location codes to the various names you want these codes to match to.
@@ -13,7 +15,7 @@ def create_location_map_from_file(sim_id: str) -> list:
 
     Will become {'locations': {'SDONLY':['Swindon Loco Yard'], 'STRUMLC': 'St. Mary's Level Crossing'}
 
-    :param file_location: File with locations map in format shown above.
+    :param sim_id: Used to fetch file with locations map in format shown above.
     :return: List of 2 maps, Entry Points and Locations, with location code as the key.
     """
     tiploc_locations = {}
@@ -40,3 +42,31 @@ def create_location_map_from_file(sim_id: str) -> list:
             tiploc_locations[code] = names
 
     return [entry_points, tiploc_locations]
+
+
+def create_categories_map_from_yaml(categories_yaml_location: str) -> dict:
+    """
+    :param categories_yaml_location: yaml file with categories specified
+    :return: a parsed instance of the yaml file with some of the criteria stuff refined.
+    """
+    # TODO incorporate default cat map into any custom one in case?
+
+    with open(categories_yaml_location, 'r') as stream:
+        category_data = yaml.safe_load(stream)
+
+    # make criteria a bit more usable
+    for cat in category_data.keys():
+        for criteria in category_data[cat]['criteria'].keys():
+            parts = category_data[cat]['criteria'][criteria].split('**')
+            if len(parts) == 1:
+                # just regex
+                category_data[cat]['criteria'][criteria] = {'match' : parts[0]}
+                continue
+
+            # We have some terms before regex
+            category_data[cat]['criteria'][criteria] = {'match': parts[-1], 'not': []}
+            for term in parts[:-1]:
+                if term[0] == '!':
+                    category_data[cat]['criteria'][criteria]['not'].append(term[1:])
+
+    return category_data

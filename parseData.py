@@ -174,6 +174,11 @@ def parse_train_table(train_info_table) -> dict:
                 out['max_speed'] = int(row_1)
 
         if row_name == 'Train Status':
+            if 'passenger' in row_2.lower():
+                out['is_freight'] = '0'
+            else:
+                out['is_freight'] = '-1'
+                out['can_use_goods_lines'] = '-1'
             if row_1 not in ['', ' ']:
                 out['Train_Status'] = row_2
 
@@ -188,7 +193,7 @@ def parse_train_header(header_text: str) -> dict:
     match = re.match('Train (\\d+) \\(.+\\) (?:[0-9][A-Z][0-9]{2})? (\\d{2}:\\d{2}) (.+) to (.+)', header_text)
 
     return {'ch_id': match.group(1), 'origin_time': match.group(2).replace(':', ''), 'origin_name': match.group(3),
-            'dest_name': match.group(4)}
+            'destination_name': match.group(4)}
 
 
 def refine_headcode(train_info: dict) -> str:
@@ -207,25 +212,68 @@ def refine_headcode(train_info: dict) -> str:
     return train_info['uid'][:4]
 
 
+def info_passes_field(field_name: str, field_criteria: dict, train_info: dict):
+    if field_name not in train_info:
+        return False
+
+    value_in_info = train_info[field_name]
+
+    if 'not' in field_criteria and len(list(filter(lambda x: x != value_in_info, field_criteria['not']))) > 0:
+        return False
+
+    return re.fullmatch(field_criteria['match'], value_in_info.strip()) is not None
+
+
+def match_category(train_info: dict, categories_map: dict) -> list :
+
+    for category in categories_map.keys():
+        criteria = categories_map[category]['criteria']
+
+        cat_match = True
+
+        for field in criteria.keys():
+            if info_passes_field(str(field), criteria[field], train_info) is False:
+                cat_match = False
+                break
+
+        if cat_match is True:
+            return [str(category), categories_map[category]]
+
+    return ['standard diesel freight', categories_map['standard diesel freight']]
+
+
 def complete_train_info(sim_id: str, train_info: dict) -> dict:
     """
     :param sim_id: temporarily provided, will be categories map.
     :param train_info: the train information scraped from source.
     :return: complete train info ready to become basis of train.
     """
+    # TODO make this an instance variable to pass in
+    categories_map = common.create_categories_map_from_yaml('templates/train_categories/default_categories_map.yaml')
 
-    # params already present:
-    # headcode, uid, max_speed?, origin_name, origin_time, destination_name, operator_code
+    out = {}
+    # stick in values we already know
+    for prop in ['headcode', 'uid', 'is_freight', 'origin_name', 'origin_time', 'destination_name', 'operator_code']:
+        out[prop] = train_info[prop]
 
-    # Params to determine:
+    category_name, matched_category = match_category(train_info, categories_map)
 
-    # category - this should determine the remaining stuff except:
-    # start_traction
+    out['category'] = category_name
 
+    for prop in matched_category.keys():
+        if 'criteria' in str(prop).lower():
+            continue
+        if str(prop) in train_info:
+            out[str(prop)] = train_info[str(prop)]
+        else:
+            out[str(prop)] = matched_category[prop]
 
+    # except:
+    # start_traction, description
+    out['start_traction'] = out['electrification']
+    out['description'] = '$template'
 
-
-    pass
+    return out
 
 
 def convert_train_locations(sim_id: str, initial_locations: list) -> list:
@@ -295,6 +343,10 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     # Fetch train info from train table
     train_info = parse_train_table(train_page.find('table', {'class': 'train-table'}))
 
+    train_info['origin_name'] = header_data['origin_name']
+    train_info['origin_time'] = header_data['origin_time']
+    train_info['destination_name'] = header_data['destination_name']
+
     # Sort headcode
     if 'headcode' not in train_info:
         train_info['headcode'] = refine_headcode(train_info)
@@ -311,13 +363,14 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
 
+
     for l in readable_locations:
         print(l)
     print(potential_entry_point)
     print(header_data)
     print(train_info)
 
-# parse_charlwood_train('newport', None, train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/20995225/30/03/21' )
+parse_charlwood_train('newport', None, train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/22398631/31/03/21' )
 
 # Part of the file for parsing charlwoodhouse location pages.
 
