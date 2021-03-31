@@ -70,3 +70,31 @@ def create_categories_map_from_yaml(categories_yaml_location: str) -> dict:
                     category_data[cat]['criteria'][criteria]['not'].append(term[1:])
 
     return category_data
+
+
+def find_tiploc_from_readable_location(readable_location: str, locations_map: dict) -> str:
+    """
+    :param readable_location: readable version of a location.
+    :param locations_map: the locations map to find tiploc from.
+    :return: the tiploc version if present, if not then empty string.
+    """
+
+    for tiploc in locations_map:
+        if readable_location in locations_map[tiploc]:
+            return tiploc
+
+    return ''
+
+
+def find_readable_from_tiploc_location(tiploc_location: str, locations_map: dict) -> str:
+    """
+    :param tiploc_location: tiploc version of a location.
+    :param locations_map: the locations map to find readable version from.
+    :return: the first readable version if present, if not then empty string.
+    """
+
+    if tiploc_location in locations_map:
+        return locations_map[tiploc_location][0]
+
+    return ''
+

@@ -303,18 +303,20 @@ def convert_train_locations(sim_id: str, initial_locations: list) -> list:
                     potential_entry_point = entry_point
 
         # check l keys
-        if location['Location'] in locations_map:
-            location['location'] = locations_map[location.pop('Location')][0]
+        loc = common.find_readable_from_tiploc_location(location['Location'], locations_map)
+        if loc is not '':
+            location['location'] = loc
             new_locations.append(location)
+            location.pop('Location')
             continue
 
         # check l values
-        for location_name in locations_map.keys():
-            if location['Location'] in locations_map[location_name]:
-                location['location'] = locations_map[location_name][0]
-                location.pop('Location')
-                new_locations.append(location)
-                continue
+        loc = common.find_tiploc_from_readable_location(location['Location'], locations_map)
+        if loc is not '':
+            location['location'] = locations_map[loc]
+            location.pop('Location')
+            new_locations.append(location)
+            continue
 
     return [new_locations, potential_entry_point]
 
