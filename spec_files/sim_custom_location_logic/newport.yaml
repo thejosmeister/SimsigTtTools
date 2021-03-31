@@ -1,4 +1,17 @@
 # Entry point rules
 entry_point_rules:
-  EMSHFILD:
-    locations_before:
+  DUMMY:
+    list_to_delete_if_before: ['a location', 'another_location']
+
+location_rules:
+  'dummy location':
+    if_x_y_z_then_delete_y:
+      x: 'first'
+      y: 'second'
+      z: 'third'
+
+    if_x_y_concurrent:
+      x: 'first'
+      y: 'second'
+      x_path: 'ML'
+      y_path: 'ML'
