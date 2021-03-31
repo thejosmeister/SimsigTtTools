@@ -1,4 +1,4 @@
 # Entry point rules
 entry_point_rules:
-  - EMSHFILD:
-      locations_before:
+  EMSHFILD:
+    locations_before:

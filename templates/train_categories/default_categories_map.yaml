@@ -1,0 +1,62 @@
+# Each category will be indexed by their description
+'standard diesel freight':
+  # The criteria will determine what characteristcs are needed for this category.
+  criteria:
+    # This term will be split by **, the last term is always regex, the terms before exclude certain values.
+    # e.g. the expression below will match a number that is not 43, 68 or 802
+    Timing_Load: '!43**!68**!802**^\\d+$'
+    # Regex that only matches D
+    Power_type: '^D$'
+    Train_Status: 'Freight'
+  ID: 'A0000001'
+  AccelBrakeIndex: '1'
+  IsFreight: '-1'
+  CanUseGoodsLines: '-1'
+  MaxSpeed: '60'
+  TrainLength: '300'
+  SpeedClass: '512'
+  PowerToWeightCategory: '0'
+  DwellTimes:
+    Join: '240'
+    Divide: '240'
+    CrewChange: '120'
+  Electrification: 'D'
+
+'standard electric freight':
+  criteria:
+    # Same as diesel freight
+    Timing_Load: '!43**!68**!802**^\\d+$'
+    # Regex that only matches E
+    Power_type: '^E$'
+    Train_Status: 'Freight'
+  ID: 'A0000002'
+  AccelBrakeIndex: '1'
+  IsFreight: '-1'
+  CanUseGoodsLines: '-1'
+  MaxSpeed: '60'
+  TrainLength: '300'
+  SpeedClass: '512'
+  PowerToWeightCategory: '0'
+  DwellTimes:
+    Join: '240'
+    Divide: '240'
+    CrewChange: '120'
+  Electrification: 'D'
+
+'Class 158':
+  criteria:
+    # Standard class 158 timing load
+    Timing_Load: '^E$'
+  ID: 'A0000003'
+  AccelBrakeIndex: '2'
+  IsFreight: '0'
+  CanUseGoodsLines: '0'
+  MaxSpeed: '90'
+  TrainLength: '47'
+  SpeedClass: '16'
+  PowerToWeightCategory: '0'
+  DwellTimes:
+    Join: '240'
+    Divide: '240'
+    CrewChange: '120'
+  Electrification: 'D'

@@ -159,15 +159,15 @@ def parse_train_table(train_info_table) -> dict:
 
         if row_name == 'Train category':
             if row_1 not in ['', ' '] or row_2 not in ['', ' ']:
-                out['Train category'] = row_1 + ' ' + row_2
+                out['Train_category'] = row_1 + ' ' + row_2
 
         if row_name == 'Power type':
             if row_1 not in ['', ' ']:
-                out['Power type'] = row_1
+                out['Power_type'] = row_1
 
         if row_name == 'Timing Load':
             if row_1 not in ['', ' '] or row_2 not in ['', ' ']:
-                out['Timing Load'] = row_1 + ' ' + row_2
+                out['Timing_Load'] = row_1 + ' ' + row_2
 
         if row_name == 'Speed':
             if row_1 not in ['', ' ']:
@@ -175,7 +175,7 @@ def parse_train_table(train_info_table) -> dict:
 
         if row_name == 'Train Status':
             if row_1 not in ['', ' ']:
-                out['Train Status'] = row_2
+                out['Train_Status'] = row_2
 
     return out
 
@@ -189,6 +189,43 @@ def parse_train_header(header_text: str) -> dict:
 
     return {'ch_id': match.group(1), 'origin_time': match.group(2).replace(':', ''), 'origin_name': match.group(3),
             'dest_name': match.group(4)}
+
+
+def refine_headcode(train_info: dict) -> str:
+    if 'max_speed' in train_info:
+        max_speed = train_info['max_speed']
+
+        if max_speed == 75:
+            return f"4{train_info['uid'][:3]}"
+        if max_speed == 60:
+            return f"6{train_info['uid'][:3]}"
+        if max_speed == 45:
+            return f"7{train_info['uid'][:3]}"
+        if max_speed == 35:
+            return f"8{train_info['uid'][:3]}"
+
+    return train_info['uid'][:4]
+
+
+def complete_train_info(sim_id: str, train_info: dict) -> dict:
+    """
+    :param sim_id: temporarily provided, will be categories map.
+    :param train_info: the train information scraped from source.
+    :return: complete train info ready to become basis of train.
+    """
+
+    # params already present:
+    # headcode, uid, max_speed?, origin_name, origin_time, destination_name, operator_code
+
+    # Params to determine:
+
+    # category - this should determine the remaining stuff except:
+    # start_traction
+
+
+
+
+    pass
 
 
 def convert_train_locations(sim_id: str, initial_locations: list) -> list:
@@ -234,22 +271,6 @@ def convert_train_locations(sim_id: str, initial_locations: list) -> list:
     return [new_locations, potential_entry_point]
 
 
-def refine_headcode(train_info: dict) -> str:
-    if 'max_speed' in train_info:
-        max_speed = train_info['max_speed']
-
-        if max_speed == 75:
-            return f"4{train_info['uid'][:3]}"
-        if max_speed == 60:
-            return f"6{train_info['uid'][:3]}"
-        if max_speed == 45:
-            return f"7{train_info['uid'][:3]}"
-        if max_speed == 35:
-            return f"8{train_info['uid'][:3]}"
-
-    return train_info['uid'][:4]
-
-
 def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     if 'train_id' in kwargs:
         train_file_as_string = ''
@@ -283,6 +304,7 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     initial_locations = parse_sched_table(train_page.find('table', {'class': 'sched-table'}))
 
     # Work out other fields for train from train cat dict
+    train_info = complete_train_info(sim_id, train_info)
 
     # Filter locations out via sim locations and translate TIPLOC to readable
     [readable_locations, potential_entry_point] = convert_train_locations(sim_id, initial_locations)
