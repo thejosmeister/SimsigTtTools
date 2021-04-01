@@ -13,8 +13,20 @@ We can parse an XML TT to Json data in the db as well.
 Beyond this there is/will be various functions to edit the TT data in a more flexible way than via the in sim TT editor. 
 Note, in sim editor functionality can still be used by writing to XML, making changes in sim and then parsing again. 
 
+### Requirements 
+- Python 3 - definitely works with v3.7 or higher, probably works for earlier versions
+    - With python packages:
+        - Tinydb
+        - ...
+- some basic coding knowledge - will need to run functions with your own arguments i.e. calling ParseXmlTt(<specified args>)
+- understanding of what yaml is - just the syntac used for spec files
+- source data from real time trains or charlwoodhouse (other sources may be integrated in future)
+
 ## Main usages
 Will provide an explanation/guide as to the main usages of the code.
+There are example files in the repo for each of the spec file types. These will hopefully give a good idea of what is expected to be provided in them.
+
+Warning: there is no validation of what you provide to the script so it can be quite likely that the script will seem to run ok only for the .WTT file to not to work in the sim.
 
 ### Take data from source and create .WTT file
 You will need:
