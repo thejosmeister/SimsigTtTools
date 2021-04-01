@@ -17,6 +17,23 @@ Note, in sim editor functionality can still be used by writing to XML, making ch
 Will provide an explanation/guide as to the main usages of the code.
 
 ### Take data from source and create .WTT file
+You will need:
+- Source to TT spec file
+- Sim locations map
+- Train categories spec file
+- Custom location logic spec file
+
+Actions:
+Run xxx in yyy.py with args ( tt name, sim id, spec location )
+
+Thus will produce a file xxx.WTT that will be a Simsig TT file.
+
+What happens:
+Script will look for trains in the specified time window for all specified source locations. I.e. all trains at Newport from 0400 to 1800.
+All trains will be converted to a Json representation of what they end up as in a Simsig TT. These Json trains are then stored in the Tinydb instance for the TT.
+Alongside this, the other elements of the TT specified in the spec file (name, description, version) will also be stored in the Tinydb.
+
+The script then converts all information in Tinydb instances to a .WTT file which is effectively a zip file containing two XML files with the TT data.
 
 ### Parse .WTT file into Json DB
 
