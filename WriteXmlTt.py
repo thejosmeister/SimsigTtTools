@@ -5,6 +5,7 @@ from dbClient import *
 import os
 import zipfile
 import common
+from xml.sax.saxutils import escape
 
 
 # Will sub in TIPLOC codes for locations in the sim
@@ -97,10 +98,10 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
     is_freight = json_tt['is_freight']
     train_length = json_tt['train_length']
     electrification = json_tt['electrification']
-    origin_name = json_tt['origin_name']
-    destination_name = json_tt['destination_name']
+    origin_name = escape(json_tt['origin_name'])
+    destination_name = escape(json_tt['destination_name'])
     origin_time = str(common.convert_time_to_secs(json_tt['origin_time']))
-    description = json_tt['description']
+    description = escape(json_tt['description'])
     destination_time = str(common.convert_time_to_secs(json_tt['destination_time']))
     operator_code = json_tt['operator_code']
     start_traction = json_tt['start_traction']
@@ -238,6 +239,44 @@ def build_xml_list_of_rules(tt_name: str, locations_map: dict):
     return xml_rules
 
 
+def convert_categories_to_xml(categories_map: dict) -> str:
+    out = '<TrainCategories>'
+    for category_desc in categories_map:
+        out += f'<TrainCategory ID="{categories_map[category_desc]["id"]}">'
+        out += f'<Description>{category_desc}</Description>'
+        if 'accel_brake_index' in categories_map[category_desc]:
+            out += f'<AccelBrakeIndex>{categories_map[category_desc]["accel_brake_index"]}</AccelBrakeIndex>'
+        if 'is_freight' in categories_map[category_desc]:
+            out += f'<IsFreight>{categories_map[category_desc]["is_freight"]}</IsFreight>'
+        if 'can_use_goods_lines' in categories_map[category_desc]:
+            out += f'<CanUseGoodsLines>{categories_map[category_desc]["can_use_goods_lines"]}</CanUseGoodsLines>'
+        if 'max_speed' in categories_map[category_desc]:
+            out += f'<MaxSpeed>{categories_map[category_desc]["max_speed"]}</MaxSpeed>'
+        if 'train_length' in categories_map[category_desc]:
+            out += f'<TrainLength>{categories_map[category_desc]["train_length"]}</TrainLength>'
+        if 'speed_class' in categories_map[category_desc]:
+            out += f'<SpeedClass>{categories_map[category_desc]["speed_class"]}</SpeedClass>'
+        if 'power_to_weight_category' in categories_map[category_desc]:
+            out += f'<PowerToWeightCategory>{categories_map[category_desc]["power_to_weight_category"]}</PowerToWeightCategory>'
+        if 'electrification' in categories_map[category_desc]:
+            out += f'<Electrification>{categories_map[category_desc]["electrification"]}</Electrification>'
+        if 'dwell_times' in categories_map[category_desc]:
+            out += '<DwellTimes>'
+            if 'join' in categories_map[category_desc]['dwell_times']:
+                out += f'<Join>{categories_map[category_desc]["dwell_times"]["join"]}</Join>'
+            if 'divide' in categories_map[category_desc]['dwell_times']:
+                out += f'<Divide>{categories_map[category_desc]["dwell_times"]["divide"]}</Divide>'
+            if 'crew_change' in categories_map[category_desc]['dwell_times']:
+                out += f'<CrewChange>{categories_map[category_desc]["dwell_times"]["crew_change"]}</CrewChange>'
+            out += '</DwellTimes>'
+        else:
+            out += '<DwellTimes/>'
+        out += '</TrainCategory>'
+    out += '</TrainCategories>'
+
+    return out
+
+
 def Build_Full_Xml_Tt(tt_name: str, output_filename: str, sim_id: str, use_default_category: bool):
     header_db = MainHeaderDb(tt_name)
     header = build_xml_header(header_db)
@@ -251,7 +290,7 @@ def Build_Full_Xml_Tt(tt_name: str, output_filename: str, sim_id: str, use_defau
 
     with open(output_filename + '/SavedTimetable.xml', 'w') as f_to_write:
         print(header, file=f_to_write)
-        print(categories, file=f_to_write)
+        print(convert_categories_to_xml(categories), file=f_to_write)
 
         print('<Timetables>', file=f_to_write)
 

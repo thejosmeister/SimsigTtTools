@@ -210,7 +210,7 @@ def parse_train_categories_to_map(xml_tt_root) -> dict:
         if category.find('PowerToWeightCategory') is not None:
             categories_dict[description]['power_to_weight_category'] = category.find('PowerToWeightCategory').text
         if category.find('Electrification') is not None:
-            categories_dict[description]['Electrification'] = category.find('Electrification').text
+            categories_dict[description]['electrification'] = category.find('Electrification').text
         if category.find('DwellTimes') is not None:
             dwell_times = category.find('DwellTimes')
             dwell_times_dict = {}
