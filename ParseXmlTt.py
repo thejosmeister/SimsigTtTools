@@ -1,7 +1,11 @@
 import xml.etree.ElementTree as ET
-from translateTimesAndLocations import convert_sec_to_time
 from dbClient import *
-from tiplocDictCreator import create_tiploc_dict, pull_train_categories_out_of_xml_file_by_id
+import common
+
+DEFAULT_CATEGORY = {'id': 'A0000001', 'accel_brake_index': '1',
+                    'is_freight': '-1', 'can_use_goods_lines': '-1', 'max_speed': '60', 'train_length': '300',
+                    'speed_class': '512', 'power_to_weight_category': '0',
+                    'dwell_times': {'join': '240', 'divide': '240', 'crew_change': '120'}, 'electrification': 'D'}
 
 
 def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict, first_loc_is_stop: bool) -> list:
@@ -13,12 +17,12 @@ def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict, first_loc_is_stop: boo
         location = {}
         location['location'] = tiploc_dict[trip.find('Location').text][0]
         if trip.find('DepPassTime') is not None:
-            location['dep'] = convert_sec_to_time(int(trip.find('DepPassTime').text))
+            location['dep'] = common.convert_sec_to_time(int(trip.find('DepPassTime').text))
             if trip.find('ArrTime') is None and first_loc_is_stop is True:
                 first_loc_is_stop = False
                 location['isOrigin'] = 'yes'
         if trip.find('ArrTime') is not None:
-            location['arr'] = convert_sec_to_time(int(trip.find('ArrTime').text))
+            location['arr'] = common.convert_sec_to_time(int(trip.find('ArrTime').text))
         if trip.find('Platform') is not None:
             location['plat'] = trip.find('Platform').text
         if trip.find('Line') is not None:
@@ -54,8 +58,13 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
     else:
         json_tt['tt_template'] = 'templates/timetables/defaultTimetableWithEntryPoint.txt'
 
-    cat_id = xml_tt.find('Category').text
-    json_tt['category'] = categories_dict[cat_id]['Description']
+    if xml_tt.find('Category') is not None:
+        cat_id = xml_tt.find('Category').text
+    else:
+        # Use default i
+        cat_id = 'A0000001'
+
+    json_tt['category'] = categories_dict[cat_id]['description']
     json_tt['uid'] = xml_tt.find('UID').text
     json_tt['headcode'] = xml_tt.find('ID').text
     json_tt['max_speed'] = xml_tt.find('MaxSpeed').text
@@ -67,35 +76,47 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
     if xml_tt.find('AccelBrakeIndex') is not None:
         json_tt['accel_brake_index'] = xml_tt.find('AccelBrakeIndex').text
     else:
-        json_tt['accel_brake_index'] = categories_dict[cat_id]['AccelBrakeIndex']
+        json_tt['accel_brake_index'] = categories_dict[cat_id]['accel_brake_index']
+
     if xml_tt.find('IsFreight') is not None:
         json_tt['is_freight'] = xml_tt.find('IsFreight').text
     else:
-        json_tt['is_freight'] = categories_dict[cat_id]['IsFreight']
+        json_tt['is_freight'] = categories_dict[cat_id]['is_freight']
+
+    if xml_tt.find('CanUseGoodsLines') is not None:
+        json_tt['can_use_goods_lines'] = xml_tt.find('CanUseGoodsLines').text
+    elif 'can_use_goods_lines' in categories_dict[cat_id]:
+        json_tt['can_use_goods_lines'] = categories_dict[cat_id]['can_use_goods_lines']
+
     if xml_tt.find('OriginName') is not None:
         json_tt['origin_name'] = xml_tt.find('OriginName').text
     else:
         json_tt['origin_name'] = 'Default'
+
     if xml_tt.find('DestinationName') is not None:
         json_tt['destination_name'] = xml_tt.find('DestinationName').text
     else:
         json_tt['destination_name'] = 'Default'
+
     if xml_tt.find('OriginTime') is not None:
-        json_tt['origin_time'] = convert_sec_to_time(int(xml_tt.find('OriginTime').text))
+        json_tt['origin_time'] = common.convert_sec_to_time(int(xml_tt.find('OriginTime').text))
     else:
         json_tt['origin_time'] = '0000'
+
     if xml_tt.find('DestinationTime') is not None:
-        json_tt['destination_time'] = convert_sec_to_time(int(xml_tt.find('DestinationTime').text))
+        json_tt['destination_time'] = common.convert_sec_to_time(int(xml_tt.find('DestinationTime').text))
     else:
         json_tt['destination_time'] = '0000'
+
     if xml_tt.find('OperatorCode') is not None:
         json_tt['operator_code'] = xml_tt.find('OperatorCode').text
     else:
         json_tt['operator_code'] = 'ZZ'
+
     if xml_tt.find('SpeedClass') is not None:
         json_tt['speed_class'] = xml_tt.find('SpeedClass').text
     else:
-        json_tt['speed_class'] = categories_dict[cat_id]['SpeedClass']
+        json_tt['speed_class'] = categories_dict[cat_id]['speed_class']
 
     # Some actually optional stuff
     if xml_tt.find('EntryPoint') is not None:
@@ -103,7 +124,7 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
     if xml_tt.find('SeedPoint') is not None:
         json_tt['seed_point'] = xml_tt.find('SeedPoint').text
     if xml_tt.find('DepartTime') is not None:
-        json_tt['entry_time'] = convert_sec_to_time(int(xml_tt.find('DepartTime').text))
+        json_tt['entry_time'] = common.convert_sec_to_time(int(xml_tt.find('DepartTime').text))
 
     if xml_tt.find('Join') is not None:
         json_tt['dwell_times'] = {}
@@ -117,10 +138,11 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
 
 
 def parse_individual_xml_rule(rule: ET.Element) -> dict:
-    RULE_NAMES_DICT = {'0': 'AppAfterEnt', '1': 'AppAfterLve', '2': 'AppAfterArr??', '3': 'NotIf', '4': '???',
-                       '5': 'DepAfterEnt', '6': 'DepAfterLve', '7': 'DepAfterJoin', '8': 'DepAfterDiv',
-                       '9': 'DepAfterForm', '10': '	MutExc', '11': 'AppAfterJoin', '12': '	AppAfterDiv',
-                       '13': 'AppAfterForm', '14': 'Alternatives'}
+    RULE_NAMES_DICT = {'0': 'XAppAfterYEnt', '1': 'XAppAfterYLve', '2': 'XAppAfterYArr', '3': 'XNotIfY',
+                       '4': 'XDepAfterYArr',
+                       '5': 'XDepAfterYEnt', '6': 'XDepAfterYLve', '7': 'XDepAfterYJoin', '8': 'XDepAfterYDiv',
+                       '9': 'XDepAfterYForm', '10': 'XYMutExc', '11': 'XAppAfterYJoin', '12': 'XAppAfterYDiv',
+                       '13': 'XAppAfterYForm', '14': 'XYAlternatives'}
     json_rule = {'name': RULE_NAMES_DICT[rule.find('Rule').text],
                  'train_x': rule.find('TrainUID').text,
                  'train_y': rule.find('Train2UID').text}
@@ -134,36 +156,88 @@ def parse_individual_xml_rule(rule: ET.Element) -> dict:
     return json_rule
 
 
-def get_categories_as_string(file: str) -> str:
-    f = open(file, mode='r')
-    train_cats = False
-    train_cat_string = ''
-    for fl in f:
-        if '<TrainCategories>' in fl:
-            train_cat_string += fl.rstrip()
-            train_cats = True
-            continue
-        if '</TrainCategories>' in fl:
-            train_cat_string += fl.rstrip()
-            train_cats = False
-            continue
-        if train_cats is True:
-            train_cat_string += fl.rstrip()
+def validate_categories(cat_root):
+    list_of_descriptions = []
+    descriptions_with_ids = {}
+    errors = []
+    for category in cat_root.findall('TrainCategory'):
+        description = category.find('Description').text
 
-    return train_cat_string
+        if description not in list_of_descriptions:
+            descriptions_with_ids[description] = category.attrib['ID']
+            list_of_descriptions.append(description)
+        else:
+            errors.append(f'{description} used for multiple IDs {category.attrib["ID"]}, {descriptions_with_ids[description]}')
+
+    if len(errors) > 0:
+        raise Exception(' '.join(errors))
 
 
-def parse_full_xml_tt(file: str, locations_file: str, overwrite_existing: bool):
+
+
+def parse_train_categories_to_map(xml_tt_root) -> dict:
+    """
+    Will take an xml excerpt just containing the TrainCategories root from a Simsig TT and give a map of categories
+    with the Description as the key. This relies on the descriptions being unique.
+
+    :param xml_tt_root: Element tree.
+    :return: A map/python dict of categories with the Description as the key.
+    """
+
+    if 'TrainCategories' in xml_tt_root.tag:
+        cat_root = xml_tt_root
+    else:
+        cat_root = xml_tt_root.find('TrainCategories')
+
+    validate_categories(cat_root)
+
+    categories_dict = {'standard diesel freight': DEFAULT_CATEGORY}
+    for category in cat_root.findall('TrainCategory'):
+        description = category.find('Description').text
+        categories_dict[description] = {'id': category.attrib['ID']}
+        if category.find('AccelBrakeIndex') is not None:
+            categories_dict[description]['accel_brake_index'] = category.find('AccelBrakeIndex').text
+        if category.find('IsFreight') is not None:
+            categories_dict[description]['is_freight'] = category.find('IsFreight').text
+        if category.find('CanUseGoodsLines') is not None:
+            categories_dict[description]['can_use_goods_lines'] = category.find('CanUseGoodsLines').text
+        if category.find('MaxSpeed') is not None:
+            categories_dict[description]['max_speed'] = category.find('MaxSpeed').text
+        if category.find('TrainLength') is not None:
+            categories_dict[description]['train_length'] = category.find('TrainLength').text
+        if category.find('SpeedClass') is not None:
+            categories_dict[description]['speed_class'] = category.find('SpeedClass').text
+        if category.find('PowerToWeightCategory') is not None:
+            categories_dict[description]['power_to_weight_category'] = category.find('PowerToWeightCategory').text
+        if category.find('Electrification') is not None:
+            categories_dict[description]['Electrification'] = category.find('Electrification').text
+        if category.find('DwellTimes') is not None:
+            dwell_times = category.find('DwellTimes')
+            dwell_times_dict = {}
+            if dwell_times.find('Join') is not None:
+                dwell_times_dict['join'] = dwell_times.find('Join').text
+            if dwell_times.find('Divide') is not None:
+                dwell_times_dict['divide'] = dwell_times.find('Divide').text
+            if dwell_times.find('CrewChange') is not None:
+                dwell_times_dict['crew_change'] = dwell_times.find('CrewChange').text
+
+            if len(dwell_times_dict) > 0:
+                categories_dict[description]['dwell_times'] = dwell_times_dict
+
+    return categories_dict
+
+
+def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
     tree = ET.parse(file)
     root = tree.getroot()
-    tiploc_dict = create_tiploc_dict(locations_file)[1]
+    locations_map = common.create_location_map_from_file(sim_id)[1]
     tt_header = {'id': root.attrib['ID'],
                  'version': root.attrib['Version'],
                  'name': root.find('Name').text.replace(' ', '_'),
                  'actual_name': root.find('Name').text,
                  'description': root.find('Description').text,
-                 'start_time': convert_sec_to_time(int(root.find('StartTime').text)),
-                 'finish_time': convert_sec_to_time(int(root.find('FinishTime').text)),
+                 'start_time': common.convert_sec_to_time(int(root.find('StartTime').text)),
+                 'finish_time': common.convert_sec_to_time(int(root.find('FinishTime').text)),
                  'v_major': root.find('VMajor').text,
                  'v_minor': root.find('VMinor').text,
                  'v_build': root.find('VBuild').text,
@@ -174,16 +248,18 @@ def parse_full_xml_tt(file: str, locations_file: str, overwrite_existing: bool):
     header_db = MainHeaderDb(tt_header['name'])
 
     header_db.add_header(tt_header)
-    header_db.add_categories_string(get_categories_as_string(file))
 
-    categories_dict = pull_train_categories_out_of_xml_file_by_id(file)
+    categories_map = parse_train_categories_to_map(root)
+    categories_by_id = common.make_id_key_category_map(categories_map)
+    header_db.add_categories_map(categories_map)
+
     list_of_tt_elts = root.find('Timetables').findall('Timetable')
 
     for tt in list_of_tt_elts:
         if overwrite_existing is True:
-            tt_db.add_tt(parse_individual_xml_tt(tt, tiploc_dict, categories_dict))
+            tt_db.add_tt(parse_individual_xml_tt(tt, locations_map, categories_by_id))
         else:
-            tt_db.add_tt_if_not_present(parse_individual_xml_tt(tt, tiploc_dict, categories_dict))
+            tt_db.add_tt_if_not_present(parse_individual_xml_tt(tt, locations_map, categories_by_id))
 
     if root.find('TimetableRules') is not None:
         list_of_rule_elts = root.find('TimetableRules').findall('TimetableRule')
@@ -195,4 +271,4 @@ def parse_full_xml_tt(file: str, locations_file: str, overwrite_existing: bool):
                 rules_db.add_rule_if_not_present(parse_individual_xml_rule(rule))
 
 
-parse_full_xml_tt('Swindon February 2021/SavedTimetable.xml', '../sim_location_files/swindid.txt', True)
+Parse_Full_Xml_Tt('Swindon February 2021xxx/SavedTimetable.xml', 'swindid', True)

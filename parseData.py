@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import common
+from customLocationLogic import CustomLogicExecutor
 
 
 def parse_location_times(times_string: str) -> dict:
@@ -261,7 +262,7 @@ def complete_train_info(sim_id: str, train_info: dict) -> dict:
     out['category'] = category_name
 
     for prop in matched_category.keys():
-        if 'criteria' in str(prop).lower():
+        if 'criteria' in str(prop).lower() or 'id' in str(prop).lower():
             continue
         if str(prop) in train_info:
             out[str(prop)] = train_info[str(prop)]
@@ -321,7 +322,7 @@ def convert_train_locations(sim_id: str, initial_locations: list) -> list:
     return [new_locations, potential_entry_point]
 
 
-def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
+def Parse_Charlwood_Train(sim_id: str, train_cat, custom_logic: CustomLogicExecutor, **kwargs):
     if 'train_id' in kwargs:
         train_file_as_string = ''
 
@@ -368,16 +369,28 @@ def parse_charlwood_train(sim_id: str, train_cat, **kwargs):
     [readable_locations, potential_entry_point] = convert_train_locations(sim_id, initial_locations)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
+    entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
+                                                                                              potential_entry_point)
 
-    for l in readable_locations:
-        print(l)
-    print(potential_entry_point)
-    print(header_data)
-    print(train_info)
+    train_to_return = {}
+
+    for field in train_info:
+        train_to_return[field] = train_info[field]
+
+    if entry_point is not None:
+        train_to_return['entry_point'] = entry_point
+        train_to_return['entry_time'] = entry_time
+
+    train_to_return['tt_template'] = tt_template
+
+    train_to_return['locations'] = final_locations
+
+    print(train_to_return)
 
 
-parse_charlwood_train('newport', None,
-                      train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/23593273/31/03/21')
+a = common.create_location_map_from_file('newport')
+parse_charlwood_train('newport', None, CustomLogicExecutor('newport', a[1], a[0]),
+                      train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/22449918/01/04/21')
 
 
 # Part of the file for parsing charlwoodhouse location pages.
@@ -447,7 +460,7 @@ def parse_full_page(start_time: str, end_time: str, full_page) -> list:
     return [x[1] for x in list_of_times]
 
 
-def parse_charlwood_house_location_file(start_time: str, end_time: str, location_of_file: str) -> list:
+def Parse_Charlwood_House_Location_File(start_time: str, end_time: str, location_of_file: str) -> list:
     """
     :param start_time: start of period to look for trains in format hhmm
     :param end_time: end of period to look for trains in format hhmm
@@ -477,7 +490,7 @@ def parse_charlwood_house_location_file(start_time: str, end_time: str, location
         return []
 
 
-def parse_charlwood_house_location_page(start_time: str, end_time: str, location_page_link: str) -> list:
+def Parse_Charlwood_House_Location_Page(start_time: str, end_time: str, location_page_link: str) -> list:
     """
     :param start_time: start of period to look for trains in format hhmm
     :param end_time: end of period to look for trains in format hhmm
@@ -503,7 +516,7 @@ def parse_charlwood_house_location_page(start_time: str, end_time: str, location
         return []
 
 
-def parse_rtt_location_page():
+def Parse_Rtt_Location_Page():
     return None
 
 # print(parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))

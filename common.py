@@ -1,6 +1,8 @@
 """
 A file containing common functions used in multiple files.
 """
+import math
+import re
 
 import yaml
 
@@ -108,3 +110,55 @@ def find_readable_location(location_name: str, locations_map: dict) -> str:
 
     return ''
 
+
+def convert_time_to_secs(time: str) -> int:
+    """
+    Converts a time string in the format hhmm to seconds past midnight
+    :param time: Time string, format hhmm
+    :return: The time as seconds from midnight
+    """
+    match = re.match("(\\d{2})(\\d{2})(?:\\.(\\d+))?", time)
+    hours = int(match.group(1))
+    mins = int(match.group(2))
+    if len(time) > 4:
+        secs = math.floor(60 * float('0.' + match.group(3)))
+    else:
+        secs = 0
+
+    return (3600 * hours) + (60 * mins) + secs
+
+
+def convert_sec_to_time(time: int) -> str:
+    """
+    Converts seconds past midnight to a time string in the format hhmm.
+    :param time: Seconds past midnight
+    :return:
+    """
+    hours = math.floor(time / 3600)
+    mins = math.floor((time - (hours * 3600))/60)
+    secs = math.floor(time - (hours * 3600) - (mins * 60))
+
+    if secs > 0:
+        return f"{hours:02d}{mins:02d}." + str(round(secs/60, 1))[2:3]
+    else:
+        return f"{hours:02d}{mins:02d}"
+
+
+def make_id_key_category_map(categories_map: dict) -> dict:
+    """
+    Makes a map of categories with the key being the id.
+    """
+    out = {}
+
+    for desc in categories_map:
+        id = categories_map[desc]['id']
+        out[id] = categories_map[desc].copy()
+        out[id]['description'] = desc
+        out[id].pop('id')
+
+    return out
+
+
+
+a = {'1':{'id':'x', 'filed': 'y'}, '2':{'id':'z', 'fil': 'sdasa'}}
+print(make_id_key_category_map(a))

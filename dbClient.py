@@ -282,14 +282,14 @@ class MainHeaderDb:
             self.db.remove(doc_ids=[1])
         self.db.insert(table.Document(header, doc_id=1))
 
-    def add_categories_string(self, cat_str: str):
+    def add_categories_map(self, cat_map: dict):
         """
-        Adds the string of xml train categories to the main header DB overwriting one if present.
-        :param header: xml train categories string to add.
+        Adds the map of xml train categories to the main header DB overwriting one if present.
+        :param cat_map: map of train categories to add.
         """
         if self.db.contains(doc_id=2):
             self.db.remove(doc_ids=[2])
-        self.db.insert(table.Document({'categories_string': cat_str}, doc_id=2))
+        self.db.insert(table.Document({'categories_map': cat_map}, doc_id=2))
 
     def get_header(self) -> dict:
         """
@@ -297,8 +297,8 @@ class MainHeaderDb:
         """
         return self.db.get(doc_id=1)
 
-    def get_categories_string(self) -> str:
+    def get_categories_map(self) -> dict:
         """
-        :return: train categories string stored.
+        :return: train categories map stored.
         """
-        return self.db.get(doc_id=2)['categories_string']
+        return self.db.get(doc_id=2)['categories_map']

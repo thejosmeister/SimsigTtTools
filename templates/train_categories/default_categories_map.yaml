@@ -5,9 +5,13 @@
     # This term will be split by **, the last term is always regex, the terms before exclude certain values.
     # e.g. the expression below will match a number that is not 43, 68 or 802
     Timing_Load: '!43**!68**!802**^\d+$'
+
     # Regex that only matches D
     Power_type: '^D$'
+    # Regex that only matches Freight
     Train_Status: 'Freight'
+
+  # This ID is reserved as the default category ID, be careful not to make any other categories in other files with this ID.
   id: 'A0000001'
   accel_brake_index: '1'
   is_freight: '-1'

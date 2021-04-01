@@ -18,7 +18,7 @@ class CustomLogicExecutor:
 
         # May instantiate dbs here in future
 
-    def perform_custom_logic(self, train_locations: list, potential_entry: str) -> list:
+    def Perform_Custom_Logic(self, train_locations: list, potential_entry: str) -> list:
         """
         :param train_locations: prospective train locations to undergo logic.
         :param potential_entry: the potential entry point for the train
@@ -38,6 +38,7 @@ class CustomLogicExecutor:
                                                                           potential_entry)
 
         # For each location in custom logic apply custom rules
+        train_locations = self.apply_location_logic(train_locations)
 
 
         return [entry_point, entry_time, tt_template, train_locations]
@@ -132,9 +133,12 @@ class CustomLogicExecutor:
 
         # If entry is first location then we delete first location and are done.
         if train_locations[0]['location'] == entry_location:
-            self.remove_location(entry_location, train_locations)
+            train_locations = self.remove_location(entry_location, train_locations)
             return [potential_entry, entry_time,
                     'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
 
         # Assume starts on sim.
         return [None, None, 'templates/timetables/defaultTimetableNoEP.txt', train_locations]
+
+    def apply_location_logic(self, train_locations):
+        return train_locations

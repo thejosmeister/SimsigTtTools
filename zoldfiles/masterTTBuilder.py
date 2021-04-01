@@ -1,5 +1,5 @@
 from jsonTimetableListBuilder import build_list_of_tts, build_list_of_rules
-from xmlTimetableBuilder import build_xml_list_of_tts, build_full_xml_tt
+from WriteXmlTt import build_xml_list_of_tts, build_full_xml_tt
 from yamlSpecParser import parse_yaml_tt_spec
 from dbClient import MainHeaderDb
 
