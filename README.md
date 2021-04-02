@@ -35,26 +35,26 @@ File struct:
 Directories present for spec/templates:
 ```
 /db/{tt_name}/main_header.json                                # Location of Json TT data
-  |            /rules.json
-  |            /train_tts.json 
-  /{tt_name}/main_header.json
-  |            /rules.json
-  |            /train_tts.json
-  ...
+   |            /rules.json
+   |            /train_tts.json 
+   /{tt_name}/main_header.json
+   |            /rules.json
+   |            /train_tts.json
+   ...
 /location_maps/{sim_id}_locations.txt                         # Location of sim location maps
              /{sim_id}_locations.txt
              ...
-/templates/categories/default_cat_map.txt                     # Location of train category maps
-         |          /train_categories_1.xml
-         |          ...
-         /tt_templates/defaultTimetableNoEP.txt
-         |            /defaultTimetableSeedPoint.txt
-         |            /defaultTimetableWithEntryPoint.txt
-         /activity_templates/crewChangeTemplate.txt
-                            /detatchFrontTemplate.txt
-                            /detatchRearTemplate.txt
-                            ...
-/spec_files/source_to_xml_tt_specs/{tt_name}.yaml             # Location of data source to .WTT file specs
+/templates/tt_templates/defaultTimetableNoEP.txt
+          |            /defaultTimetableSeedPoint.txt
+          |            /defaultTimetableWithEntryPoint.txt
+          /activity_templates/crewChangeTemplate.txt
+                             /detatchFrontTemplate.txt
+                             /detatchRearTemplate.txt
+                             ...
+/spec_files/categories/default_cat_map.txt                    # Location of train category maps
+           |          /train_categories_1.xml
+           |          ...
+           /source_to_xml_tt_specs/{tt_name}.yaml             # Location of data source to .WTT file specs
            |                      /{tt_name}.yaml
            |                      ...
            /sim_custom_location_logic/{sim_id}.yaml           # Location of sim custom logig definitions
