@@ -146,7 +146,7 @@ def parse_train_table(train_info_table) -> dict:
         row_2 = fields[2].get_text()
 
         if row_name == 'Train UID':
-            out['uid'] = row_1
+            out['uid'] = row_1.replace('∇', 'V')
 
         if row_name == 'ATOC code':
             if row_1 not in ['', ' ']:
@@ -171,8 +171,8 @@ def parse_train_table(train_info_table) -> dict:
                 out['Timing_Load'] = row_1 + ' ' + row_2
 
         if row_name == 'Speed':
-            if row_1 not in ['', ' ']:
-                out['max_speed'] = int(row_1)
+            if re.search('\\d+', row_1.strip()) is not None:
+                out['max_speed'] = row_1
 
         if row_name == 'Train Status':
             if 'passenger' in row_2.lower():
@@ -242,14 +242,12 @@ def match_category(train_info: dict, categories_map: dict) -> list:
     return ['standard diesel freight', categories_map['standard diesel freight']]
 
 
-def complete_train_info(sim_id: str, train_info: dict) -> dict:
+def complete_train_info(categories_map: dict, train_info: dict) -> dict:
     """
-    :param sim_id: temporarily provided, will be categories map.
+    :param categories_map: the train categories map.
     :param train_info: the train information scraped from source.
     :return: complete train info ready to become basis of train.
     """
-    # TODO make this an instance variable to pass in
-    categories_map = common.create_categories_map_from_yaml('templates/train_categories/default_categories_map.yaml')
 
     out = {}
     # stick in values we already know
@@ -277,15 +275,83 @@ def complete_train_info(sim_id: str, train_info: dict) -> dict:
     return out
 
 
-def convert_train_locations(sim_id: str, initial_locations: list) -> list:
+def do_times_cross_midnight(location1: dict, location2: dict) -> bool:
+    if location1['location'] == location2['location']:
+        return False
+
+    time1dep = ''
+    time1arr = ''
+    time2dep = ''
+    time2arr = ''
+
+    if 'dep' in location1:
+        time1dep = location1['dep']
+    if 'arr' in location1:
+        time1arr = location1['arr']
+    if 'dep' in location2:
+        time2dep = location2['dep']
+    if 'arr' in location2:
+        time2arr = location2['arr']
+
+    if time1dep != '':
+        if time2dep != '':
+            if float(time1dep) > float(time2dep):
+                return True
+        if time2arr != '':
+            if float(time1dep) > float(time2arr):
+                return True
+    if time1arr != '':
+        if time2dep != '':
+            if float(time1arr) > float(time2dep):
+                return True
+        if time2arr != '':
+            if float(time1arr) > float(time2arr):
+                return True
+    return False
+
+
+def times_span_multiple_days(locations: list) -> bool:
+    for i in range(len(locations) - 1):
+        if do_times_cross_midnight(locations[i], locations[i + 1]) is True:
+            return True
+    return False
+
+
+def remove_locations_before_0000(locations: list) -> list:
+    # find point where location after
+    remove_up_to = 0
+    for i in range(len(locations) - 1):
+        if do_times_cross_midnight(locations[i], locations[i + 1]) is True:
+            remove_up_to = i + 1
+
+    return locations[remove_up_to:]
+
+
+def add_time_to_locations_after_0000(locations: list) -> list:
+    add_24h = 0
+    for i in range(len(locations) - 1):
+        if do_times_cross_midnight(locations[i], locations[i + 1]) is True:
+            add_24h = i + 1
+
+    for i in range(add_24h, len(locations)):
+        if 'dep' in locations[i]:
+            locations[i]['dep'] = common.convert_sec_to_time(
+                common.convert_time_to_secs(locations[i]['dep']) + common.convert_time_to_secs('2400'))
+        if 'arr' in locations[i]:
+            locations[i]['arr'] = common.convert_sec_to_time(
+                common.convert_time_to_secs(locations[i]['arr']) + common.convert_time_to_secs('2400'))
+
+    return locations
+
+def convert_train_locations(initial_locations: list, location_maps: list, source_location: str) -> list:
     """
-    :param sim_id: temporarily provided, will be locations and entry point map.
     :param initial_locations: the list of locations scraped from source.
+    :param location_maps: the entry and sim location maps
+    :param source_location: used if we have times spanning more than one day.
     :return: [ readable list of locations on sim, the potential entry point for the train ]
     """
-    # TODO move map creation out to main file so we are not doing this every time.
     # get the map of sim locations
-    [entry_points, locations_map] = common.create_location_map_from_file(sim_id)
+    [entry_points, locations_map] = location_maps
 
     # create list of entry point names
     list_of_entry_points = []
@@ -305,7 +371,7 @@ def convert_train_locations(sim_id: str, initial_locations: list) -> list:
 
         # check l keys
         loc = common.find_readable_location(location['Location'], locations_map)
-        if loc is not '':
+        if loc != '':
             location['location'] = loc
             new_locations.append(location)
             location.pop('Location')
@@ -313,16 +379,36 @@ def convert_train_locations(sim_id: str, initial_locations: list) -> list:
 
         # check l values
         loc = common.find_tiploc_for_location(location['Location'], locations_map)
-        if loc is not '':
+        if loc != '':
             location['location'] = locations_map[loc]
             location.pop('Location')
             new_locations.append(location)
             continue
 
+    if times_span_multiple_days(new_locations) is True:
+        readable_source_location = common.find_readable_location(source_location)
+        location_on_day = list(filter(lambda x: x['location'] == readable_source_location, new_locations))[0]
+
+        if do_times_cross_midnight(new_locations[0], location_on_day):
+            new_locations = remove_locations_before_0000(new_locations)
+        elif do_times_cross_midnight(location_on_day, new_locations[-1]):
+            new_locations = add_time_to_locations_after_0000(new_locations)
+
     return [new_locations, potential_entry_point]
 
 
-def Parse_Charlwood_Train(sim_id: str, train_cat, custom_logic: CustomLogicExecutor, **kwargs):
+def Parse_Charlwood_Train(sim_id: str, categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
+                          source_location: str, **kwargs):
+    """
+
+    :param sim_id:
+    :param categories_map:
+    :param location_maps:
+    :param custom_logic:
+    :param source_location:
+    :param kwargs: Contains either 'train_id' if parsing from file or 'train_link' if parsing from page
+    :return:
+    """
     if 'train_id' in kwargs:
         train_file_as_string = ''
 
@@ -342,6 +428,7 @@ def Parse_Charlwood_Train(sim_id: str, train_cat, custom_logic: CustomLogicExecu
 
     # Fetch ch id and origin time location and dest from top of page <h2>
     header_data = parse_train_header(train_page.find('h2').get_text())
+    print(f"parsing train {header_data['origin_time']} {header_data['origin_name']} - {header_data['destination_name']}")
 
     # Fetch train info from train table
     train_info = parse_train_table(train_page.find('table', {'class': 'train-table'}))
@@ -363,10 +450,11 @@ def Parse_Charlwood_Train(sim_id: str, train_cat, custom_logic: CustomLogicExecu
         train_info['destination_time'] = initial_locations[-1]['dep']
 
     # Work out other fields for train from train cat dict
-    train_info = complete_train_info(sim_id, train_info)
+    train_info = complete_train_info(categories_map, train_info)
 
     # Filter locations out via sim locations and translate TIPLOC to readable
-    [readable_locations, potential_entry_point] = convert_train_locations(sim_id, initial_locations)
+    [readable_locations, potential_entry_point] = convert_train_locations(initial_locations, location_maps,
+                                                                          source_location)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
     entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
@@ -385,12 +473,7 @@ def Parse_Charlwood_Train(sim_id: str, train_cat, custom_logic: CustomLogicExecu
 
     train_to_return['locations'] = final_locations
 
-    print(train_to_return)
-
-
-a = common.create_location_map_from_file('newport')
-parse_charlwood_train('newport', None, CustomLogicExecutor('newport', a[1], a[0]),
-                      train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/22449918/01/04/21')
+    return train_to_return
 
 
 # Part of the file for parsing charlwoodhouse location pages.
@@ -402,17 +485,19 @@ def parse_summary_page(start_time: str, end_time: str, summary_page) -> list:
     :param summary_page: the BeautifulSoup summary page.
     :return: list of links to train pages.
     """
+
     summary_tables = summary_page.find_all('table', class_='summ-table')
 
     list_of_times = []
     for summary_table in summary_tables:
         for row in summary_table.find_all('tr'):
             fields = row.find_all('td')
-            if len(fields) > 0:
+            if len(fields) == 4:
                 formatted_times_field = fields[1].get_text().replace('&half', '.5').replace('\n', '')
-                time_match_obj = re.match('.*(\\d{2}:\\d{2}(?:\\.5)?)', formatted_times_field)
-                list_of_times.append(
-                    [float(time_match_obj.group(1).replace(':', '')), fields[2].find('a')['href']])
+                time_match_obj = re.search('(\\d{4}(?:\\.5)?)', formatted_times_field)
+                if time_match_obj is not None:
+                    list_of_times.append(
+                        [float(time_match_obj.group(1)), fields[2].find('a')['href']])
 
     start_time_num = float(start_time)
     end_time_num = float(end_time)
@@ -429,6 +514,7 @@ def parse_full_page(start_time: str, end_time: str, full_page) -> list:
     :param full_page: the BeautifulSoup full page.
     :return: list of links to train pages.
     """
+    tiploc_for_location = re.search('\\(([A-Z ]+)\\)', full_page.find('h2').get_text()).group(1).split(' ')[0]
     tables_on_page = full_page.find_all('table')
 
     locations_table = None
@@ -457,7 +543,7 @@ def parse_full_page(start_time: str, end_time: str, full_page) -> list:
     list_of_times = list(filter(lambda x: (x[0] >= start_time_num), list_of_times))
     list_of_times = list(filter(lambda x: (x[0] <= end_time_num), list_of_times))
 
-    return [x[1] for x in list_of_times]
+    return [tiploc_for_location, [x[1] for x in list_of_times]]
 
 
 def Parse_Charlwood_House_Location_File(start_time: str, end_time: str, location_of_file: str) -> list:
@@ -475,16 +561,19 @@ def Parse_Charlwood_House_Location_File(start_time: str, end_time: str, location
     f.close()
 
     if '/sum/' in location_of_file:
+        print(f'Collecting trains for {location_of_file}')
         summary_page = BeautifulSoup(location_page_as_string, 'html.parser')
         list_of_links = parse_summary_page(start_time, end_time, summary_page)
+        tiploc_location = re.search('/sum/([A-Z]+)/', location_of_file).group(1)
 
-        return [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]
+        return [tiploc_location, [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]]
 
     elif '/full/' in location_of_file:
+        print(f'Collecting trains for {location_of_file}')
         full_page = BeautifulSoup(location_page_as_string, 'html.parser')
-        list_of_links = parse_full_page(start_time, end_time, full_page)
+        tiploc_location, list_of_links = parse_full_page(start_time, end_time, full_page)
 
-        return [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]
+        return [tiploc_location, [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]]
     else:
         print('Could not determine location file type: ' + location_of_file)
         return []
@@ -501,22 +590,33 @@ def Parse_Charlwood_House_Location_Page(start_time: str, end_time: str, location
     response = requests.get(location_page_link)
 
     if '/sum/' in location_page_link:
+        print(f'Collecting trains for {location_page_link}')
         summary_page = BeautifulSoup(response.content, 'html.parser')
         list_of_links = parse_summary_page(start_time, end_time, summary_page)
+        tiploc_location = re.search('/sum/([A-Z]+)/', location_page_link).group(1)
 
-        return [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]
+        return [tiploc_location, [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]]
 
     elif '/full/' in location_page_link:
+        print(f'Collecting trains for {location_page_link}')
         full_page = BeautifulSoup(response.content, 'html.parser')
-        list_of_links = parse_full_page(start_time, end_time, full_page)
+        tiploc_location, list_of_links = parse_full_page(start_time, end_time, full_page)
 
-        return [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]
+        return [tiploc_location, [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]]
     else:
         print('Could not determine location page type: ' + location_page_link)
         return []
 
 
-def Parse_Rtt_Location_Page():
+def Parse_Rtt_Location_Page(start_time: str, end_time: str, location_page_link: str):
+    return None
+
+
+def Parse_Rtt_Train(sim_id: str, train_cat, location_maps, custom_logic: CustomLogicExecutor, source_location: str,
+                    **kwargs):
     return None
 
 # print(parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))
+# a = common.create_location_map_from_file('newport')
+# parse_charlwood_train('newport', None, CustomLogicExecutor('newport', a[1], a[0]),
+#                       train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/22449918/01/04/21')

@@ -46,14 +46,14 @@ def create_location_map_from_file(sim_id: str) -> list:
     return [entry_points, tiploc_locations]
 
 
-def create_categories_map_from_yaml(categories_yaml_location: str) -> dict:
+def create_categories_map_from_yaml(categories_yaml_file_name: str) -> dict:
     """
-    :param categories_yaml_location: yaml file with categories specified
+    :param categories_yaml_file_name: yaml file with categories specified
     :return: a parsed instance of the yaml file with some of the criteria stuff refined.
     """
     # TODO incorporate default cat map into any custom one in case?
 
-    with open(categories_yaml_location, 'r') as stream:
+    with open(f'spec_files/train_categories/{categories_yaml_file_name}', 'r') as stream:
         category_data = yaml.safe_load(stream)
 
     # make criteria a bit more usable
@@ -160,5 +160,5 @@ def make_id_key_category_map(categories_map: dict) -> dict:
 
 
 
-a = {'1':{'id':'x', 'filed': 'y'}, '2':{'id':'z', 'fil': 'sdasa'}}
-print(make_id_key_category_map(a))
+# a = {'1':{'id':'x', 'filed': 'y'}, '2':{'id':'z', 'fil': 'sdasa'}}
+# print(make_id_key_category_map(a))

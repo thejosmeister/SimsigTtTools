@@ -51,6 +51,8 @@ class CustomLogicExecutor:
                 train_locations = self.list_to_delete_if_before(
                     rules_for_entry[rule], entry_location, entry_time, train_locations)
                 return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
+            if rule == 'if_later_location_matching':
+                return self.if_later_location_matching(rules_for_entry[rule], entry_location, entry_time, train_locations ,potential_entry)
 
         return None
 
@@ -140,5 +142,11 @@ class CustomLogicExecutor:
         # Assume starts on sim.
         return [None, None, 'templates/timetables/defaultTimetableNoEP.txt', train_locations]
 
+    def if_later_location_matching(self, rule_root, entry_location, entry_time, train_locations, potential_entry):
+        # TODO implement this
+        return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
+
     def apply_location_logic(self, train_locations):
         return train_locations
+
+

@@ -231,7 +231,7 @@ def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
     tree = ET.parse(file)
     root = tree.getroot()
     locations_map = common.create_location_map_from_file(sim_id)[1]
-    tt_header = {'id': root.attrib['ID'],
+    tt_header = {'sim_id': root.attrib['ID'],
                  'version': root.attrib['Version'],
                  'name': root.find('Name').text.replace(' ', '_'),
                  'actual_name': root.find('Name').text,

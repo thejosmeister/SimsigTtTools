@@ -195,9 +195,10 @@ def build_xml_header(header_db: MainHeaderDb) -> str:
         name = json_tt_header['actual_name']
     else:
         name = json_tt_header['name']
-    out = '<SimSigTimetable ID="' + json_tt_header['id'] + '" Version="' + json_tt_header['version'] + '">' + \
+    out = '<SimSigTimetable ID="' + json_tt_header['sim_id'] + '" Version="' + json_tt_header['version'] + '">' + \
           '<Name>' + name + '</Name><Description>' + json_tt_header['description'] + '</Description>' + \
-          '<StartTime>' + json_tt_header['start_time'] + '</StartTime><FinishTime>' + json_tt_header['finish_time'] + \
+          '<StartTime>' + str(common.convert_time_to_secs(json_tt_header['start_time'])) + '</StartTime><FinishTime>' + \
+          str(common.convert_time_to_secs(json_tt_header['finish_time'])) + \
           '</FinishTime><VMajor>' + json_tt_header['v_major'] + '</VMajor><VMinor>' + json_tt_header['v_minor'] + \
           '</VMinor><VBuild>' + json_tt_header['v_build'] + '</VBuild>' + '<TrainDescriptionTemplate>' + \
           json_tt_header['train_description_template'] + \
@@ -322,4 +323,4 @@ def Build_Full_Xml_Tt(tt_name: str, output_filename: str, sim_id: str, use_defau
     # TODO poss delete interim files: filename/SavedTimetable.xml, filename/TimetableHeader.xml, {filename}TT_List.xml
 
 
-Build_Full_Xml_Tt('Swindon_February_2021', 'Swindon_February_2021', 'swindid', True)
+Build_Full_Xml_Tt('newport_test', 'newport_test', 'newport', True)

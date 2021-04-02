@@ -1,0 +1,35 @@
+timetable_header:
+  # The sim id that appears in the XML tt in the root tag.
+  sim_id: 'newport'
+  # The sim version that appears in the XML tt in the root tag.
+  version: '5.8.6'
+  # The name of the timetable
+  name: 'newport_test'
+  # The description of the timetable
+  description: 'A test timetable'
+  # The start time for the timetable in hhmm
+  start_time: '0400'
+  # The end time for the timetable in hhmm
+  finish_time: '2500'
+  # Timetable versioning properties
+  v_major: '0'
+  v_minor: '0'
+  v_build: '1'
+  # The template given for train descriptions, will be applied if the train has a description of $template.
+  train_description_template: '$originTime $originName-$destName $operator ($stock)'
+
+# Name of the train categories map we wish to use.
+train_categories_file: 'default_categories_map.yaml'
+
+# An example of the source pages we can pull infor from.
+# To use stored html files use charlwoodhouse_location_files instead.
+charlwoodhouse_location_pages:
+  'http://charlwoodhouse.co.uk/rail/liverail/full/nwp/':
+    start: '0400'
+    end: '0800'
+  'http://charlwoodhouse.co.uk/rail/liverail/sum/LWERWJN/':
+    start: '0400'
+    end: '0800'
+
+overwrite_tt_with_same_name: True
+overwrite_trains: True

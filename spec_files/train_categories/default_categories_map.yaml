@@ -14,7 +14,9 @@
   # This ID is reserved as the default category ID, be careful not to make any other categories in other files with this ID.
   id: 'A0000001'
   accel_brake_index: '1'
+  # Does the train use freight linespeeds: -1 -> yes, 0 -> no.
   is_freight: '-1'
+  # Can the train use goods lines: -1 -> yes, 0 -> no.
   can_use_goods_lines: '-1'
   max_speed: '60'
   train_length: '300'

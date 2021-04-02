@@ -2,7 +2,13 @@
 entry_point_rules:
   DUMMY:
     list_to_delete_if_before: ['a location', 'another_location']
-
+  EMSHFILD:
+    if_later_location_matching:
+      conditions:
+        - { 'location':'Newport', 'plat': 'URL' }
+      then:
+        entry_point: 'EMSHFILDR'
+        remove: [ 'Marshfield' ]
 location_rules:
   'dummy location':
     if_x_y_z_then_delete_y:
