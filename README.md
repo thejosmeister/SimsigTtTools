@@ -1,17 +1,21 @@
 # SimsigTtTools
-Will hopefully become comething that can parse and write Simsig TTs via python
+Some python scripts that can parse and write Simsig TTs.
 
 ### General Overview
-Each TT will have a set of TinyDB databases. 
-The data in the db will be a Json representation of what you would find in a Simsig XML TT (the upackaged files from a .WTT file).
+Each TT that we either parse or generate from an external data source will be made up a set of TinyDB databases. 
+The data in the DBs will be a Json representation of what you would find in a Simsig XML TT (the upackaged files from a .WTT file).
 
 Whenever we fetch input information from an external source (RTT, charlwoodhouse, NROD) we will translate that to the Json representation and store in a db.
 
-There is functionality to write the Json data in the db as an XML TT and then package it into a .WTT file.
-We can parse an XML TT to Json data in the db as well.
+There is functionality to take the Json data in the DBs for a particular timetable, write it as an XML TT and then package it into a .WTT file.
 
-Beyond this there is/will be various functions to edit the TT data in a more flexible way than via the in sim TT editor. 
-Note, in sim editor functionality can still be used by writing to XML, making changes in sim and then parsing again. 
+We can also parse an XML TT to Json data in the db as well.
+
+The idea around structuring the code like this is that we can use various functions to edit the TT data in a more flexible way than via the in sim TT editor.
+There is also scope for using the Json data to provide more in depth TT analysis and reports (pathing diagrams, location reports etc.)
+
+Note, in sim editor functionality can be used in conjunction with the code. 
+This would entail writing the TT to XML making changes in sim and then parsing again. 
 
 ### Requirements 
 - Python 3 - definitely works with v3.7 or higher, probably works for earlier versions
@@ -19,8 +23,51 @@ Note, in sim editor functionality can still be used by writing to XML, making ch
         - Tinydb
         - ...
 - some basic coding knowledge - will need to run functions with your own arguments i.e. calling ParseXmlTt(<specified args>)
-- understanding of what yaml is - just the syntac used for spec files
+- understanding of what yaml is - syntax used for spec files
 - source data from real time trains or charlwoodhouse (other sources may be integrated in future)
+
+### File Structure
+
+The file structure of the repo is deliberately flat with respect to the .py files as it can be a dark art trying to get the python interpreter to import other .py files from another directory.
+Here is a brief guide:
+
+File struct:
+Directories present for spec/templates:
+```
+/db/{tt_name}/main_header.json                                # Location of Json TT data
+  |            /rules.json
+  |            /train_tts.json 
+  /{tt_name}/main_header.json
+  |            /rules.json
+  |            /train_tts.json
+  ...
+/location_maps/{sim_id}_locations.txt                         # Location of sim location maps
+             /{sim_id}_locations.txt
+             ...
+/templates/categories/default_cat_map.txt                     # Location of train category maps
+         |          /train_categories_1.xml
+         |          ...
+         /tt_templates/defaultTimetableNoEP.txt
+         |            /defaultTimetableSeedPoint.txt
+         |            /defaultTimetableWithEntryPoint.txt
+         /activity_templates/crewChangeTemplate.txt
+                            /detatchFrontTemplate.txt
+                            /detatchRearTemplate.txt
+                            ...
+/spec_files/source_to_xml_tt_specs/{tt_name}.yaml             # Location of data source to .WTT file specs
+           |                      /{tt_name}.yaml
+           |                      ...
+           /sim_custom_location_logic/{sim_id}.yaml           # Location of sim custom logig definitions
+                                     /{sim_id}.yaml
+                                     ...
+BuildXmlTtFromSource.py - Creates a .WTT file from a data source such as rtt using a source_to_xml_tt_spec yaml file
+WriteXmlTt.py - Creates a .WTT file from data already in TinyDB form
+ParseXmlTt.py - Parses SavedTimetable.xml from .WTT file in to TinyDB instance
+parseData.py - handles parsing of source data
+customLocationLogic.py - handles custom sim location logic which is used when creating a TT from external data source
+common.py - contains some common code
+```
+
 
 ## Main usages
 Will provide an explanation/guide as to the main usages of the code.
