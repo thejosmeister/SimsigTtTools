@@ -32,7 +32,7 @@ NWPTRTG:Newport,Newport (South Wales) [NWP],Newport (South Wales)
 LLHLETH:Llanhilleth,Llanhilleth [LTH]
 NBRWGE:Newbridge,Newbridge [NBE]
 AWRE:Awre
-EUSKJNY:East Usk Jn. N. Y.,East Usk Yard (Fhh)
+EUSKJNY:East Usk Jn. N. Y.,East Usk Yard (Fhh),EUSKFHH
 NWPTCOU:Newport Courtybella Sdgs
 CWMBRAN:Cwmbran,Cwmbran [CWM]
 MAGOR:Magor

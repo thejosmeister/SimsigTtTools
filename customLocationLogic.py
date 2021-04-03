@@ -27,7 +27,7 @@ class CustomLogicExecutor:
 
         # Look to see if entry point has custom logic
         entry_location, entry_time = self.get_entry_location_and_time(potential_entry, train_locations)
-        if potential_entry in self.custom_specs['entry_point_rules']:
+        if 'entry_point_rules' in self.custom_specs and potential_entry in self.custom_specs['entry_point_rules']:
             entry_point, entry_time, \
             tt_template, train_locations = self.apply_custom_entry_logic(train_locations, entry_location, entry_time,
                                                                          potential_entry)
@@ -38,8 +38,8 @@ class CustomLogicExecutor:
                                                                           potential_entry)
 
         # For each location in custom logic apply custom rules
-        train_locations = self.apply_location_logic(train_locations)
-
+        if 'location_rules' in self.custom_specs:
+            train_locations = self.apply_location_logic(train_locations)
 
         return [entry_point, entry_time, tt_template, train_locations]
 
@@ -52,7 +52,8 @@ class CustomLogicExecutor:
                     rules_for_entry[rule], entry_location, entry_time, train_locations)
                 return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
             if rule == 'if_later_location_matching':
-                return self.if_later_location_matching(rules_for_entry[rule], entry_location, entry_time, train_locations ,potential_entry)
+                return self.if_later_location_matching(rules_for_entry[rule], entry_location, entry_time,
+                                                       train_locations, potential_entry)
 
         return None
 
@@ -65,7 +66,7 @@ class CustomLogicExecutor:
 
         for location in list_to_delete:
             if self.x_before_y(location, entry_location, train_locations) is True:
-                train_locations = self.remove_location(location, train_locations)
+                train_locations = self.remove_nth_location(location, 1, train_locations)
 
         return train_locations
 
@@ -116,9 +117,21 @@ class CustomLogicExecutor:
 
         return x_pos < y_pos
 
-    def remove_location(self, location_to_remove, train_locations):
+    def remove_all_of_location(self, location_to_remove, train_locations):
         standard_location_to_remove = common.find_readable_location(location_to_remove, self.locations_map)
         return list(filter(lambda x: x['location'] != standard_location_to_remove, train_locations))
+
+    def remove_nth_location(self, location_to_remove, nth_time, train_locations):
+        standard_location_to_remove = common.find_readable_location(location_to_remove, self.locations_map)
+        count_times_seen = 0
+        new_locations = train_locations.copy()
+        for i in range(len(train_locations)):
+            if train_locations[i]['location'] == standard_location_to_remove:
+                count_times_seen += 1
+                if count_times_seen == nth_time:
+                    new_locations.pop(i)
+                    return new_locations
+        return new_locations
 
     def apply_generic_entry_logic(self, train_locations, entry_location, entry_time, potential_entry):
         """
@@ -135,7 +148,7 @@ class CustomLogicExecutor:
 
         # If entry is first location then we delete first location and are done.
         if train_locations[0]['location'] == entry_location:
-            train_locations = self.remove_location(entry_location, train_locations)
+            train_locations = self.remove_nth_location(entry_location, 1, train_locations)
             return [potential_entry, entry_time,
                     'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
 
@@ -143,10 +156,119 @@ class CustomLogicExecutor:
         return [None, None, 'templates/timetables/defaultTimetableNoEP.txt', train_locations]
 
     def if_later_location_matching(self, rule_root, entry_location, entry_time, train_locations, potential_entry):
-        # TODO implement this
+        """
+        For use with custom entry logic
+        """
+        if self.rule_conditions_are_met(rule_root['conditions'], train_locations):
+            return self.apply_then_clause(rule_root['then'], entry_location, entry_time, train_locations,
+                                          potential_entry)
         return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
 
+    def rule_conditions_are_met(self, conditions, train_locations):
+        condition_met = True
+        for condition in conditions:
+            if condition == 'OR':
+                if condition_met is True:
+                    return True
+                condition_met = True
+                continue
+            if condition_met is False:
+                continue
+            if self.is_condition_met(condition, train_locations) is False:
+                condition_met = False
+        return condition_met
+
+    def is_condition_met(self, condition, train_locations):
+        if 'location' in condition:
+            condition['location'] = common.find_readable_location(condition['location'], self.locations_map)
+        for location in train_locations:
+            if all(prop in location and location[prop] == condition[prop] for prop in condition) is True:
+                return True
+        return False
+
+    def apply_then_clause(self, then_clauses, entry_location, entry_time, train_locations, potential_entry):
+        for clause in then_clauses:
+            if 'entry_point' in clause:
+                potential_entry = clause['entry_point']
+            if 'remove_1st_of' in clause:
+                for l_to_remove in clause['remove_1st_of']:
+                    train_locations = self.remove_nth_location(
+                        common.find_readable_location(l_to_remove, self.locations_map), 1
+                        , train_locations)
+            if 'remove_all_of' in clause:
+                for l_to_remove in clause['remove_all_of']:
+                    train_locations = self.remove_all_of_location(
+                        common.find_readable_location(l_to_remove, self.locations_map)
+                        , train_locations)
+            if 'modify_location' in clause:
+                for l_to_remove in clause['modify_location']:
+                    train_locations = self.remove_all_of_location(
+                        common.find_readable_location(l_to_remove, self.locations_map)
+                        , train_locations)
+
+        return [potential_entry, entry_time, 'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
+
     def apply_location_logic(self, train_locations):
+        for location in self.custom_specs['location_rules']:
+            for rule in self.custom_specs['location_rules'][location]:
+                if 'if_x_y_concurrent' in rule:
+                    train_locations = self.apply_x_y_concurrent(rule['if_x_y_concurrent'], train_locations)
         return train_locations
 
+    def apply_x_y_concurrent(self, rule_map, train_locations):
+        x_conditions = rule_map['x_conditions']
+        y_conditions = rule_map['y_conditions']
 
+        if self.rule_conditions_are_met(x_conditions, train_locations):
+            x_index = self.are_x_y_concurrent(x_conditions[0]['location'], y_conditions[0]['location'], train_locations)
+            if x_index > -1:
+                if self.rule_conditions_are_met(y_conditions, train_locations) is True:
+                    train_locations = self.apply_locations_then_clause(rule_map['then'], train_locations)
+
+        return train_locations
+
+    def are_x_y_concurrent(self, location1, location2, train_locations):
+        """
+        Returns index of location 1 if condition satisfied, o.w. will return -1
+        """
+        readable_l1 = common.find_readable_location(location1, self.locations_map)
+        readable_l2 = common.find_readable_location(location2, self.locations_map)
+
+        if any(readable_l1 == l['location'] for l in train_locations) is False or any(
+                readable_l2 == l['location'] for l in train_locations) is False:
+            return False
+
+
+        for i in range(len(train_locations)):
+            if train_locations[i]['location'] == readable_l1 and train_locations[i+1]['location'] == readable_l2:
+                return True
+
+        return False
+
+    def apply_locations_then_clause(self, then_clauses, train_locations):
+        for clause in then_clauses:
+            if 'remove_1st_of' in clause:
+                for l_to_remove in clause['remove_1st_of']:
+                    train_locations = self.remove_nth_location(
+                        common.find_readable_location(l_to_remove, self.locations_map), 1
+                        , train_locations)
+            if 'remove_all_of' in clause:
+                for l_to_remove in clause['remove_all_of']:
+                    train_locations = self.remove_all_of_location(
+                        common.find_readable_location(l_to_remove, self.locations_map)
+                        , train_locations)
+            if 'modify_location' in clause:
+                train_locations = self.modify_location(clause['modify_location'], train_locations)
+
+        return train_locations
+
+    def modify_location(self, location_modifications, train_locations):
+        location_modifications_copy = location_modifications.copy()
+        readable_l = common.find_readable_location(location_modifications_copy.pop('location'), self.locations_map)
+
+        for l in train_locations:
+            if l['location'] == readable_l:
+                for prop in location_modifications_copy:
+                    l[prop] = location_modifications[prop]
+
+        return train_locations

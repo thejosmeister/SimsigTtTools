@@ -8,6 +8,7 @@ import re
 import common
 from customLocationLogic import CustomLogicExecutor
 
+CAPITALS = 'ABCDEFGHIJ'
 
 def parse_location_times(times_string: str) -> dict:
     formatted_times_string = times_string.replace('&half', '.5')
@@ -200,15 +201,21 @@ def parse_train_header(header_text: str) -> dict:
 def refine_headcode(train_info: dict) -> str:
     if 'max_speed' in train_info:
         max_speed = train_info['max_speed']
+        end_part = ''
+        try:
+            for digit in train_info['uid'][-3:]:
+                end_part += CAPITALS[int(digit)]
+        except:
+            end_part = train_info['uid'][-3:]
 
-        if max_speed == '75':
-            return f"4{train_info['uid'][:3]}"
-        if max_speed == '60':
-            return f"6{train_info['uid'][:3]}"
-        if max_speed == '45':
-            return f"7{train_info['uid'][:3]}"
-        if max_speed == '35':
-            return f"8{train_info['uid'][:3]}"
+        if max_speed in ['75', '075']:
+            return f"4{end_part}"
+        if max_speed in ['60', '060']:
+            return f"6{end_part}"
+        if max_speed in ['45', '045']:
+            return f"7{end_part}"
+        if max_speed in ['35', '035']:
+            return f"8{end_part}"
 
     return train_info['uid'][:4]
 

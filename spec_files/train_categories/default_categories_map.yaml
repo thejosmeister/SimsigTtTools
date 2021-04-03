@@ -20,12 +20,16 @@
   can_use_goods_lines: '-1'
   max_speed: '60'
   train_length: '300'
+  # The value for this is described in a table in https://www.simsig.co.uk/Wiki/Show?page=usertrack:ttuse:xml_timetable
   speed_class: '512'
+  # not sure how this affects things
   power_to_weight_category: '0'
+  # There are more of these but I am yet to add them here
   dwell_times:
     join: '240'
     divide: '240'
     crew_change: '120'
+  # Can be D: diesel, O: overhead elec, OD: bi mode, 3: third rail elec
   electrification: 'D'
 
 'standard electric freight':
@@ -47,17 +51,38 @@
     join: '240'
     divide: '240'
     crew_change: '120'
-  electrification: 'E'
+  electrification: 'O'
 
 'Class 158':
   criteria:
     # Standard class 158 timing load
-    Timing_Load: '^E$'
+    Timing_Load: '^E.*'
+    max_speed: '90'
   id: 'A0000003'
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
   max_speed: '90'
+  train_length: '47'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'TFW Class 175':
+  criteria:
+    # Same as class 158 timing load
+    Timing_Load: '^E.*'
+    operator_code: 'AW'
+    max_speed: '100'
+  id: 'B0000001'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '100'
   train_length: '47'
   speed_class: '16'
   power_to_weight_category: '0'

@@ -1,23 +1,36 @@
 # Entry point rules
 entry_point_rules:
+  # Example of when you have an entry location that is after locations on the sim that only trains in the other direction use (Westerleigh jn on Swindon is an example)
   DUMMY:
+    # name(s) of locations we want to get rud of if train has entry 'DUMMY'
     list_to_delete_if_before: ['a location', 'another_location']
   EMSHFILD:
     if_later_location_matching:
       conditions:
         - { 'location':'Newport', 'plat': 'URL' }
       then:
-        entry_point: 'EMSHFILDR'
-        remove: [ 'Marshfield' ]
+        - entry_point: 'EMSHFILDR'
+        - remove_1st_of: [ 'Marshfield' ]
 location_rules:
   'dummy location':
-    if_x_y_z_then_delete_y:
-      x: 'first'
-      y: 'second'
-      z: 'third'
+    - if_x_y_z_then_delete_y:
+        x: 'first'
+        y: 'second'
+        z: 'third'
 
-    if_x_y_concurrent:
-      x: 'first'
-      y: 'second'
-      x_path: 'ML'
-      y_path: 'ML'
+  'Severn Tunnel Junction':
+    - if_x_y_concurrent:
+        x_conditions:
+          - { 'location': 'Severn Tunnel Junction' }
+        y_conditions:
+          - { 'location': 'Severn Tunnel West' }
+        then:
+          - modify_location:  { 'location': 'Severn Tunnel Junction', 'plat': '3' }
+
+    - if_x_y_concurrent:
+        x_conditions:
+          - { 'location': 'Severn Tunnel Junction' }
+        y_conditions:
+          - { 'location': 'SEVTUGL' }
+        then:
+          - modify_location: { 'location': 'Severn Tunnel Junction', 'plat': '3' }
