@@ -38,10 +38,21 @@ def determine_sources(spec_data: dict, sim_id: str, categories_map: dict, locati
 
     elif 'charlwoodhouse_location_files' in spec_data:
         sources = spec_data['charlwoodhouse_location_files']
+        if 'charlwood_files_root' in spec_data:
+            files_root = spec_data['charlwood_files_root']
+        else:
+            files_root = ''
+
+        if files_root == None:
+            files_root = ''
+        elif files_root != '' and files_root[-1] != '/':
+            files_root += '/'
+
         location_parsing_funct = lambda start, end, location_page: \
-            parseData.Parse_Charlwood_House_Location_File(start, end, location_page)
+            parseData.Parse_Charlwood_House_Location_File(start, end, f'{files_root}{location_page}')
         train_parsing_funct = lambda train_id, location: \
-            parseData.Parse_Charlwood_Train(sim_id, categories_map, location_maps, custom_location_logic, location, train_id=train_id)
+            parseData.Parse_Charlwood_Train(sim_id, categories_map, location_maps, custom_location_logic, location,
+                                            train_filepath=f'{files_root}charlwoodhouse.co.uk/rail/liverail/train/{train_id}/14/02/20.html')
 
     elif 'rtt_location_files' in spec_data:
         sources = spec_data['rtt_location_files']
@@ -133,7 +144,3 @@ def BuildXmlTtFromSource(name_of_spec_file: str):
         add_rules(rules_db, spec_data['rules'])
 
     WriteXmlTt.Build_Full_Xml_Tt(tt_name, tt_name, sim_id, True)
-
-
-if __name__ == "__main__":
-    BuildXmlTtFromSource('newport_test')

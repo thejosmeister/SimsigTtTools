@@ -271,4 +271,4 @@ def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
                 rules_db.add_rule_if_not_present(parse_individual_xml_rule(rule))
 
 
-Parse_Full_Xml_Tt('Swindon February 2021xxx/SavedTimetable.xml', 'swindid', True)
+# Parse_Full_Xml_Tt('Swindon February 2021xxx/SavedTimetable.xml', 'swindid', True)

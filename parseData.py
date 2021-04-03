@@ -406,14 +406,14 @@ def Parse_Charlwood_Train(sim_id: str, categories_map: dict, location_maps: list
     :param location_maps:
     :param custom_logic:
     :param source_location:
-    :param kwargs: Contains either 'train_id' if parsing from file or 'train_link' if parsing from page
+    :param kwargs: Contains either 'train_filepath' if parsing from file or 'train_link' if parsing from page
     :return:
     """
-    if 'train_id' in kwargs:
+    if 'train_filepath' in kwargs:
         train_file_as_string = ''
 
-        # f = open(f'charlwoodhouse.co.uk/rail/liverail/train/{kwargs['train_id']}/14/02/20.html', "r")
-        f = open('assorted_files/charlwoodhousesimsig/t20.html', "r")
+        f = open(kwargs['train_filepath'], "r")
+        # f = open('assorted_files/charlwoodhousesimsig/charlwoodhouse.co.uk/rail/liverail/train/16596143/14/02/20.html', "r")
         for file_line in f:
             train_file_as_string += file_line.rstrip()
         f.close()
