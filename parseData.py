@@ -201,19 +201,19 @@ def refine_headcode(train_info: dict) -> str:
     if 'max_speed' in train_info:
         max_speed = train_info['max_speed']
 
-        if max_speed == 75:
+        if max_speed == '75':
             return f"4{train_info['uid'][:3]}"
-        if max_speed == 60:
+        if max_speed == '60':
             return f"6{train_info['uid'][:3]}"
-        if max_speed == 45:
+        if max_speed == '45':
             return f"7{train_info['uid'][:3]}"
-        if max_speed == 35:
+        if max_speed == '35':
             return f"8{train_info['uid'][:3]}"
 
     return train_info['uid'][:4]
 
 
-def info_passes_field(field_name: str, field_criteria: dict, train_info: dict):
+def info_passes_field_criteria(field_name: str, field_criteria: dict, train_info: dict):
     if field_name not in train_info:
         return False
 
@@ -232,7 +232,7 @@ def match_category(train_info: dict, categories_map: dict) -> list:
         cat_match = True
 
         for field in criteria.keys():
-            if info_passes_field(str(field), criteria[field], train_info) is False:
+            if info_passes_field_criteria(str(field), criteria[field], train_info) is False:
                 cat_match = False
                 break
 

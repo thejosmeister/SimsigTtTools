@@ -89,7 +89,7 @@ class CustomLogicExecutor:
         Returns the whole location, not just the name.
         """
         loc_list = list(filter(lambda x: x['location'] == readable_entry_name, train_locations))
-        if len(loc_list) == 1:
+        if len(loc_list) > 0:
             return loc_list[0]
         return None
 

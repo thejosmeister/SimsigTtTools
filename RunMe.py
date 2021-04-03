@@ -3,7 +3,7 @@ import WriteXmlTt
 import ParseXmlTt
 
 if __name__ == "__main__":
-    BuildXmlTtFromSource.BuildXmlTtFromSource('files_test')
+    BuildXmlTtFromSource.BuildXmlTtFromSource('example_source_to_tt_spec')
 
 # if __name__ == "__main__":
 #     WriteXmlTt.Build_Full_Xml_Tt('tt_name', '.WTT_name', 'sim_id', True)
