@@ -9,4 +9,4 @@ if __name__ == "__main__":
 #     WriteXmlTt.Build_Full_Xml_Tt('tt_name', '.WTT_name', 'sim_id', True)
 
 # if __name__ == "__main__":
-#     ParseXmlTt.Parse_Full_Xml_Tt('directory/SavedTimetable.xml', 'sim_id', True)
+#     ParseXmlTt.Parse_Full_Xml_Tt('filepath_to_WTT/tt_name.WTT', 'sim_id', True)

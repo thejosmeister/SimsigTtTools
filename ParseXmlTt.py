@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import zipfile
 from dbClient import *
 import common
 
@@ -228,7 +229,15 @@ def parse_train_categories_to_map(xml_tt_root) -> dict:
 
 
 def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
-    tree = ET.parse(file)
+    with zipfile.ZipFile(file, 'r') as zip_ref:
+        zip_ref.extractall('temp_parsing_dir')
+
+    tree = ET.parse('temp_parsing_dir/SavedTimetable.xml')
+
+    os.remove('temp_parsing_dir/SavedTimetable.xml')
+    os.remove('temp_parsing_dir/TimetableHeader.xml')
+    os.rmdir('temp_parsing_dir')
+
     root = tree.getroot()
     locations_map = common.create_location_map_from_file(sim_id)[1]
     tt_header = {'sim_id': root.attrib['ID'],
@@ -271,4 +280,6 @@ def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
                 rules_db.add_rule_if_not_present(parse_individual_xml_rule(rule))
 
 
-# Parse_Full_Xml_Tt('Swindon February 2021xxx/SavedTimetable.xml', 'swindid', True)
+
+
+Parse_Full_Xml_Tt('Swindon_February_2021.WTT', 'swindid', True)

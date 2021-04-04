@@ -370,6 +370,9 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
     potential_entry_point = None
     new_locations = []
     for location in initial_locations:
+        if 'Activities' in location:
+            if 'Stops to change trainmen' in location['Activities']:
+                location['activities'] = {"crewChange": ""}
 
         if location['Location'] in list_of_entry_points and potential_entry_point is None:
             for entry_point in entry_points.keys():
