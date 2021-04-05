@@ -11,7 +11,7 @@ timetable_header:
   description: 'A test timetable'
   # The start time for the timetable in hhmm
   start_time: '0400'
-  # The end time for the timetable in hhmm
+  # The end time for the timetable in hhmm (2500 translates to 0100 the next day)
   finish_time: '2500'
   # Timetable versioning properties
   v_major: '0'
