@@ -6,7 +6,7 @@ timetable_header:
   # The sim version that appears in the XML tt in the root tag.
   version: '5.8.6'
   # The name of the timetable
-  name: 'newport_test'
+  name: 'newport_full_test'
   # The description of the timetable
   description: 'A test timetable'
   # The start time for the timetable in hhmm
@@ -32,11 +32,11 @@ train_categories_file: 'default_categories_map.yaml'
 # N.B. if a start time of 0000 is used then trains from 0000 onwards will be added even though they are for the next day. This is because they appear on the charlwoodhouse location page.
 charlwoodhouse_location_pages:
   'http://charlwoodhouse.co.uk/rail/liverail/full/NWPTRTG/01/04/21':
-    start: '0400'
-    end: '0800'
+    start: '0000'
+    end: '2400'
   'http://charlwoodhouse.co.uk/rail/liverail/sum/SEVTNLJ/01/04/21':
-    start: '0400'
-    end: '0800'
+    start: '0000'
+    end: '2400'
 
 
 
