@@ -24,6 +24,7 @@ This would entail writing the TT to XML making changes in sim and then parsing a
         - [beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
         - [requests](https://pypi.org/project/requests/)
         - [PyYAML](https://pypi.org/project/PyYAML/)
+        - [isodate](https://pypi.org/project/isodate/)
 - some basic coding knowledge - will need to run functions with your own arguments i.e. calling Parse_Full_Xml_Tt({specified args})
 - text editor like notepad++ - used for editing yaml spec files
 - source data from real time trains or charlwoodhouse (other sources may be integrated in future)
