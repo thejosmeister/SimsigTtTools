@@ -227,11 +227,13 @@ def refine_headcode(train_info: dict) -> str:
 
 def info_passes_field_criteria(field_name: str, field_criteria: dict, train_info: dict):
     if field_name not in train_info:
+        if field_criteria['match'] == '.*':
+            return True
         return False
 
     value_in_info = train_info[field_name]
 
-    if 'not' in field_criteria and len(list(filter(lambda x: x != value_in_info, field_criteria['not']))) > 0:
+    if 'not' in field_criteria and len(list(filter(lambda x: x == value_in_info, field_criteria['not']))) > 0:
         return False
 
     return re.fullmatch(field_criteria['match'], value_in_info.strip()) is not None
@@ -412,11 +414,10 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
     return [new_locations, potential_entry_point]
 
 
-def Parse_Charlwood_Train(sim_id: str, categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
+def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
                           source_location: str, **kwargs):
     """
 
-    :param sim_id:
     :param categories_map:
     :param location_maps:
     :param custom_logic:
@@ -500,7 +501,7 @@ def parse_summary_page(start_time: str, end_time: str, summary_page) -> list:
     :param summary_page: the BeautifulSoup summary page.
     :return: list of links to train pages.
     """
-
+    tiploc_for_location = re.search('\\(([A-Z ]+)\\)', summary_page.find('h2').get_text()).group(1).split(' ')[0]
     summary_tables = summary_page.find_all('table', class_='summ-table')
 
     list_of_times = []
@@ -519,7 +520,7 @@ def parse_summary_page(start_time: str, end_time: str, summary_page) -> list:
     list_of_times = list(filter(lambda x: (x[0] >= start_time_num), list_of_times))
     list_of_times = list(filter(lambda x: (x[0] <= end_time_num), list_of_times))
 
-    return [x[1] for x in list_of_times]
+    return [tiploc_for_location, [x[1] for x in list_of_times]]
 
 
 def parse_full_page(start_time: str, end_time: str, full_page) -> list:
@@ -578,8 +579,7 @@ def Parse_Charlwood_House_Location_File(start_time: str, end_time: str, location
     if '/sum/' in location_of_file:
         print(f'Collecting trains for {location_of_file}')
         summary_page = BeautifulSoup(location_page_as_string, 'html.parser')
-        list_of_links = parse_summary_page(start_time, end_time, summary_page)
-        tiploc_location = re.search('/sum/([A-Z]+)/', location_of_file).group(1)
+        tiploc_location, list_of_links = parse_summary_page(start_time, end_time, summary_page)
 
         return [tiploc_location, [re.match('.*/train/(\\d+/.*)', x).group(1) for x in list_of_links]]
 
@@ -607,8 +607,7 @@ def Parse_Charlwood_House_Location_Page(start_time: str, end_time: str, location
     if '/sum/' in location_page_link:
         print(f'Collecting trains for {location_page_link}')
         summary_page = BeautifulSoup(response.content, 'html.parser')
-        list_of_links = parse_summary_page(start_time, end_time, summary_page)
-        tiploc_location = re.search('/sum/([A-Z]+)/', location_page_link).group(1)
+        tiploc_location, list_of_links = parse_summary_page(start_time, end_time, summary_page)
 
         return [tiploc_location, [f'http://charlwoodhouse.co.uk{x}' for x in list_of_links]]
 

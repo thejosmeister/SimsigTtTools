@@ -1,18 +1,25 @@
 # Each category will be indexed by their description
 'standard diesel freight':
   # The criteria will determine what characteristcs are needed for this category.
+
+  # To match a train to a trai category it must match the criteria on the fields pulled out of the source page.
+  # A list of fields you can use are listed in the readme.
+  # The match terms all use the same syntax: '!{text_to_not_match}**!{text_to_not_match}**{regex_term_to_match}'
+  # You can have multiple {text_to_not_match} terms and then always 1 {regex_term_to_match}
   criteria:
-    # This term will be split by **, the last term is always regex, the terms before exclude certain values.
-    # e.g. the expression below will match a number that is not 43, 68 or 802
+    # e.g. the expression below will match text that is not 43, 68 or 802 but text that is made up of digits ( '^\d+$' will match 1 or more digits like '1475' )
     Timing_Load: '!43**!68**!802**^\d+$'
 
-    # Regex that only matches D
+    # Regex that only matches D, there are
     Power_type: '^D$'
     # Regex that only matches Freight
-    Train_Status: 'Freight'
+    Train_Status: '.*(F|f)reight.*'
+    # We want to exclude max speeds of 75, 60, 45 as they are catered for below. '.*' at the end means we accept anything else.
+    max_speed: '!75**!60**!45**.*'
 
   # This ID is reserved as the default category ID, be careful not to make any other categories in other files with this ID.
   id: 'A0000001'
+  # Goes from 0 (heavy freight) to 4 (light engine)
   accel_brake_index: '1'
   # Does the train use freight linespeeds: -1 -> yes, 0 -> no.
   is_freight: '-1'
@@ -34,11 +41,9 @@
 
 'standard electric freight':
   criteria:
-    # Same as diesel freight
     Timing_Load: '!43**!68**!802**^\d+$'
-    # Regex that only matches E
     Power_type: '^E$'
-    Train_Status: 'Freight'
+    Train_Status: '.*(F|f)reight.*'
   id: 'F0000001'
   accel_brake_index: '1'
   is_freight: '-1'
@@ -58,7 +63,7 @@
     Timing_Load: '!43**!68**!802**^\d+$'
     Power_type: '^D$'
     max_speed: '75'
-    Train_Status: 'Freight'
+    Train_Status: '.*(F|f)reight.*'
   id: 'F0000002'
   accel_brake_index: '1'
   is_freight: '-1'
@@ -78,7 +83,7 @@
     Timing_Load: '!43**!68**!802**^\d+$'
     Power_type: '^D$'
     max_speed: '60'
-    Train_Status: 'Freight'
+    Train_Status: '.*(F|f)reight.*'
   id: 'F0000003'
   accel_brake_index: '1'
   is_freight: '-1'
@@ -98,7 +103,7 @@
     Timing_Load: '!43**!68**!802**^\d+$'
     Power_type: '^D$'
     max_speed: '45'
-    Train_Status: 'Freight'
+    Train_Status: '.*(F|f)reight.*'
   id: 'F0000004'
   accel_brake_index: '1'
   is_freight: '-1'
@@ -117,6 +122,7 @@
   criteria:
     # Standard class 158 timing load
     Timing_Load: '^E.*'
+    operator_code: '!GW**!AW**.*'
     max_speed: '90'
   id: 'B0000001'
   accel_brake_index: '2'

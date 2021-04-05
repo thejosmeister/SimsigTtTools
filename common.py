@@ -62,7 +62,7 @@ def create_categories_map_from_yaml(categories_yaml_file_name: str) -> dict:
             parts = category_data[cat]['criteria'][criteria].split('**')
             if len(parts) == 1:
                 # just regex
-                category_data[cat]['criteria'][criteria] = {'match' : parts[0]}
+                category_data[cat]['criteria'][criteria] = {'match': parts[0]}
                 continue
 
             # We have some terms before regex

@@ -30,26 +30,26 @@ train_categories_file: 'default_categories_map.yaml'
 
 # An example of the source pages we can pull info from. Just provide a link to each location page you want to use.
 # N.B. if a start time of 0000 is used then trains from 0000 onwards will be added even though they are for the next day. This is because they appear on the charlwoodhouse location page.
-#charlwoodhouse_location_pages:
-#  'http://charlwoodhouse.co.uk/rail/liverail/full/nwp/':
-#    start: '0400'
-#    end: '0800'
-#  'http://charlwoodhouse.co.uk/rail/liverail/sum/LWERWJN/':
-#    start: '0400'
-#    end: '0800'
+charlwoodhouse_location_pages:
+  'http://charlwoodhouse.co.uk/rail/liverail/full/NWPTRTG/01/04/21':
+    start: '0400'
+    end: '0800'
+  'http://charlwoodhouse.co.uk/rail/liverail/sum/SEVTNLJ/01/04/21':
+    start: '0400'
+    end: '0800'
 
 
 
 
 
 # To use stored html files use charlwoodhouse_location_files instead. Each location page will require the filepath from the charlwoodhouse.co.uk directory
-charlwoodhouse_location_files:
-  'charlwoodhouse.co.uk/rail/liverail/full/ABDARE/14/02/20.html':
-    start: '0400'
-    end: '0800'
-  'charlwoodhouse.co.uk/rail/liverail/sum/ABDARE/14/02/20.html':
-    start: '0400'
-    end: '0800'
+#charlwoodhouse_location_files:
+#  'charlwoodhouse.co.uk/rail/liverail/full/ABDARE/14/02/20.html':
+#    start: '0400'
+#    end: '0800'
+#  'charlwoodhouse.co.uk/rail/liverail/sum/ABDARE/14/02/20.html':
+#    start: '0400'
+#    end: '0800'
 
 # If stored files are used then also use the charlwood_files_root to specify where the 'charlwoodhouse.co.uk' directory is located relative to where the script is run
 # Leave empty if the files root is in the same directory as the python script.
