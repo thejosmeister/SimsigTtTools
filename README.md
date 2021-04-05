@@ -2,7 +2,7 @@
 Some python scripts that can parse and write Simsig TTs.
 
 ### General Overview
-Each TT that we either parse or generate from an external data source will be made up a set of TinyDB databases. 
+Each TT that we either parse or generate from an external data source will be made up a set of [TinyDB](https://tinydb.readthedocs.io/en/latest/getting-started.html) databases. 
 The data in the DBs will be a Json representation of what you would find in a Simsig XML TT (the upackaged files from a .WTT file).
 
 Whenever we fetch input information from an external source (RTT, charlwoodhouse, NROD) we will translate that to the Json representation and store in a db.
