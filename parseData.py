@@ -165,15 +165,20 @@ def parse_train_table(train_info_table) -> dict:
 
         if row_name == 'Power type':
             if row_1 not in ['', ' ']:
-                out['Power_type'] = row_1
+                out['Power_type'] = row_1.strip()
 
         if row_name == 'Timing Load':
             if row_1 not in ['', ' '] or row_2 not in ['', ' ']:
-                out['Timing_Load'] = row_1 + ' ' + row_2
+                timing_load = row_1 + ' ' + row_2
+                out['Timing_Load'] = timing_load.strip()
 
         if row_name == 'Speed':
             if re.search('\\d+', row_1.strip()) is not None:
-                out['max_speed'] = row_1
+                max_speed = row_1.strip()
+                if max_speed[0] == '0':
+                    out['max_speed'] = row_1[1:]
+                else:
+                    out['max_speed'] = row_1
 
         if row_name == 'Train Status':
             if 'passenger' in row_2.lower():
@@ -558,7 +563,7 @@ def Parse_Charlwood_House_Location_File(start_time: str, end_time: str, location
     :param start_time: start of period to look for trains in format hhmm
     :param end_time: end of period to look for trains in format hhmm
     :param location_of_file: relative path to charlwoodhouse locations file.
-    :return: list of train ids to parse the individual files.
+    :return: list of train filepaths to parse the individual files.
     """
     location_page_as_string = ''
 
@@ -573,14 +578,14 @@ def Parse_Charlwood_House_Location_File(start_time: str, end_time: str, location
         list_of_links = parse_summary_page(start_time, end_time, summary_page)
         tiploc_location = re.search('/sum/([A-Z]+)/', location_of_file).group(1)
 
-        return [tiploc_location, [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]]
+        return [tiploc_location, [re.match('.*/train/(\\d+/.*)', x).group(1) for x in list_of_links]]
 
     elif '/full/' in location_of_file:
         print(f'Collecting trains for {location_of_file}')
         full_page = BeautifulSoup(location_page_as_string, 'html.parser')
         tiploc_location, list_of_links = parse_full_page(start_time, end_time, full_page)
 
-        return [tiploc_location, [re.match('.*/train/(\\d+)/.*', x).group(1) for x in list_of_links]]
+        return [tiploc_location, [re.match('.*/train/(\\d+/.*)', x).group(1) for x in list_of_links]]
     else:
         print('Could not determine location file type: ' + location_of_file)
         return []

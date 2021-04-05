@@ -39,7 +39,7 @@
     # Regex that only matches E
     Power_type: '^E$'
     Train_Status: 'Freight'
-  id: 'A0000002'
+  id: 'F0000001'
   accel_brake_index: '1'
   is_freight: '-1'
   can_use_goods_lines: '-1'
@@ -53,12 +53,72 @@
     crew_change: '120'
   electrification: 'O'
 
-'Class 158':
+'Class 4 diesel freight':
+  criteria:
+    Timing_Load: '!43**!68**!802**^\d+$'
+    Power_type: '^D$'
+    max_speed: '75'
+    Train_Status: 'Freight'
+  id: 'F0000002'
+  accel_brake_index: '1'
+  is_freight: '-1'
+  can_use_goods_lines: '-1'
+  max_speed: '75'
+  train_length: '300'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'Class 6 diesel freight':
+  criteria:
+    Timing_Load: '!43**!68**!802**^\d+$'
+    Power_type: '^D$'
+    max_speed: '60'
+    Train_Status: 'Freight'
+  id: 'F0000003'
+  accel_brake_index: '1'
+  is_freight: '-1'
+  can_use_goods_lines: '-1'
+  max_speed: '60'
+  train_length: '300'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'Class 7 diesel freight':
+  criteria:
+    Timing_Load: '!43**!68**!802**^\d+$'
+    Power_type: '^D$'
+    max_speed: '45'
+    Train_Status: 'Freight'
+  id: 'F0000004'
+  accel_brake_index: '1'
+  is_freight: '-1'
+  can_use_goods_lines: '-1'
+  max_speed: '45'
+  train_length: '300'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'Class 158 (2 car)':
   criteria:
     # Standard class 158 timing load
     Timing_Load: '^E.*'
     max_speed: '90'
-  id: 'A0000003'
+  id: 'B0000001'
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -72,13 +132,33 @@
     crew_change: '120'
   electrification: 'D'
 
-'TFW Class 175':
+'GWR Class 158 (2 car)':
+  criteria:
+    # Standard class 158 timing load
+    Timing_Load: '^E.*'
+    operator_code: 'GW'
+    max_speed: '90'
+  id: 'B0000002'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '47'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'TFW Class 175 (2 car)':
   criteria:
     # Same as class 158 timing load
     Timing_Load: '^E.*'
     operator_code: 'AW'
     max_speed: '100'
-  id: 'B0000001'
+  id: 'B0000003'
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -92,15 +172,90 @@
     crew_change: '120'
   electrification: 'D'
 
+'XC Class 170 (2 car)':
+  criteria:
+    Timing_Load: '^E.*'
+    operator_code: 'XC'
+    max_speed: '100'
+  id: 'B0000004'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '100'
+  train_length: '47'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'TFW 150/153 (2 car)':
+  criteria:
+    Timing_Load: '^S.*'
+    operator_code: 'AW'
+    max_speed: '75'
+  id: 'B0000005'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '41'
+  speed_class: '48'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
 'HST - 2 + 4 Castle':
   criteria:
     Timing_Load: '^43$'
-  id: 'A0000004'
+    max_speed: '110'
+  id: 'C0000001'
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
-  max_speed: '90'
-  train_length: '47'
+  max_speed: '110'
+  train_length: '127'
+  speed_class: '4'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'GWR Class 80x (5 car)':
+  criteria:
+    Timing_Load: '^802$'
+    max_speed: '125'
+  id: 'C0000002'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '130'
+  speed_class: '24'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'OD'
+
+'XC Class 220/221 (4 car)':
+  criteria:
+    Timing_Load: '^V.*'
+    max_speed: '125'
+  id: 'C0000003'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '95'
   speed_class: '16'
   power_to_weight_category: '0'
   dwell_times:

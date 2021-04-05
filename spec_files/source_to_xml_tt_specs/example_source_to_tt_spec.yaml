@@ -1,3 +1,5 @@
+# The timetable_header will provide the overarching information for the TT file. This can be altered in the in sim editor so can just use place holder values
+
 timetable_header:
   # The sim id that appears in the XML tt in the root tag.
   sim_id: 'newport'
@@ -18,33 +20,45 @@ timetable_header:
   # The template given for train descriptions, will be applied if the train has a description of $template.
   train_description_template: '$originTime $originName-$destName $operator ($stock)'
 
+
+
 # Name of the train categories map we wish to use.
 train_categories_file: 'default_categories_map.yaml'
 
-# An example of the source pages we can pull info from.
-charlwoodhouse_location_pages:
-  'http://charlwoodhouse.co.uk/rail/liverail/full/nwp/':
-    start: '0400'
-    end: '0800'
-  'http://charlwoodhouse.co.uk/rail/liverail/sum/LWERWJN/':
-    start: '0400'
-    end: '0800'
+
+
+
+# An example of the source pages we can pull info from. Just provide a link to each location page you want to use.
+# N.B. if a start time of 0000 is used then trains from 0000 onwards will be added even though they are for the next day. This is because they appear on the charlwoodhouse location page.
+#charlwoodhouse_location_pages:
+#  'http://charlwoodhouse.co.uk/rail/liverail/full/nwp/':
+#    start: '0400'
+#    end: '0800'
+#  'http://charlwoodhouse.co.uk/rail/liverail/sum/LWERWJN/':
+#    start: '0400'
+#    end: '0800'
+
+
+
 
 
 # To use stored html files use charlwoodhouse_location_files instead. Each location page will require the filepath from the charlwoodhouse.co.uk directory
-#charlwoodhouse_location_files:
-#  'charlwoodhouse.co.uk/rail/liverail/full/ABDARE/14/02/20.html':
-#    start: '0400'
-#    end: '0800'
-#  'charlwoodhouse.co.uk/rail/liverail/sum/ABDARE/14/02/20.html':
-#    start: '0400'
-#    end: '0800'
+charlwoodhouse_location_files:
+  'charlwoodhouse.co.uk/rail/liverail/full/ABDARE/14/02/20.html':
+    start: '0400'
+    end: '0800'
+  'charlwoodhouse.co.uk/rail/liverail/sum/ABDARE/14/02/20.html':
+    start: '0400'
+    end: '0800'
 
 # If stored files are used then also use the charlwood_files_root to specify where the 'charlwoodhouse.co.uk' directory is located relative to where the script is run
 # Leave empty if the files root is in the same directory as the python script.
 charlwood_files_root: 'C:/directory/another/'
 
-# run with false if you're not sure if one already exists
+
+
+
+# run with false if you're not sure if a TT with the same name already exists, this will stop you deleting files you don't want to.
 overwrite_tt_with_same_name: True
 # If true, this will overwrite the trains in the TinyDb instance with the tt name
 overwrite_trains: True

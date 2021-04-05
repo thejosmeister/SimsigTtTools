@@ -50,9 +50,9 @@ def determine_sources(spec_data: dict, sim_id: str, categories_map: dict, locati
 
         location_parsing_funct = lambda start, end, location_page: \
             parseData.Parse_Charlwood_House_Location_File(start, end, f'{files_root}{location_page}')
-        train_parsing_funct = lambda train_id, location: \
+        train_parsing_funct = lambda train_filepath, location: \
             parseData.Parse_Charlwood_Train(sim_id, categories_map, location_maps, custom_location_logic, location,
-                                            train_filepath=f'{files_root}charlwoodhouse.co.uk/rail/liverail/train/{train_id}/14/02/20.html')
+                                            train_filepath=f'{files_root}charlwoodhouse.co.uk/rail/liverail/train/{train_filepath}')
 
     elif 'rtt_location_files' in spec_data:
         sources = spec_data['rtt_location_files']
