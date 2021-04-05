@@ -143,4 +143,4 @@ def BuildXmlTtFromSource(name_of_spec_file: str):
     if 'rules' in spec_data:
         add_rules(rules_db, spec_data['rules'])
 
-    WriteXmlTt.Build_Full_Xml_Tt(tt_name, tt_name, sim_id, True)
+    WriteXmlTt.Write_Full_Xml_Tt(tt_name, tt_name, True)

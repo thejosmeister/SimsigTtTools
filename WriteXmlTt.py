@@ -278,11 +278,11 @@ def convert_categories_to_xml(categories_map: dict) -> str:
     return out
 
 
-def Build_Full_Xml_Tt(tt_name: str, output_filename: str, sim_id: str, use_default_category: bool):
+def Write_Full_Xml_Tt(tt_name: str, output_filename: str, use_default_category: bool):
     header_db = MainHeaderDb(tt_name)
     header = build_xml_header(header_db)
     categories = header_db.get_categories_map()
-    locations_map = common.create_location_map_from_file(sim_id)[1]
+    locations_map = common.create_location_map_from_file(header_db.get_header()['sim_id'])[1]
     build_xml_list_of_tts(tt_name, output_filename + 'TT_List.xml', locations_map, categories, use_default_category)
     rules = build_xml_list_of_rules(tt_name, locations_map)
 
@@ -324,8 +324,3 @@ def Build_Full_Xml_Tt(tt_name: str, output_filename: str, sim_id: str, use_defau
     os.remove(f'{output_filename}/TimetableHeader.xml')
     os.remove(f'{output_filename}TT_List.xml')
     os.rmdir(output_filename)
-
-
-
-
-# Build_Full_Xml_Tt('newport_test', 'newport_test', 'newport', True)

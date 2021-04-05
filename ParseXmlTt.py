@@ -228,7 +228,7 @@ def parse_train_categories_to_map(xml_tt_root) -> dict:
     return categories_dict
 
 
-def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
+def Parse_Full_Xml_Tt(file: str, overwrite_existing: bool):
     with zipfile.ZipFile(file, 'r') as zip_ref:
         zip_ref.extractall('temp_parsing_dir')
 
@@ -239,7 +239,6 @@ def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
     os.rmdir('temp_parsing_dir')
 
     root = tree.getroot()
-    locations_map = common.create_location_map_from_file(sim_id)[1]
     tt_header = {'sim_id': root.attrib['ID'],
                  'version': root.attrib['Version'],
                  'name': root.find('Name').text.replace(' ', '_'),
@@ -251,6 +250,7 @@ def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
                  'v_minor': root.find('VMinor').text,
                  'v_build': root.find('VBuild').text,
                  'train_description_template': root.find('Description').text}
+    locations_map = common.create_location_map_from_file(tt_header['sim_id'])[1]
 
     tt_db = TrainTtDb(tt_header['name'])
     rules_db = RulesDb(tt_header['name'])
@@ -278,8 +278,3 @@ def Parse_Full_Xml_Tt(file: str, sim_id: str, overwrite_existing: bool):
                 rules_db.add_rule(parse_individual_xml_rule(rule))
             else:
                 rules_db.add_rule_if_not_present(parse_individual_xml_rule(rule))
-
-
-
-
-Parse_Full_Xml_Tt('Swindon_February_2021.WTT', 'swindid', True)

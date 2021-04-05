@@ -2,11 +2,16 @@ import BuildXmlTtFromSource
 import WriteXmlTt
 import ParseXmlTt
 
+# Provide the name of the spec file you wish to use.
 if __name__ == "__main__":
     BuildXmlTtFromSource.BuildXmlTtFromSource('example_source_to_tt_spec')
 
-# if __name__ == "__main__":
-#     WriteXmlTt.Build_Full_Xml_Tt('tt_name', '.WTT_name', 'sim_id', True)
 
+# Provide the name of the TT you wish to write from a Json DB, the name of the .WTT file you want to create, whether we use a default category for trains with none.
 # if __name__ == "__main__":
-#     ParseXmlTt.Parse_Full_Xml_Tt('filepath_to_WTT/tt_name.WTT', 'sim_id', True)
+#     WriteXmlTt.Write_Full_Xml_Tt('newport_test', 'newport_test', True)
+
+
+# Provide the filepath and name of the file you wish to parse and whether you want to overwrite existing trains in the DB if present.
+# if __name__ == "__main__":
+#     ParseXmlTt.Parse_Full_Xml_Tt('filepath_to_WTT/tt_name.WTT', True)
