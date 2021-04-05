@@ -119,7 +119,7 @@ Alongside this, the other elements of the TT specified in the spec file (name, d
 
 The script then converts all information in Tinydb instances to a .WTT file which is effectively a zip file containing two XML files with the TT data.
 
-**Notes**
+**Notes:**
 It is assumed that all trains fetched from a location are on the same day i.e. the charlwoodhouse location pages show trains from 0400 on day 1 to 0400 on day 2. If you set the times to start_time: 0000 and end_time: 2400 then the code will take the trains from 0000 to 0400 on day 2 as day 1 trains.
 
 There are a number of things that will require manual editing after creating the .WTT file:
@@ -154,6 +154,6 @@ Run WriteXmlTt.Write_Full_Xml_Tt in RunMe.py with arg ( <tt name that DB files a
 **What happens:**
 The code will take data in the named set of DB files and write it to a .WTT file with the specified name. This is done automatically in the BuildXmlTtFromSource method.
 
-### Making changes to Json TT
+## Making changes to Json TT
 
 More funtions will be added to make useful changes to TTs like bulk rules writing, bulk train editing, more indepth reports.
