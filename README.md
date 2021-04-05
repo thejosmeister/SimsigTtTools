@@ -81,6 +81,9 @@ Location: spec_files/categories/{file_name}.yaml
 Purpose: Used to set properties on each train that we write to a TT. Corresponds to Train Types in the in sim editor.
 Example File: default_categories_map.yaml
 
+To map charlwoodhouse trains the following properties are extracted from the page under the denoted field names:
+![Category_fields](https://github.com/thejosmeister/SimsigTtTools/blob/master/assorted_files/Category_fields.png)
+
 #### Locations Map
 Location: location_maps/{sim_id}.txt
 Purpose: Used to map the location names in the sim (mostly TIPLOC codes) to readable names as well as the sim entry points. (This will be revamped in future for usability)
