@@ -21,9 +21,10 @@ This would entail writing the TT to XML making changes in sim and then parsing a
 - Python 3 - definitely works with v3.7 or higher, probably works for earlier versions
     - With python packages:
         - Tinydb
+        - BeautifulSoup
         - ...
 - some basic coding knowledge - will need to run functions with your own arguments i.e. calling ParseXmlTt(<specified args>)
-- understanding of what yaml is - syntax used for spec files
+- text editor like notepad++ - used for editing yaml spec files
 - source data from real time trains or charlwoodhouse (other sources may be integrated in future)
 
 ### File Structure
@@ -77,15 +78,15 @@ Warning: there is no validation of what you provide to the script so it can be q
 
 ### Take data from source and create .WTT file
 You will need:
-- Source to TT spec file
-- Sim locations map
-- Train categories spec file
-- Custom location logic spec file
+- Source to TT spec file - example at spec_files/source_to_xml_tt_spec/example_source_to_xml_spec.yaml
+- Sim locations map - example at location_maps/newport.txt
+- Train categories spec file - example at spec_files/train_categories/default_categories_map.yaml
+- Custom location logic spec file - example at spec_files/custom_location_logic/newport.yaml
 
 Actions:
-Run xxx in yyy.py with args ( tt name, sim id, spec location )
+Run BuildXmlTtFromSource in RunMe.py with arg ( <source to xml spec file name> )
 
-Thus will produce a file xxx.WTT that will be a Simsig TT file.
+Thus will produce a file xxx.WTT that will be a Simsig TT file, with the name specified in the spec file.
 
 What happens:
 Script will look for trains in the specified time window for all specified source locations. I.e. all trains at Newport from 0400 to 1800.

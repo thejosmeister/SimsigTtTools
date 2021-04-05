@@ -320,7 +320,12 @@ def Build_Full_Xml_Tt(tt_name: str, output_filename: str, sim_id: str, use_defau
     zf.write(output_filename + '/TimetableHeader.xml', 'TimetableHeader.xml')
     zf.close()
 
-    # TODO poss delete interim files: filename/SavedTimetable.xml, filename/TimetableHeader.xml, {filename}TT_List.xml
+    os.remove(f'{output_filename}/SavedTimetable.xml')
+    os.remove(f'{output_filename}/TimetableHeader.xml')
+    os.remove(f'{output_filename}TT_List.xml')
+    os.rmdir(output_filename)
+
+
 
 
 # Build_Full_Xml_Tt('newport_test', 'newport_test', 'newport', True)
