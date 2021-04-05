@@ -403,7 +403,7 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
             continue
 
     if times_span_multiple_days(new_locations) is True:
-        readable_source_location = common.find_readable_location(source_location)
+        readable_source_location = common.find_readable_location(source_location, locations_map)
         location_on_day = list(filter(lambda x: x['location'] == readable_source_location, new_locations))[0]
 
         if do_times_cross_midnight(new_locations[0], location_on_day):
