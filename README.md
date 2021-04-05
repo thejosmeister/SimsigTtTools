@@ -131,6 +131,7 @@ There are a number of things that will require manual editing after creating the
 - More specific train categoies/types will have to be selected.
 - Freight headcodes and some properties (e.g. length) will need to be input/respecified (placeholder headocdes like 6ADJ are added by the code to indicate no headcode)
 - Some non standard locations not caught in custom logic will need to be modified for some trains.
+- Rules are not currently implemented in the spec file (although I do have some code that will do it from an old repo)
 
 ### Parse .WTT file into Json DB
 **You will need:**
