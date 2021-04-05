@@ -20,9 +20,10 @@ This would entail writing the TT to XML making changes in sim and then parsing a
 ### Requirements 
 - Python 3 - definitely works with v3.7 or higher, probably works for earlier versions
     - With python packages:
-        - Tinydb
-        - BeautifulSoup
-        - ...
+        - [tinydb](https://tinydb.readthedocs.io/en/latest/getting-started.html)
+        - [beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+        - [requests](https://pypi.org/project/requests/)
+        - [PyYAML](https://pypi.org/project/PyYAML/)
 - some basic coding knowledge - will need to run functions with your own arguments i.e. calling ParseXmlTt(<specified args>)
 - text editor like notepad++ - used for editing yaml spec files
 - source data from real time trains or charlwoodhouse (other sources may be integrated in future)
@@ -68,6 +69,27 @@ parseData.py - handles parsing of source data
 customLocationLogic.py - handles custom sim location logic which is used when creating a TT from external data source
 common.py - contains some common code
 ```
+
+### Key Spec Files
+#### Source To XML TT Spec
+Location: spec_files/source_to_xml_tt_specs/{file_name}.yaml
+Purpose: Provides key properties for build a TT from source data
+Example File: example_source_to_tt_spec.yaml
+
+#### Train Categories Map
+Location: spec_files/categories/{file_name}.yaml
+Purpose: Used to set properties on each train that we write to a TT. Corresponds to Train Types in the in sim editor.
+Example File: default_categories_map.yaml
+
+#### Locations Map
+Location: location_maps/{sim_id}.txt
+Purpose: Used to map the location names in the sim (mostly TIPLOC codes) to readable names as well as the sim entry points. (This will be revamped in future for usability)
+Example File: newport.txt
+
+#### Custom Location Logic
+Location: spec_files/sim_custom_location_logic/{sim_id}.yaml
+Purpose: Some locations in each sim require specific paths, lines, plats to be set to make TT data valid.
+Example File: newport.yaml
 
 
 ## Main usages
