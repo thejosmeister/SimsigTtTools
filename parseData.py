@@ -197,7 +197,7 @@ def parse_train_header(header_text: str) -> dict:
     :param header_text: text in charlwoodhouse train page header.
     :return: map { 'ch_id', 'origin_time', 'origin_name', 'dest_name' }
     """
-    match = re.match('Train (\\d+) \\(.+\\) (?:[0-9][A-Z][0-9]{2})? (\\d{2}:\\d{2}) (.+) to (.+)', header_text)
+    match = re.match('Train (\\d+) \\(.+\\) (?:[0-9][A-Z][0-9]{2} )? ?(\\d{2}:\\d{2})(?:\\.5)? (.+) to (.+)', header_text.replace('&half', '.5'))
 
     return {'ch_id': match.group(1), 'origin_time': match.group(2).replace(':', ''), 'origin_name': match.group(3),
             'destination_name': match.group(4)}
