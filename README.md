@@ -121,7 +121,7 @@ The script then converts all information in Tinydb instances to a .WTT file whic
 
 **Notes:**
 
-If want to create a new TT with the same name as an old one (or overwite all trains from the last) then make sure you delete the DB files to avoid old data not being left around.
+If want to create a new TT with the same name as an old one (or overwite all trains from the last) then make sure you delete the DB files for that particular TT name to avoid old data being left around.
 
 It is assumed that all trains fetched from a location are on the same day i.e. the charlwoodhouse location pages show trains from 0400 on day 1 to 0400 on day 2. If you set the times to start_time: 0000 and end_time: 2400 then the code will take the trains from 0000 to 0400 on day 2 as day 1 trains.
 
@@ -145,6 +145,10 @@ The code will populate a set of Json TT DBs under the filepath db/{parsed_TT_nam
 All trains will be converted to a Json representation of what they end up as in a Simsig TT and placed into the train_tts.json database file. Timetable header information will be in the main_header.json DB file. Any rules will be in the rules.json DB file.
 
 Methods in the dbClient.py file can be used to query and modify data in the Json DBs.
+
+**Notes:**
+
+If want to parse a TT with the same name as an old one and overwite all trains from the last, then make sure you delete the DB files for that particular TT name before to avoid old data being left around.
 
 
 ### Write info strored in Json DB to a .WTT file
