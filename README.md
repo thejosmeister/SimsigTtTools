@@ -24,7 +24,7 @@ This would entail writing the TT to XML making changes in sim and then parsing a
         - [beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
         - [requests](https://pypi.org/project/requests/)
         - [PyYAML](https://pypi.org/project/PyYAML/)
-- some basic coding knowledge - will need to run functions with your own arguments i.e. calling ParseXmlTt(<specified args>)
+- some basic coding knowledge - will need to run functions with your own arguments i.e. calling Parse_Full_Xml_Tt({specified args})
 - text editor like notepad++ - used for editing yaml spec files
 - source data from real time trains or charlwoodhouse (other sources may be integrated in future)
 
@@ -108,7 +108,7 @@ Warning: there is no validation of what you provide to the script so it can be q
 - Custom location logic file
 
 **Actions:**
-Run BuildXmlTtFromSource.BuildXmlTtFromSource in RunMe.py with arg ( <source to xml spec file name> )
+Run BuildXmlTtFromSource.BuildXmlTtFromSource in RunMe.py with arg ( {source to xml spec file name} )
 
 This will produce a file xxx.WTT that will be a Simsig TT file, with the name specified in the spec file.
 
@@ -137,7 +137,7 @@ There are a number of things that will require manual editing after creating the
 - Locations Map file for the particular sim
 
 **Actions:**
-Run ParseXmlTt.Parse_Full_Xml_Tt in RunMe.py with arg ( <.WTT filepath and name>, <True if you want to overwrite existing trains in the TT DB, False if not> )
+Run ParseXmlTt.Parse_Full_Xml_Tt in RunMe.py with arg ( {.WTT filepath and name}, {True if you want to overwrite existing trains in the TT DB, False if not} )
 
 **What happens:**
 The code will populate a set of Json TT DBs under the filepath db/{parsed_TT_name}.
@@ -152,7 +152,7 @@ Methods in the dbClient.py file can be used to query and modify data in the Json
 - Locations Map file for the particular sim
 
 **Actions:**
-Run WriteXmlTt.Write_Full_Xml_Tt in RunMe.py with arg ( <tt name that DB files are under>, <name of .WTT file we will write to>, <True if you want to use a default train category for trains that dont have one, False if not> )
+Run WriteXmlTt.Write_Full_Xml_Tt in RunMe.py with arg ( {tt name that DB files are under}, {name of .WTT file we will write to}, {True if you want to use a default train category for trains that dont have one, False if not} )
 
 **What happens:**
 The code will take data in the named set of DB files and write it to a .WTT file with the specified name. This is done automatically in the BuildXmlTtFromSource method.
