@@ -120,6 +120,9 @@ Alongside this, the other elements of the TT specified in the spec file (name, d
 The script then converts all information in Tinydb instances to a .WTT file which is effectively a zip file containing two XML files with the TT data.
 
 **Notes:**
+
+If want to create a new TT with the same name as an old one (or overwite all trains from the last) then make sure you delete the DB files to avoid old data not being left around.
+
 It is assumed that all trains fetched from a location are on the same day i.e. the charlwoodhouse location pages show trains from 0400 on day 1 to 0400 on day 2. If you set the times to start_time: 0000 and end_time: 2400 then the code will take the trains from 0000 to 0400 on day 2 as day 1 trains.
 
 There are a number of things that will require manual editing after creating the .WTT file:
