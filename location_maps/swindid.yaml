@@ -1,0 +1,107 @@
+entry_points:
+  EUPMAIN: Bathampton Jn
+    readable_names: Bathampton Jn
+    assoc_sim_location: BTHMPTJ
+
+  # Use custom logic to differentiate between these two
+  ECOCKD:
+    readable_names: Swindon Cocklebury Down
+    assoc_sim_location:
+  ECOCKU:
+    readable_names: Swindon Cocklebury, Swindon Cocklebury Up
+    assoc_sim_location: SDONCBY
+
+  EUPBAD:
+    readable_names: Badminton, BADMTN
+    assoc_sim_location:
+
+  # These will need logic
+  E920:
+    readable_names: Didcot TC Up, Didcot T.C.
+    assoc_sim_location: DIDCTTC
+  E6411:
+    readable_names: Didcot TC Dn \#1
+    assoc_sim_location:
+  E6413:
+    readable_names: Didcot TC Dn \#2
+    assoc_sim_location:
+
+  EUPOX:
+    readable_names: Kennington Jn
+    assoc_sim_location: KNNGTNJ
+  EARC:
+    readable_names: Appleford Sidings, Appleford Fhh
+    assoc_sim_location: APPLEFS
+  EWOOTT:
+    readable_names: Wootton Bassett F.Y. (Flhh, Wootton Bassett F.Y. (Flhh), Wootton Bassett F.Y.
+    assoc_sim_location: WTNBSFY
+
+  # Will need some custom logic
+  EDNRLF:
+    readable_names: Reading Relief
+    assoc_sim_location:
+  EDNMAIN:
+    readable_names: Reading Main, Reading, Reading [RDG]
+    assoc_sim_location: RDNGSTN
+
+  EDNTROW:
+    readable_names: Hawkeridge Jn, Hawkeridge Junction, HWKRJN
+    assoc_sim_location: TRWBRDG
+
+  EUPKEMB:
+  readable_names: Standish Jn
+    assoc_sim_location: STNDSHJ
+
+locations:
+  DIDCWE: Didcot West End
+  CHOLSEY: Cholsey, Cholsey [CHO]
+  RUSHEYP: Rushey Platt
+  DNGDS: Swindon Down Goods, Swindon DG
+  SN30: SN30
+  HGHWTHJ: Highworth Junction,Highworth Jn
+  MILTJN: Milton Junction
+  DIDCTEJ: Didcot East Jn
+  WTNBSTJ: Wootton Bassett Jn, Wootton Bassett Junction
+  GORASTR: Goring & Streatley, Goring & Streatley [GOR]
+  STVTN: Steventon
+  KEMBLE: Kemble, Kemble [KEM]
+  SDONCBY: Swindon Cocklebury
+  TRWBRDG: Trowbridge, Trowbridge [TRO]
+  RDLEY: Radley, Radley [RAD]
+  CHIPNHM: Chippenham, Chippenham [CPM]
+  DIDCTFP: Didcot Fuelling Point
+  DIDCTTC: Didcot Terminal Complex, Didcot TC, Didcot T.C.
+  CHALLOW: Challow
+  FOXHALJ: Foxhall Jn [XJF]
+  BRDFDJN: Bradford Jn, Bradford Junction
+  MRTNCUT: Moreton Cutting
+  THNGLYJ: Thingley Jn
+  HLVNGTN: Hullavington
+  KNNGTNJ: Kennington Jn
+  REDGWJN: Reading West Junction, Reading West Jn, Reading Main Line West
+  BOURTON: Bourton
+  APPLEFS: Appleford Sidings, Appleford Fhh,
+  SDONLY: Swindon Loco Yard
+  STRUMLC: St. Mary's Level Crossing
+  STRUD: Stroud, Stroud [STD]
+  RDNGSTN: Reading, Reading [RDG]
+  DIDCTNJ: Didcot North Jn
+  DIDCOTP: Didcot Parkway, Didcot Parkway [DID]
+  DIDCWCJ: Didcot West Curve Jn
+  SDON: Swindon, Swindon [SWI]
+  TILHRST: Tilehurst, Tilehurst [TLH]
+  WSTLGHJ: Westerleigh Junction, Westerleigh Jn
+  STNDSHJ: Standish Jn
+  PANGBRN: Pangbourne, Pangbourne [PAN]
+  BTHMPTJ: Bathampton Jn
+  WANTRD: Wantage Road
+  APPLEFD: Appleford, Appleford [APF]
+  MELKSHM: Melksham, Melksham [MKM]
+  THNGLEJ: Thingley East Junction
+  STNHSE: Stonehouse, Stonehouse [SHU]
+  CULHAM: Culham, Culham [CUM]
+  WTNBSFY: Wootton Bassett F.Y. (Flhh, Wootton Bassett F.Y. (Flhh), Wootton Bassett F.Y.
+  UFNGTN: Uffington (Oxfordshire)
+  SWINE: Swindon East
+  CHPSDBY: Chipping Sodbury
+  SN645: Wootton Bassett Gf, Swindon S645

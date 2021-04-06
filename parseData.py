@@ -369,9 +369,11 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
 
     # create list of entry point names
     list_of_entry_points = []
-    for lis in entry_points.values():
-        for elt in lis:
+    for entry_point in entry_points:
+        for elt in entry_points[entry_point]['readable_names']:
             list_of_entry_points.append(elt)
+        if entry_points[entry_point]['assoc_sim_location'] is not None:
+            list_of_entry_points.append(entry_points[entry_point]['assoc_sim_location'])
 
     # for each location check if potential entry point then check if in locations (both sides)
     potential_entry_point = None
@@ -383,7 +385,9 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
 
         if location['Location'] in list_of_entry_points and potential_entry_point is None:
             for entry_point in entry_points.keys():
-                if location['Location'] in entry_points[entry_point]:
+                if location['Location'] in entry_points[entry_point]['readable_names'] or \
+                        (entry_points[entry_point]['assoc_sim_location'] is not None and
+                         location['Location'] in entry_points[entry_point]['assoc_sim_location']):
                     potential_entry_point = entry_point
 
         # check l keys

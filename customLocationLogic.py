@@ -74,7 +74,7 @@ class CustomLogicExecutor:
         """
         Returns an associated entry location name and time if found.
         """
-        tiploc_for_entry = self.entry_points_map[potential_entry][-1]
+        tiploc_for_entry = self.entry_points_map[potential_entry]['assoc_sim_location']
         readable_entry_name = common.find_readable_location(tiploc_for_entry, self.locations_map)
 
         entry_location = self.get_entry_location_in_list(readable_entry_name, train_locations)
