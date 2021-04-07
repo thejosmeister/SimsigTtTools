@@ -30,12 +30,14 @@ class CustomLogicExecutor:
         entry_location = self.get_entry_location_in_train_locs(potential_entry, train_locations)
         if 'entry_point_rules' in self.custom_specs and potential_entry in self.custom_specs['entry_point_rules']:
             entry_point, entry_time, \
-            tt_template, train_locations = self.apply_custom_entry_logic(train_locations, entry_location, potential_entry_time,
+            tt_template, train_locations = self.apply_custom_entry_logic(train_locations, entry_location,
+                                                                         potential_entry_time,
                                                                          potential_entry)
         # If not then apply default
         else:
             entry_point, entry_time, \
-            tt_template, train_locations = self.apply_generic_entry_logic(train_locations, entry_location, potential_entry_time,
+            tt_template, train_locations = self.apply_generic_entry_logic(train_locations, entry_location,
+                                                                          potential_entry_time,
                                                                           potential_entry)
 
         # For each location in custom logic apply custom rules
@@ -117,6 +119,27 @@ class CustomLogicExecutor:
 
         return x_pos < y_pos
 
+    def x_after_time(self, x, time, train_locations):
+        """
+        Will return none if cant find x in locations.
+        Will return false if same time.
+        """
+        x_readable = common.find_readable_location(x, self.locations_map)
+        x_time = None
+        for l in train_locations:
+            if l['location'] == x_readable:
+                if 'dep' in l:
+                    x_time = l['dep']
+                elif 'arr' in l:
+                    x_time = l['arr']
+
+        if x_time is None:
+            return False
+
+        time_as_num = float(time)
+
+        return time_as_num < float(x_time)
+
     def remove_all_of_location(self, location_to_remove, train_locations):
         standard_location_to_remove = common.find_readable_location(location_to_remove, self.locations_map)
         return list(filter(lambda x: x['location'] != standard_location_to_remove, train_locations))
@@ -159,7 +182,11 @@ class CustomLogicExecutor:
         """
         For use with custom entry logic
         """
-        if self.rule_conditions_are_met(rule_root['conditions'], train_locations):
+
+        later_locations = list(
+            filter(lambda x: self.x_after_time(x['location'], entry_time, train_locations) is True, train_locations))
+
+        if len(later_locations) > 0 and self.rule_conditions_are_met(rule_root['conditions'], later_locations):
             return self.apply_then_clause(rule_root['then'], entry_location, entry_time, train_locations,
                                           potential_entry)
         return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
@@ -213,6 +240,8 @@ class CustomLogicExecutor:
             for rule in self.custom_specs['location_rules'][location]:
                 if 'if_x_y_concurrent' in rule:
                     train_locations = self.apply_x_y_concurrent(rule['if_x_y_concurrent'], train_locations)
+                if 'if_paticular_present' in rule:
+                    train_locations = self.apply_if_particular_present(rule['if_particular_present'], train_locations)
         return train_locations
 
     def apply_x_y_concurrent(self, rule_map, train_locations):
@@ -227,6 +256,12 @@ class CustomLogicExecutor:
 
         return train_locations
 
+    def apply_if_particular_present(self, rule, train_locations):
+        if self.rule_conditions_are_met(rule['conditions'], train_locations) is True:
+            train_locations = self.apply_locations_then_clause(rule['then'], train_locations)
+
+        return train_locations
+
     def are_x_y_concurrent(self, location1, location2, train_locations):
         """
         Returns index of location 1 if condition satisfied, o.w. will return -1
@@ -238,9 +273,8 @@ class CustomLogicExecutor:
                 readable_l2 == l['location'] for l in train_locations) is False:
             return False
 
-
         for i in range(len(train_locations)):
-            if train_locations[i]['location'] == readable_l1 and train_locations[i+1]['location'] == readable_l2:
+            if train_locations[i]['location'] == readable_l1 and train_locations[i + 1]['location'] == readable_l2:
                 return True
 
         return False
@@ -259,6 +293,8 @@ class CustomLogicExecutor:
                         , train_locations)
             if 'modify_location' in clause:
                 train_locations = self.modify_location(clause['modify_location'], train_locations)
+            if 'remove_props_from_location' in clause:
+                train_locations = self.remove_props_from_location(clause['remove_props_from_location'], train_locations)
 
         return train_locations
 
@@ -270,5 +306,15 @@ class CustomLogicExecutor:
             if l['location'] == readable_l:
                 for prop in location_modifications_copy:
                     l[prop] = location_modifications[prop]
+
+        return train_locations
+
+    def remove_props_from_location(self, location_with_props, train_locations):
+        readable_l = common.find_readable_location(location_with_props['location'], self.locations_map)
+
+        for l in train_locations:
+            if l['location'] == readable_l:
+                for prop in location_with_props['props']:
+                    l.pop(prop)
 
         return train_locations

@@ -1,5 +1,5 @@
 entry_points:
-  EUPMAIN: Bathampton Jn
+  EUPMAIN:
     readable_names: Bathampton Jn
     assoc_sim_location: BTHMPTJ
 
@@ -12,7 +12,7 @@ entry_points:
     assoc_sim_location: SDONCBY
 
   EUPBAD:
-    readable_names: Badminton, BADMTN
+    readable_names: Badminton, BADMTN, WSTLGHJ
     assoc_sim_location:
 
   # These will need logic
@@ -41,7 +41,7 @@ entry_points:
     readable_names: Reading Relief
     assoc_sim_location:
   EDNMAIN:
-    readable_names: Reading Main, Reading, Reading [RDG]
+    readable_names: Reading Main, Reading, Reading [RDG], Reading West [RDW], REDGWST, REDGWJN
     assoc_sim_location: RDNGSTN
 
   EDNTROW:
@@ -49,7 +49,7 @@ entry_points:
     assoc_sim_location: TRWBRDG
 
   EUPKEMB:
-  readable_names: Standish Jn
+    readable_names: Standish Jn
     assoc_sim_location: STNDSHJ
 
 locations:
