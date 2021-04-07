@@ -18,23 +18,24 @@ class CustomLogicExecutor:
 
         # May instantiate dbs here in future
 
-    def Perform_Custom_Logic(self, train_locations: list, potential_entry: str) -> list:
+    def Perform_Custom_Logic(self, train_locations: list, potential_entry: str, potential_entry_time: str) -> list:
         """
         :param train_locations: prospective train locations to undergo logic.
         :param potential_entry: the potential entry point for the train
+        :param potential_entry_time: the associated potential entry time.
         :return: [ entry_point?, entry_time?, tt_template, location_list ]
         """
 
         # Look to see if entry point has custom logic
-        entry_location, entry_time = self.get_entry_location_and_time(potential_entry, train_locations)
+        entry_location = self.get_entry_location_in_train_locs(potential_entry, train_locations)
         if 'entry_point_rules' in self.custom_specs and potential_entry in self.custom_specs['entry_point_rules']:
             entry_point, entry_time, \
-            tt_template, train_locations = self.apply_custom_entry_logic(train_locations, entry_location, entry_time,
+            tt_template, train_locations = self.apply_custom_entry_logic(train_locations, entry_location, potential_entry_time,
                                                                          potential_entry)
         # If not then apply default
         else:
             entry_point, entry_time, \
-            tt_template, train_locations = self.apply_generic_entry_logic(train_locations, entry_location, entry_time,
+            tt_template, train_locations = self.apply_generic_entry_logic(train_locations, entry_location, potential_entry_time,
                                                                           potential_entry)
 
         # For each location in custom logic apply custom rules
@@ -70,20 +71,19 @@ class CustomLogicExecutor:
 
         return train_locations
 
-    def get_entry_location_and_time(self, potential_entry, train_locations):
+    def get_entry_location_in_train_locs(self, potential_entry, train_locations):
         """
         Returns an associated entry location name and time if found.
         """
-        tiploc_for_entry = self.entry_points_map[potential_entry]['assoc_sim_location']
-        readable_entry_name = common.find_readable_location(tiploc_for_entry, self.locations_map)
+        if potential_entry is not None:
+            tiploc_for_entry = self.entry_points_map[potential_entry]['assoc_sim_location']
+            readable_entry_name = common.find_readable_location(tiploc_for_entry, self.locations_map)
 
-        entry_location = self.get_entry_location_in_list(readable_entry_name, train_locations)
-        if entry_location is not None:
-            if 'dep' in entry_location:
-                return [entry_location['location'], entry_location['dep']]
-            return [entry_location['location'], entry_location['arr']]
+            entry_location = self.get_entry_location_in_list(readable_entry_name, train_locations)
 
-        return [None, None]
+            if entry_location is not None:
+                return entry_location['location']
+        return None
 
     def get_entry_location_in_list(self, readable_entry_name, train_locations):
         """
@@ -133,7 +133,7 @@ class CustomLogicExecutor:
                     return new_locations
         return new_locations
 
-    def apply_generic_entry_logic(self, train_locations, entry_location, entry_time, potential_entry):
+    def apply_generic_entry_logic(self, train_locations, entry_location, potential_entry_time, potential_entry):
         """
         If potential entry is 1st location then capture dep time as entry time and delete location.
         If potential entry is not 1st location (implicitly no custom) then assume train starts on sim.
@@ -143,13 +143,13 @@ class CustomLogicExecutor:
 
         # If we cant find anything then bail out with a default
         if entry_location is None and potential_entry is not None:
-            return [potential_entry, train_locations[0]['dep'],
+            return [potential_entry, potential_entry_time,
                     'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
 
         # If entry is first location then we delete first location and are done.
         if train_locations[0]['location'] == entry_location:
             train_locations = self.remove_nth_location(entry_location, 1, train_locations)
-            return [potential_entry, entry_time,
+            return [potential_entry, potential_entry_time,
                     'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
 
         # Assume starts on sim.

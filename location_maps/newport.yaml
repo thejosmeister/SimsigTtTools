@@ -39,8 +39,8 @@ entry_points:
     readable_names: Maindee Depot Isu (Ce)
     assoc_sim_location: MAINCE
   EMSHFILDR:
-    readable_names: Marshfield
-    assoc_sim_location: MSHFILDR
+    readable_names: Marshfield Reliefs
+    assoc_sim_location:
   EEUSKJNY:
     readable_names: East Usk Jn. N. Y.
     assoc_sim_location: EUSKJNY

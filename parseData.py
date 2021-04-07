@@ -377,6 +377,7 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
 
     # for each location check if potential entry point then check if in locations (both sides)
     potential_entry_point = None
+    potential_entry_time = None
     new_locations = []
     for location in initial_locations:
         if 'Activities' in location:
@@ -389,6 +390,10 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
                         (entry_points[entry_point]['assoc_sim_location'] is not None and
                          location['Location'] in entry_points[entry_point]['assoc_sim_location']):
                     potential_entry_point = entry_point
+                    if 'dep' in location:
+                        potential_entry_time = location['dep']
+                    elif 'arr' in location:
+                        potential_entry_time = location['arr']
 
         # check l keys
         loc = common.find_readable_location(location['Location'], locations_map)
@@ -415,7 +420,7 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
         elif do_times_cross_midnight(location_on_day, new_locations[-1]):
             new_locations = add_time_to_locations_after_0000(new_locations)
 
-    return [new_locations, potential_entry_point]
+    return [new_locations, potential_entry_point, potential_entry_time]
 
 
 def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
@@ -473,12 +478,12 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
     train_info = complete_train_info(categories_map, train_info)
 
     # Filter locations out via sim locations and translate TIPLOC to readable
-    [readable_locations, potential_entry_point] = convert_train_locations(initial_locations, location_maps,
+    [readable_locations, potential_entry_point, potential_entry_time] = convert_train_locations(initial_locations, location_maps,
                                                                           source_location)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
     entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
-                                                                                              potential_entry_point)
+                                                                                              potential_entry_point, potential_entry_time)
 
     train_to_return = {}
 
