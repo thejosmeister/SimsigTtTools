@@ -438,7 +438,6 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
         train_file_as_string = ''
 
         f = open(kwargs['train_filepath'], "r")
-        # f = open('assorted_files/charlwoodhousesimsig/charlwoodhouse.co.uk/rail/liverail/train/16596143/14/02/20.html', "r")
         for file_line in f:
             train_file_as_string += file_line.rstrip()
         f.close()
@@ -638,8 +637,3 @@ def Parse_Rtt_Location_Page(start_time: str, end_time: str, location_page_link: 
 def Parse_Rtt_Train(sim_id: str, train_cat, location_maps, custom_logic: CustomLogicExecutor, source_location: str,
                     **kwargs):
     return None
-
-# print(parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))
-# a = common.create_location_map_from_file('newport')
-# parse_charlwood_train('newport', None, CustomLogicExecutor('newport', a[1], a[0]),
-#                       train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/22449918/01/04/21')

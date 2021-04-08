@@ -64,12 +64,17 @@ class CustomLogicExecutor:
         """
         Will delete any of these found before the entry point location.
         """
-        if entry_location is None:
+        if entry_location is None and entry_time is None:
             return train_locations
 
-        for location in list_to_delete:
-            if self.x_before_y(location, entry_location, train_locations) is True:
-                train_locations = self.remove_nth_location(location, 1, train_locations)
+        if entry_location is None:
+            for location in list_to_delete:
+                if self.x_after_time(location, entry_time, train_locations) is False:
+                    train_locations = self.remove_nth_location(location, 1, train_locations)
+        else:
+            for location in list_to_delete:
+                if self.x_before_y(location, entry_location, train_locations) is True:
+                    train_locations = self.remove_nth_location(location, 1, train_locations)
 
         return train_locations
 
@@ -209,8 +214,24 @@ class CustomLogicExecutor:
         if 'location' in condition:
             condition['location'] = common.find_readable_location(condition['location'], self.locations_map)
         for location in train_locations:
-            if all(prop in location and location[prop] == condition[prop] for prop in condition) is True:
+            if all(self.is_property_in_condition_satisfied(prop, condition[prop], location) for prop in condition) is True:
                 return True
+        return False
+
+    def is_property_in_condition_satisfied(self, prop, prop_value, location):
+        if prop[0] == '!':
+            if prop[1:] in location:
+                return False
+            return True
+
+        if prop_value[0] == '!':
+            if prop in location and location[prop] == prop_value[1:]:
+                return False
+            return True
+
+        if prop in location and prop_value == location[prop]:
+            return True
+
         return False
 
     def apply_then_clause(self, then_clauses, entry_location, entry_time, train_locations, potential_entry):
@@ -271,13 +292,13 @@ class CustomLogicExecutor:
 
         if any(readable_l1 == l['location'] for l in train_locations) is False or any(
                 readable_l2 == l['location'] for l in train_locations) is False:
-            return False
+            return -1
 
-        for i in range(len(train_locations)):
+        for i in range(len(train_locations) - 1):
             if train_locations[i]['location'] == readable_l1 and train_locations[i + 1]['location'] == readable_l2:
-                return True
+                return i
 
-        return False
+        return -1
 
     def apply_locations_then_clause(self, then_clauses, train_locations):
         for clause in then_clauses:
@@ -300,12 +321,23 @@ class CustomLogicExecutor:
 
     def modify_location(self, location_modifications, train_locations):
         location_modifications_copy = location_modifications.copy()
-        readable_l = common.find_readable_location(location_modifications_copy.pop('location'), self.locations_map)
+        if 'location' in location_modifications_copy:
+            readable_l = common.find_readable_location(location_modifications_copy.pop('location'), self.locations_map)
 
-        for l in train_locations:
-            if l['location'] == readable_l:
-                for prop in location_modifications_copy:
-                    l[prop] = location_modifications[prop]
+            for l in train_locations:
+                if l['location'] == readable_l:
+                    for prop in location_modifications_copy:
+                        l[prop] = location_modifications[prop]
+
+        elif 'new_location' in location_modifications_copy:
+            new_readable_l = common.find_readable_location(location_modifications_copy.pop('new_location'), self.locations_map)
+            old_readable_l = common.find_readable_location(location_modifications_copy.pop('old_location'), self.locations_map)
+
+            for l in train_locations:
+                if l['location'] == old_readable_l:
+                    l['location'] = new_readable_l
+                    for prop in location_modifications_copy:
+                        l[prop] = location_modifications[prop]
 
         return train_locations
 

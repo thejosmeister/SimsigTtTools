@@ -3,7 +3,7 @@
 # Entry point rules
 entry_point_rules:
   EUPBAD:
-    list_to_delete_if_before: ['Westerleigh Jn']
+    list_to_delete_if_before: ['WSTLGHJ']
 
   EDNMAIN:
     # The code will set the Marshfield entry point ot the mains by default. This logic can be used to set the entry to the reliefs if TT data suggests a train uses them.
@@ -59,7 +59,88 @@ location_rules:
           - { 'location': 'Didcot Parkway', 'plat': '5' }
         then:
           - modify_location: { 'location': 'Didcot Parkway', 'path': 'URL' }
-#
+
+  'Thingley East Junction':
+    - if_x_y_concurrent:
+        x_conditions:
+          - { 'location': 'Thingley East Junction', 'line': '!DM' }
+        y_conditions:
+          - { 'location': 'Chippenham' }
+        then:
+          - modify_location: { old_location: 'Thingley East Junction', new_location: 'THNGLYJ' }
+
+    - if_x_y_concurrent:
+        x_conditions:
+          - { 'location': 'THNGLYJ' }
+        y_conditions:
+          - { 'location': 'Thingley East Junction' }
+        then:
+          - remove_1st_of: [ 'Thingley East Junction' ]
+
+  HGHWTHJ:
+    - remove_location:
+        conditions:
+          - { 'location':'HGHWTHJ', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location':'HGHWTHJ', 'line': 'ML' }
+          - OR
+          - { 'location':'HGHWTHJ', 'path': 'ML' }
+
+  BOURTON:
+    - remove_location:
+        conditions:
+          - { 'location': 'BOURTON', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location': 'BOURTON', 'line': 'ML' }
+          - OR
+          - { 'location': 'BOURTON', 'path': 'ML' }
+
+  Steventon:
+    - remove_location:
+        conditions:
+          - { 'location': 'Steventon', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location': 'Steventon', 'line': 'ML' }
+          - OR
+          - { 'location': 'Steventon', 'path': 'ML' }
+
+  Milton Junction:
+    - remove_location:
+        conditions:
+          - { 'location': 'Milton Junction', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location': 'Milton Junction', 'line': 'ML' }
+          - OR
+          - { 'location': 'Milton Junction', 'path': 'ML' }
+
+  Foxhall Jn [XJF]:
+    - remove_location:
+        conditions:
+          - { 'location': 'Foxhall Jn [XJF]', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location': 'Foxhall Jn [XJF]', 'line': 'ML' }
+          - OR
+          - { 'location': 'Foxhall Jn [XJF]', 'path': 'ML' }
+
+  Didcot West End:
+    - remove_location:
+        conditions:
+          - { 'location': 'Didcot West End' }
+
+  Moreton Cutting:
+    - remove_location:
+        conditions:
+          - { 'location': 'Moreton Cutting', '!line': 'no line', '!path': 'no path' }
+
+  Rushey Platt:
+    - remove_location:
+        conditions:
+          - { 'location': 'Rushey Platt', '!line': 'no line', '!path': 'no path' }
+
+
+
+
+
 #    - if_x_y_concurrent:
 #        x_conditions:
 #          - { 'location': 'Severn Tunnel Junction' }
