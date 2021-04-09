@@ -42,7 +42,7 @@ class CustomLogicExecutor:
 
         # For each location in custom logic apply custom rules
         if 'location_rules' in self.custom_specs:
-            train_locations = self.apply_location_logic(train_locations)
+            train_locations = self.apply_location_logic(entry_point, train_locations)
 
         return [entry_point, entry_time, tt_template, train_locations]
 
@@ -191,12 +191,13 @@ class CustomLogicExecutor:
         later_locations = list(
             filter(lambda x: self.x_after_time(x['location'], entry_time, train_locations) is True, train_locations))
 
-        if len(later_locations) > 0 and self.rule_conditions_are_met(rule_root['conditions'], later_locations):
-            return self.apply_then_clause(rule_root['then'], entry_location, entry_time, train_locations,
-                                          potential_entry)
+        if len(later_locations) > 0 and self.rule_conditions_are_met(rule_root['conditions'], potential_entry,
+                                                                     later_locations):
+            return self.apply_entry_then_clause(rule_root['then'], entry_location, entry_time, train_locations,
+                                                potential_entry)
         return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
 
-    def rule_conditions_are_met(self, conditions, train_locations):
+    def rule_conditions_are_met(self, conditions, entry_point, train_locations):
         condition_met = True
         for condition in conditions:
             if condition == 'OR':
@@ -206,15 +207,19 @@ class CustomLogicExecutor:
                 continue
             if condition_met is False:
                 continue
-            if self.is_condition_met(condition, train_locations) is False:
+            if self.is_condition_met(condition, entry_point, train_locations) is False:
                 condition_met = False
         return condition_met
 
-    def is_condition_met(self, condition, train_locations):
+    def is_condition_met(self, condition, entry_point, train_locations):
+        if 'entry_point' in condition:
+            return condition['entry_point'] == entry_point
+
         if 'location' in condition:
             condition['location'] = common.find_readable_location(condition['location'], self.locations_map)
         for location in train_locations:
-            if all(self.is_property_in_condition_satisfied(prop, condition[prop], location) for prop in condition) is True:
+            if all(self.is_property_in_condition_satisfied(prop, condition[prop], location) for prop in
+                   condition) is True:
                 return True
         return False
 
@@ -234,7 +239,8 @@ class CustomLogicExecutor:
 
         return False
 
-    def apply_then_clause(self, then_clauses, entry_location, entry_time, train_locations, potential_entry):
+    def apply_entry_then_clause(self, then_clauses, entry_location, entry_time, train_locations, potential_entry):
+        # TODO refactor this method and apply_locations_then_clause to use common code.
         for clause in then_clauses:
             if 'entry_point' in clause:
                 potential_entry = clause['entry_point']
@@ -249,36 +255,36 @@ class CustomLogicExecutor:
                         common.find_readable_location(l_to_remove, self.locations_map)
                         , train_locations)
             if 'modify_location' in clause:
-                for l_to_remove in clause['modify_location']:
-                    train_locations = self.remove_all_of_location(
-                        common.find_readable_location(l_to_remove, self.locations_map)
-                        , train_locations)
+                train_locations = self.modify_location(clause['modify_location'], train_locations)
+            if 'remove_props_from_location' in clause:
+                train_locations = self.remove_props_from_location(clause['remove_props_from_location'], train_locations)
 
         return [potential_entry, entry_time, 'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
 
-    def apply_location_logic(self, train_locations):
+    def apply_location_logic(self, entry_point, train_locations):
         for location in self.custom_specs['location_rules']:
             for rule in self.custom_specs['location_rules'][location]:
                 if 'if_x_y_concurrent' in rule:
-                    train_locations = self.apply_x_y_concurrent(rule['if_x_y_concurrent'], train_locations)
+                    train_locations = self.apply_x_y_concurrent(rule['if_x_y_concurrent'], entry_point, train_locations)
                 if 'if_paticular_present' in rule:
-                    train_locations = self.apply_if_particular_present(rule['if_particular_present'], train_locations)
+                    train_locations = self.apply_if_particular_present(rule['if_particular_present'], entry_point,
+                                                                       train_locations)
         return train_locations
 
-    def apply_x_y_concurrent(self, rule_map, train_locations):
+    def apply_x_y_concurrent(self, rule_map, entry_point, train_locations):
         x_conditions = rule_map['x_conditions']
         y_conditions = rule_map['y_conditions']
 
-        if self.rule_conditions_are_met(x_conditions, train_locations):
+        if self.rule_conditions_are_met(x_conditions, entry_point, train_locations):
             x_index = self.are_x_y_concurrent(x_conditions[0]['location'], y_conditions[0]['location'], train_locations)
             if x_index > -1:
-                if self.rule_conditions_are_met(y_conditions, train_locations) is True:
+                if self.rule_conditions_are_met(y_conditions, entry_point, train_locations) is True:
                     train_locations = self.apply_locations_then_clause(rule_map['then'], train_locations)
 
         return train_locations
 
-    def apply_if_particular_present(self, rule, train_locations):
-        if self.rule_conditions_are_met(rule['conditions'], train_locations) is True:
+    def apply_if_particular_present(self, rule, entry_point, train_locations):
+        if self.rule_conditions_are_met(rule['conditions'], entry_point, train_locations) is True:
             train_locations = self.apply_locations_then_clause(rule['then'], train_locations)
 
         return train_locations
@@ -330,8 +336,10 @@ class CustomLogicExecutor:
                         l[prop] = location_modifications[prop]
 
         elif 'new_location' in location_modifications_copy:
-            new_readable_l = common.find_readable_location(location_modifications_copy.pop('new_location'), self.locations_map)
-            old_readable_l = common.find_readable_location(location_modifications_copy.pop('old_location'), self.locations_map)
+            new_readable_l = common.find_readable_location(location_modifications_copy.pop('new_location'),
+                                                           self.locations_map)
+            old_readable_l = common.find_readable_location(location_modifications_copy.pop('old_location'),
+                                                           self.locations_map)
 
             for l in train_locations:
                 if l['location'] == old_readable_l:

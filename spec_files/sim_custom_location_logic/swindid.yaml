@@ -61,11 +61,10 @@ location_rules:
           - modify_location: { 'location': 'Didcot Parkway', 'path': 'URL' }
 
   'Thingley East Junction':
-    - if_x_y_concurrent:
-        x_conditions:
+    - if_particular_present:
+        conditions:
           - { 'location': 'Thingley East Junction', 'line': '!DM' }
-        y_conditions:
-          - { 'location': 'Chippenham' }
+          - entry_point: 'EUPMAIN'
         then:
           - modify_location: { old_location: 'Thingley East Junction', new_location: 'THNGLYJ' }
 
