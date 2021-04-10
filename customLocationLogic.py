@@ -80,7 +80,7 @@ class CustomLogicExecutor:
 
     def get_entry_location_in_train_locs(self, potential_entry, train_locations):
         """
-        Returns an associated entry location name and time if found.
+        Returns an associated entry location name if found.
         """
         if potential_entry is not None:
             tiploc_for_entry = self.entry_points_map[potential_entry]['assoc_sim_location']
@@ -126,7 +126,7 @@ class CustomLogicExecutor:
 
     def x_after_time(self, x, time, train_locations):
         """
-        Will return none if cant find x in locations.
+        Will return false if cant find x in locations.
         Will return false if same time.
         """
         x_readable = common.find_readable_location(x, self.locations_map)
@@ -185,9 +185,8 @@ class CustomLogicExecutor:
 
     def if_later_location_matching(self, rule_root, entry_location, entry_time, train_locations, potential_entry):
         """
-        For use with custom entry logic
+        Applies some then clauses if there are locations after the potential entry time that satisfy conditions.
         """
-
         later_locations = list(
             filter(lambda x: self.x_after_time(x['location'], entry_time, train_locations) is True, train_locations))
 
@@ -227,6 +226,9 @@ class CustomLogicExecutor:
         return False
 
     def is_property_in_condition_satisfied(self, prop, prop_value, location):
+        """
+        Is a basic equals unless a '!' char is at the start of field or value.
+        """
         if prop[0] == '!':
             if prop[1:] in location:
                 return False
@@ -318,9 +320,7 @@ class CustomLogicExecutor:
         if index > len(train_locations) - 1:
             return False
 
-        if train_locations[index]['location'] == common.find_readable_location(location_name, self.locations_map):
-            return True
-        return False
+        return train_locations[index]['location'] == common.find_readable_location(location_name, self.locations_map)
 
     def apply_if_particular_present(self, rule, entry_point, train_locations):
         if self.rule_conditions_are_met(rule['conditions'], entry_point, train_locations) is True:
