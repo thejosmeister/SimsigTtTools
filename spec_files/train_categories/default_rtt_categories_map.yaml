@@ -8,13 +8,8 @@
   # You can have multiple {text_to_not_match} terms and then always 1 {regex_term_to_match}
   criteria:
     # e.g. the expression below will match text that is not 43, 68 or 802 but text that is made up of digits ( '^\d+$' will match 1 or more digits like '1475' )
-    Timing_Load: '!43**!68**!802**^\d+$'
-
-    # Regex that only matches D, there are
-    Power_type: '^D$'
-    # Regex that only matches Freight
-    Train_Status: '.*(F|f)reight.*'
-    # We want to exclude max speeds of 75, 60, 45 as they are catered for below. '.*' at the end means we accept anything else.
+    Timing_Load: '^Diesel locomotive, trailing load .*$'
+    is_freight: '-1'
     max_speed: '!75**!60**!45**.*'
 
   # This ID is reserved as the default category ID, be careful not to make any other categories in other files with this ID.
@@ -41,9 +36,8 @@
 
 'standard electric freight':
   criteria:
-    Timing_Load: '!43**!68**!802**^\d+$'
-    Power_type: '^E$'
-    Train_Status: '.*(F|f)reight.*'
+    Timing_Load: '^Electric locomotive, trailing load .*$'
+    is_freight: '-1'
   id: 'F0000001'
   accel_brake_index: '1'
   is_freight: '-1'
@@ -60,10 +54,9 @@
 
 'Class 4 diesel freight':
   criteria:
-    Timing_Load: '!43**!68**!802**^\d+$'
-    Power_type: '^D$'
+    Timing_Load: '^Diesel locomotive, trailing load .*$'
+    is_freight: '-1'
     max_speed: '75'
-    Train_Status: '.*(F|f)reight.*'
   id: 'F0000002'
   accel_brake_index: '1'
   is_freight: '-1'
@@ -80,10 +73,9 @@
 
 'Class 6 diesel freight':
   criteria:
-    Timing_Load: '!43**!68**!802**^\d+$'
-    Power_type: '^D$'
+    Timing_Load: '^Diesel locomotive, trailing load .*$'
+    is_freight: '-1'
     max_speed: '60'
-    Train_Status: '.*(F|f)reight.*'
   id: 'F0000003'
   accel_brake_index: '1'
   is_freight: '-1'
@@ -100,10 +92,9 @@
 
 'Class 7 diesel freight':
   criteria:
-    Timing_Load: '!43**!68**!802**^\d+$'
-    Power_type: '^D$'
+    Timing_Load: '^Diesel locomotive, trailing load .*$'
+    is_freight: '-1'
     max_speed: '45'
-    Train_Status: '.*(F|f)reight.*'
   id: 'F0000004'
   accel_brake_index: '1'
   is_freight: '-1'
@@ -118,10 +109,10 @@
     crew_change: '120'
   electrification: 'D'
 
-'Class 158 (2 car)':
+'Class 158/168/170/175 DMU':
   criteria:
     # Standard class 158 timing load
-    Timing_Load: '^E.*'
+    Timing_Load: '^Class 158/168/170/175 DMU.*'
     operator_code: '!GW**!AW**.*'
     max_speed: '90'
   id: 'B0000001'
@@ -141,7 +132,7 @@
 'GWR Class 158 (2 car)':
   criteria:
     # Standard class 158 timing load
-    Timing_Load: '^E.*'
+    Timing_Load: '^Class 158/168/170/175 DMU.*'
     operator_code: 'GW'
     max_speed: '90'
   id: 'B0000002'
@@ -161,7 +152,7 @@
 'TFW Class 175 (2 car)':
   criteria:
     # Same as class 158 timing load
-    Timing_Load: '^E.*'
+    Timing_Load: '^Class 158/168/170/175 DMU.*'
     operator_code: 'AW'
     max_speed: '100'
   id: 'B0000003'
@@ -180,9 +171,12 @@
 
 'XC Class 170 (2 car)':
   criteria:
-    Timing_Load: '^E.*'
+    Timing_Load: '^Class 158/168/170/175 DMU.*'
     operator_code: 'XC'
     max_speed: '100'
+  allox_criteria:
+    Alloction: '17011[1-7]'
+    operator_code: 'XC'
   id: 'B0000004'
   accel_brake_index: '3'
   is_freight: '0'
@@ -197,9 +191,63 @@
     crew_change: '120'
   electrification: 'D'
 
+'XC Class 170 (3 car)':
+  allox_criteria:
+    Alloction: '170((10[1-9])|110|(3.{2})|(6.{2}))'
+    operator_code: 'XC'
+  id: 'B1000004'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '100'
+  train_length: '71'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'XC Class 170 (4 car)':
+  allox_criteria:
+    Alloction: '17011[1-7], 17011[1-7]'
+    operator_code: 'XC'
+  id: 'B3000004'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '100'
+  train_length: '94'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'XC Class 170 (5 car)':
+  allox_criteria:
+    Alloction: '(17011[1-7], 170((10[1-9])|110|(3.{2})|(6.{2})))|(170((10[1-9])|110), 17011[1-7])'
+    operator_code: 'XC'
+  id: 'B4000004'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '100'
+  train_length: '118'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
 'TFW 150/153 (2 car)':
   criteria:
-    Timing_Load: '^S.*'
+    Timing_Load: '^150/153/155/156 DMU.*'
     operator_code: 'AW'
     max_speed: '75'
   id: 'B0000005'
@@ -218,7 +266,7 @@
 
 'HST - 2 + 4 Castle':
   criteria:
-    Timing_Load: '^43$'
+    Timing_Load: '^Castle Class HST.*$'
     max_speed: '110'
   id: 'C0000001'
   accel_brake_index: '2'
@@ -236,7 +284,8 @@
 
 'GWR Class 80x (5 car)':
   criteria:
-    Timing_Load: '^802$'
+    Timing_Load: '^Class 80x.*$'
+    operator_code: 'GW'
     max_speed: '125'
   id: 'C0000002'
   accel_brake_index: '2'
@@ -254,14 +303,89 @@
 
 'XC Class 220/221 (4 car)':
   criteria:
-    Timing_Load: '^V.*'
+    Timing_Load: '^Class 220/221 DMU.*'
     max_speed: '125'
+    operator_code: 'XC'
+  allox_criteria:
+    Allocation: '(220.{3})|(2211(36|4[014]))'
   id: 'C0000003'
   accel_brake_index: '3'
   is_freight: '0'
   can_use_goods_lines: '0'
   max_speed: '125'
   train_length: '95'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'XC Class 220/221 (5 car)':
+  allox_criteria:
+    Allocation: '2211(19|2.|3[0-5789])'
+    operator_code: 'XC'
+  id: 'C1000003'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '116'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'XC Class 220/221 (8 car)':
+  allox_criteria:
+    Allocation: '(220.{3})|(2211(36|4[014])), (220.{3})|(2211(36|4[014]))'
+    operator_code: 'XC'
+  id: 'C2000003'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '186'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'XC Class 220/221 (9 car)':
+  allox_criteria:
+    Allocation: '220.{3}, 2211(19|2.|3[0-5789])|221136, 22113[789]|2211(19|2.|3[0-5789]), 2214[014])'
+    operator_code: 'XC'
+  id: 'C3000003'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '209'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'XC Class 220/221 (10 car)':
+  allox_criteria:
+    Allocation: '2211(19|2.|3[0-5789]), 2211(19|2.|3[0-5789])'
+    operator_code: 'XC'
+  id: 'C4000003'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '209'
   speed_class: '16'
   power_to_weight_category: '0'
   dwell_times:
