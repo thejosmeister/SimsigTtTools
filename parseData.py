@@ -10,6 +10,7 @@ from customLocationLogic import CustomLogicExecutor
 
 CAPITALS = 'ABCDEFGHIJ'
 
+
 def parse_location_times(times_string: str) -> dict:
     formatted_times_string = times_string.replace('&half', '.5')
     dep = re.match('.*d\\. (\\d{2}:\\d{2}(?:\\.5)?)', formatted_times_string)
@@ -128,7 +129,7 @@ def parse_sched_table(table) -> list:
     return df
 
 
-def parse_train_table(train_info_table) -> dict:
+def parse_ch_train_table(train_info_table) -> dict:
     """
     :param train_info_table: BeautifulSoup instance of the ch train info table.
     :return: map like: { uid, operator_code, headcode?, Train category?, Power type?, Timing Load?, max_speed?, Train Status? }
@@ -192,12 +193,13 @@ def parse_train_table(train_info_table) -> dict:
     return out
 
 
-def parse_train_header(header_text: str) -> dict:
+def parse_charlwood_train_header(header_text: str) -> dict:
     """
     :param header_text: text in charlwoodhouse train page header.
     :return: map { 'ch_id', 'origin_time', 'origin_name', 'dest_name' }
     """
-    match = re.match('Train (\\d+) \\(.+\\) (?:[0-9][A-Z][0-9]{2} )? ?(\\d{2}:\\d{2})(?:\\.5)? (.+) to (.+)', header_text.replace('&half', '.5'))
+    match = re.match('Train (\\d+) \\(.+\\) (?:[0-9][A-Z][0-9]{2} )? ?(\\d{2}:\\d{2})(?:\\.5)? (.+) to (.+)',
+                     header_text.replace('&half', '.5'))
 
     return {'ch_id': match.group(1), 'origin_time': match.group(2).replace(':', ''), 'origin_name': match.group(3),
             'destination_name': match.group(4)}
@@ -357,6 +359,7 @@ def add_time_to_locations_after_0000(locations: list) -> list:
 
     return locations
 
+
 def convert_train_locations(initial_locations: list, location_maps: list, source_location: str) -> list:
     """
     :param initial_locations: the list of locations scraped from source.
@@ -451,11 +454,12 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
         return None
 
     # Fetch ch id and origin time location and dest from top of page <h2>
-    header_data = parse_train_header(train_page.find('h2').get_text())
-    print(f"parsing train {header_data['origin_time']} {header_data['origin_name']} - {header_data['destination_name']}")
+    header_data = parse_charlwood_train_header(train_page.find('h2').get_text())
+    print(
+        f"parsing train {header_data['origin_time']} {header_data['origin_name']} - {header_data['destination_name']}")
 
     # Fetch train info from train table
-    train_info = parse_train_table(train_page.find('table', {'class': 'train-table'}))
+    train_info = parse_ch_train_table(train_page.find('table', {'class': 'train-table'}))
 
     train_info['origin_name'] = header_data['origin_name']
     train_info['origin_time'] = header_data['origin_time']
@@ -477,12 +481,14 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
     train_info = complete_train_info(categories_map, train_info)
 
     # Filter locations out via sim locations and translate TIPLOC to readable
-    [readable_locations, potential_entry_point, potential_entry_time] = convert_train_locations(initial_locations, location_maps,
-                                                                          source_location)
+    [readable_locations, potential_entry_point, potential_entry_time] = convert_train_locations(initial_locations,
+                                                                                                location_maps,
+                                                                                                source_location)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
     entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
-                                                                                              potential_entry_point, potential_entry_time)
+                                                                                              potential_entry_point,
+                                                                                              potential_entry_time)
 
     train_to_return = {}
 
@@ -631,9 +637,136 @@ def Parse_Charlwood_House_Location_Page(start_time: str, end_time: str, location
 
 
 def Parse_Rtt_Location_Page(start_time: str, end_time: str, location_page_link: str):
-    return None
+    """
+    :param start_time: start of period to look for trains in format hhmm
+    :param end_time: end of period to look for trains in format hhmm
+    :param location_page_link: link to rtt location page
+    :return: list of links to rtt train pages.
+    """
+
+    # sort link with times
+    base_location_page_link = re.match('(.*/\\d{4}-\\d{2}-\\d{2}/)', location_page_link).group(1)
+    link_to_get = base_location_page_link + start_time + '-' + end_time
+
+    page = requests.get(link_to_get)
+
+    soup = BeautifulSoup(page.content, 'html.parser')
+
+    # This will find all the trains listed on the page
+    trains = soup.find_all('a', class_='service')
+
+    train_links = []
+
+    for train in trains:
+        train_links.append(train['href'])
+
+    page_header = soup.find_all('div', class_='header-text')
+    location = page_header[0].find('h3').get_text().strip().split('\n')[0].strip()
+
+    return [location, [f'https://www.realtimetrains.co.uk{t}' for t in train_links]]
 
 
-def Parse_Rtt_Train(sim_id: str, train_cat, location_maps, custom_logic: CustomLogicExecutor, source_location: str,
+def parse_rtt_train_header(header_string: str) -> dict:
+    parts = header_string.split('to')
+    first_half = re.search('([0-9][A-Z][0-9]{2}|[0-9]{3}[A-Z]) (\\d{4}) (.+)', parts[0])
+    dest_name = parts[1].strip()
+
+    return {'headcode': first_half.group(1), 'origin_time': first_half.group(2),
+            'origin_name': first_half.group(3).strip(), 'destination_name': dest_name}
+
+
+def parse_rtt_train_info(train_info_panels, allox_train):
+    train_info = {}
+    info_text_lines = []
+
+    if allox_train is True:
+        for panel in train_info_panels:
+            for line in panel.findall('li'):
+                if line.find('i', class_='glyphicons-database') is not None:
+                    train_info['uid'] = re.search('UID ([0-9A-Z]+),', line.get_text()).group(1)
+                if line.find('div', class_='allocation') is not None:
+                    train_info['Allocation'] = re.search
+
+            info_text_lines.append(line)
+
+def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor, source_location: str,
                     **kwargs):
+    """
+
+        :param train_cat:
+        :param location_maps:
+        :param custom_logic:
+        :param source_location:
+        :param kwargs: Contains 'train_link' which will link to train page
+        :return:
+        """
+    if 'train_link' in kwargs:
+        response = requests.get(kwargs['train_link'])
+        train_page = BeautifulSoup(response.content, 'html.parser')
+    else:
+        print('No train passed in')
+        return None
+
+    # Fetch ch id and origin time location and dest from top of page <h2>
+    header_data = parse_rtt_train_header(train_page.find('h3').find('div', class_='header').get_text())
+    print(
+        f"parsing train {header_data['origin_time']} {header_data['origin_name']} - {header_data['destination_name']}")
+
+    if 'allox_id' in kwargs['train_link']:
+        allox_train = True
+    else:
+        allox_train = False
+
+    # Fetch train info from train table
+    train_info = parse_rtt_train_info(train_page.find_all('div', {'class': 'callout infopanel'}), allox_train)
+
+    train_info['origin_name'] = header_data['origin_name']
+    train_info['origin_time'] = header_data['origin_time']
+    train_info['destination_name'] = header_data['destination_name']
+
+    # Sort headcode
+    if 'headcode' not in train_info:
+        train_info['headcode'] = refine_headcode(train_info)
+
+    # Fetch location data from sched table
+    initial_locations = parse_sched_table(train_page.find('table', {'class': 'sched-table'}))
+
+    if 'arr' in initial_locations[-1]:
+        train_info['destination_time'] = initial_locations[-1]['arr']
+    else:
+        train_info['destination_time'] = initial_locations[-1]['dep']
+
+    # Work out other fields for train from train cat dict
+    train_info = complete_train_info(train_cat, train_info)
+
+    # Filter locations out via sim locations and translate TIPLOC to readable
+    [readable_locations, potential_entry_point, potential_entry_time] = convert_train_locations(initial_locations,
+                                                                                                location_maps,
+                                                                                                source_location)
+
+    # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
+    entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
+                                                                                              potential_entry_point,
+                                                                                              potential_entry_time)
+
+    train_to_return = {}
+
+    for field in train_info:
+        train_to_return[field] = train_info[field]
+
+    if entry_point is not None:
+        train_to_return['entry_point'] = entry_point
+        train_to_return['entry_time'] = entry_time
+
+    train_to_return['tt_template'] = tt_template
+
+    train_to_return['locations'] = final_locations
+
+    return train_to_return
+
     return None
+
+
+if __name__ == '__main__':
+    Parse_Rtt_Train(None, None, None, ' ',
+                    train_link='https://www.realtimetrains.co.uk/train/Y11100/2021-04-08/detailed#allox_id=0')
