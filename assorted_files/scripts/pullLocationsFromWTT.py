@@ -50,5 +50,5 @@ def pull_tiploc_out_of_xml(files_to_pull_tiploc_out: list, out_filename):
 
 
 if __name__ == '__main__':
-    pull_tiploc_out_of_xml(['C:/Users/josiah.filleul/PycharmProjects/SimsigTtTools/assorted_files/Newport SO 21 11 2015 0000 Start.WTT'],
+    pull_tiploc_out_of_xml(['generic_filepath/Newport SO 21 11 2015 0000 Start.WTT'],
                            'test.yaml')
