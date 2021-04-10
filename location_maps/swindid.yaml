@@ -84,7 +84,8 @@ locations:
   SDONLY: Swindon Loco Yard
   STRUMLC: St. Mary's Level Crossing
   STRUD: Stroud, Stroud [STD]
-  RDNGSTN: Reading, Reading [RDG]
+  # Oxford rd junction in here becuase trains have to exit at rdg on the sim
+  RDNGSTN: Reading, Reading [RDG], RDNGORJ, Oxford Road Jn
   DIDCTNJ: Didcot North Jn
   DIDCOTP: Didcot Parkway, Didcot Parkway [DID]
   DIDCWCJ: Didcot West Curve Jn
@@ -105,3 +106,4 @@ locations:
   SWINE: Swindon East
   CHPSDBY: Chipping Sodbury
   SN645: Wootton Bassett Gf, Swindon S645
+  SB940: DIDC940, Didcot Sig. Sb940

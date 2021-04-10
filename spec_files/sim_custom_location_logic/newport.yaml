@@ -7,11 +7,6 @@
 
 # Entry point rules
 entry_point_rules:
-  # Example of when you have an entry location that is after locations on the sim that only trains in the other direction use (Westerleigh jn on Swindon is an example)
-  DUMMY:
-    # name(s) of locations we want to get rud of if train has entry 'DUMMY'
-    list_to_delete_if_before: ['a location', 'another_location']
-
   # Trains with this entry point will be subject to this rule.
   EMSHFILD:
     # The code will set the Marshfield entry point ot the mains by default. This logic can be used to set the entry to the reliefs if TT data suggests a train uses them.
@@ -27,25 +22,47 @@ entry_point_rules:
         # Remove 1st instance Marshfield location from train location list (needed for valid TT data)
         - remove_1st_of: [ 'Marshfield' ]
 
+    # !
+    # A limitation of the entry point rules is that you can only apply 1 rule for each entry point.
+    # If more are required then some logic can be moved to the location rules
+
+
+  # Example of when you have an entry location that is after locations on the sim that only trains in the other direction use (Westerleigh jn on Swindon is an example)
+  EXAMPLE1:
+    # name(s) of locations we want to get rud of if train has entry 'DUMMY'
+    list_to_delete_if_before: [ 'a location', 'another_location' ]
+
+  # This example shows how you can use the OR term to separate groups of conditions
+  EXAMPLE2:
+    if_later_location_matching:
+      conditions:
+        - { 'location': 'GORASTR', 'line': 'RL' }
+        - { 'location': 'GRWERWE', 'line': 'ML' }
+        - OR
+        - { 'location': 'GORASTR', 'path': 'RL' }
+        - OR
+        - { 'location': 'GORASTR', 'line': 'RL', 'plat': '3' }
+        - OR
+        - { 'location': 'GORASTR', 'plat': '3' }
+      then:
+        - entry_point: 'EDNRLF'
+        - remove_1st_of: [ 'Reading', 'REDGWJN' ]
+
 
 # Location rules
 location_rules:
-  'dummy location':
-    # Rule not implemented yet.
-    - if_x_y_z_then_delete_y:
-        x: 'first'
-        y: 'second'
-        z: 'third'
-
-  # If STJ is in the train locations.
+  # If STJ is in the train locations. You can apply multiple rules to a location, like the below.
   'Severn Tunnel Junction':
-    # We want to set certain paths/plats/lines if 2 locations are concurrent
+
+    # We want to set certain paths/plats/lines if we have certain that locations are concurrent
+    # You can specify as many locations as you want, just use the label location_{n}_conditions
     - if_x_y_concurrent:
         # Conditions for 1st location, in this case we are just matching on name
-        x_conditions:
+        location_1_conditions:
+          # Only 1 condition per location here.
           - { 'location': 'Severn Tunnel Junction' }
         # Conditions for 2nd location.
-        y_conditions:
+        location_2_conditions:
           - { 'location': 'Severn Tunnel West' }
         # Need to make the platform number 3 at STJ for valid TT data.
         then:
@@ -53,9 +70,39 @@ location_rules:
 
     # Another variation of the rule above.
     - if_x_y_concurrent:
-        x_conditions:
+        location_1_conditions:
           - { 'location': 'Severn Tunnel Junction' }
-        y_conditions:
+        location_2_conditions:
           - { 'location': 'SEVTUGL' }
         then:
           - modify_location: { 'location': 'Severn Tunnel Junction', 'plat': '3' }
+
+  EXAMPLE1:
+    # Then clauses will be executed if train contains location 'EXAMPLE1' and the conditions are met.
+    - if_particular_present:
+        conditions:
+          - { 'location': 'GORASTR', 'line': 'RL' }
+        then:
+          # This will remove a list of properties from a location, if present.
+          - remove_props_from_location: { 'location': 'GORASTR', props: [ 'line' ] }
+
+  EXAMPLE2:
+    - if_particular_present:
+        conditions:
+          - { 'location': 'Thingley East Junction', 'line': '!DM' }
+          # The entry point can be one of the conditions.
+          - entry_point: 'EUPMAIN'
+        then:
+          # We can also change the name of a location with the keys 'old_location' and 'new_location'
+          - modify_location: { old_location: 'Thingley East Junction', new_location: 'THNGLYJ' }
+
+  EXAMPLE3:
+    # This is a more direct way to remove a location that we don't want. The location will only be removed if it meets the conditions under 'location_conditions'
+    - remove_location:
+        # 'other_conditions' can be used to specify conditions that are not on the location to remove.
+        # Here the '!' means that we want the train to NOT have an entry point of 'ECOCKU'
+        other_conditions:
+          - entry_point: '!ECOCKU'
+        location_conditions:
+          # The '!' is used here to indicate that the location must not have the field present in order to match.
+          - { 'location': 'HGHWTHJ', '!line': 'no line', '!path': 'no path' }

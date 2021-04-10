@@ -213,7 +213,10 @@ class CustomLogicExecutor:
 
     def is_condition_met(self, condition, entry_point, train_locations):
         if 'entry_point' in condition:
-            return condition['entry_point'] == entry_point
+            c_entry = condition['entry_point']
+            if c_entry[0] == '!':
+                return c_entry[1:] != entry_point
+            return c_entry == entry_point
 
         if 'location' in condition:
             condition['location'] = common.find_readable_location(condition['location'], self.locations_map)
@@ -266,22 +269,58 @@ class CustomLogicExecutor:
             for rule in self.custom_specs['location_rules'][location]:
                 if 'if_x_y_concurrent' in rule:
                     train_locations = self.apply_x_y_concurrent(rule['if_x_y_concurrent'], entry_point, train_locations)
-                if 'if_paticular_present' in rule:
+                if 'if_particular_present' in rule:
                     train_locations = self.apply_if_particular_present(rule['if_particular_present'], entry_point,
                                                                        train_locations)
+                if 'remove_location' in rule:
+                    train_locations = self.apply_remove_location(rule['remove_location'], entry_point, train_locations)
         return train_locations
 
     def apply_x_y_concurrent(self, rule_map, entry_point, train_locations):
-        x_conditions = rule_map['x_conditions']
-        y_conditions = rule_map['y_conditions']
+        if 'entry_point' in rule_map:
+            c_entry = rule_map['entry_point']
+            if c_entry[0] == '!' and c_entry[1:] == entry_point:
+                return train_locations
+            if entry_point != c_entry:
+                return train_locations
+            amount_of_locations = len(rule_map) - 2
+        else:
+            amount_of_locations = len(rule_map) - 1
 
-        if self.rule_conditions_are_met(x_conditions, entry_point, train_locations):
-            x_index = self.are_x_y_concurrent(x_conditions[0]['location'], y_conditions[0]['location'], train_locations)
-            if x_index > -1:
-                if self.rule_conditions_are_met(y_conditions, entry_point, train_locations) is True:
-                    train_locations = self.apply_locations_then_clause(rule_map['then'], train_locations)
+        location_conditions = []
+        for i in range(1, amount_of_locations + 1):
+            location_conditions.append(rule_map[f'location_{i}_conditions'][0])
 
-        return train_locations
+        if len(train_locations) < 2:
+            return train_locations
+
+        # check all concurrent
+        loc_1_index = self.are_x_y_concurrent(location_conditions[0]['location'], location_conditions[1]['location'], train_locations)
+
+        if loc_1_index > -1 and amount_of_locations > 2:
+            next_index = loc_1_index + 2
+            for i in range(2, amount_of_locations):
+                if self.is_location_at_index(location_conditions[i]['location'], next_index, train_locations) is False:
+                    return train_locations
+                next_index += 1
+
+        # check all meet conditions
+        location_index = loc_1_index
+        for location_condition in location_conditions:
+            if self.is_condition_met(location_condition, entry_point, [train_locations[location_index]]) is False:
+                return train_locations
+            location_index += 1
+
+        # Apply then clauses
+        return self.apply_locations_then_clause(rule_map['then'], train_locations)
+
+    def is_location_at_index(self, location_name, index, train_locations):
+        if index > len(train_locations) - 1:
+            return False
+
+        if train_locations[index]['location'] == common.find_readable_location(location_name, self.locations_map):
+            return True
+        return False
 
     def apply_if_particular_present(self, rule, entry_point, train_locations):
         if self.rule_conditions_are_met(rule['conditions'], entry_point, train_locations) is True:
@@ -357,4 +396,24 @@ class CustomLogicExecutor:
                 for prop in location_with_props['props']:
                     l.pop(prop)
 
+        return train_locations
+
+    def apply_remove_location(self, rule_map, entry_point, train_locations):
+        if 'other_conditions' in rule_map:
+            condtions = rule_map['other_conditions']
+        else:
+            condtions = []
+
+        for condition in rule_map['location_conditions']:
+            condtions.append(condition)
+
+        if self.rule_conditions_are_met(condtions, entry_point, train_locations) is False:
+            return train_locations
+
+        for i in range(len(train_locations)):
+            for condition in rule_map['location_conditions']:
+                if condition != 'OR':
+                    if self.is_condition_met(condition, entry_point, [train_locations[i]]) is True:
+                        train_locations.pop(i)
+                        return train_locations
         return train_locations
