@@ -369,12 +369,15 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
 
     # create list of entry point names
     list_of_entry_points = []
-    for lis in entry_points.values():
-        for elt in lis:
+    for entry_point in entry_points:
+        for elt in entry_points[entry_point]['readable_names']:
             list_of_entry_points.append(elt)
+        if entry_points[entry_point]['assoc_sim_location'] is not None:
+            list_of_entry_points.append(entry_points[entry_point]['assoc_sim_location'])
 
     # for each location check if potential entry point then check if in locations (both sides)
     potential_entry_point = None
+    potential_entry_time = None
     new_locations = []
     for location in initial_locations:
         if 'Activities' in location:
@@ -383,8 +386,14 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
 
         if location['Location'] in list_of_entry_points and potential_entry_point is None:
             for entry_point in entry_points.keys():
-                if location['Location'] in entry_points[entry_point]:
+                if location['Location'] in entry_points[entry_point]['readable_names'] or \
+                        (entry_points[entry_point]['assoc_sim_location'] is not None and
+                         location['Location'] in entry_points[entry_point]['assoc_sim_location']):
                     potential_entry_point = entry_point
+                    if 'dep' in location:
+                        potential_entry_time = location['dep']
+                    elif 'arr' in location:
+                        potential_entry_time = location['arr']
 
         # check l keys
         loc = common.find_readable_location(location['Location'], locations_map)
@@ -411,7 +420,7 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
         elif do_times_cross_midnight(location_on_day, new_locations[-1]):
             new_locations = add_time_to_locations_after_0000(new_locations)
 
-    return [new_locations, potential_entry_point]
+    return [new_locations, potential_entry_point, potential_entry_time]
 
 
 def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
@@ -429,7 +438,6 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
         train_file_as_string = ''
 
         f = open(kwargs['train_filepath'], "r")
-        # f = open('assorted_files/charlwoodhousesimsig/charlwoodhouse.co.uk/rail/liverail/train/16596143/14/02/20.html', "r")
         for file_line in f:
             train_file_as_string += file_line.rstrip()
         f.close()
@@ -469,12 +477,12 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
     train_info = complete_train_info(categories_map, train_info)
 
     # Filter locations out via sim locations and translate TIPLOC to readable
-    [readable_locations, potential_entry_point] = convert_train_locations(initial_locations, location_maps,
+    [readable_locations, potential_entry_point, potential_entry_time] = convert_train_locations(initial_locations, location_maps,
                                                                           source_location)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
     entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
-                                                                                              potential_entry_point)
+                                                                                              potential_entry_point, potential_entry_time)
 
     train_to_return = {}
 
@@ -629,8 +637,3 @@ def Parse_Rtt_Location_Page(start_time: str, end_time: str, location_page_link: 
 def Parse_Rtt_Train(sim_id: str, train_cat, location_maps, custom_logic: CustomLogicExecutor, source_location: str,
                     **kwargs):
     return None
-
-# print(parse_charlwood_house_location_page('0400', '2400', 'http://charlwoodhouse.co.uk/rail/liverail/full/sdon/26/03/20'))
-# a = common.create_location_map_from_file('newport')
-# parse_charlwood_train('newport', None, CustomLogicExecutor('newport', a[1], a[0]),
-#                       train_link='http://www.charlwoodhouse.co.uk/rail/liverail/train/22449918/01/04/21')

@@ -1,0 +1,187 @@
+# Custom Location logic for the Swindon sim
+
+# Entry point rules
+entry_point_rules:
+  EUPBAD:
+    list_to_delete_if_before: ['WSTLGHJ']
+
+  EDNMAIN:
+    if_later_location_matching:
+      conditions:
+        - { 'location':'GORASTR', 'line': 'RL' }
+        - OR
+        - { 'location':'GORASTR', 'path': 'RL' }
+        - OR
+        - { 'location':'GORASTR', 'line': 'RL', 'plat': '3' }
+        - OR
+        - { 'location':'GORASTR', 'plat': '3' }
+      then:
+        - entry_point: 'EDNRLF'
+        - remove_1st_of: [ 'Reading', 'REDGWJN' ]
+
+
+# Location rules
+location_rules:
+  GORASTR:
+    - if_particular_present:
+        conditions:
+          - { 'location':'GORASTR', 'line': 'RL' }
+        then:
+          - remove_props_from_location:  { 'location': 'GORASTR', props: ['line'] }
+    - if_particular_present:
+        conditions:
+          - { 'location': 'GORASTR', 'line': 'ML' }
+        then:
+          - remove_props_from_location: { 'location': 'GORASTR', props: [ 'line' ] }
+
+
+  'Didcot East Jn':
+    - if_x_y_concurrent:
+        # can also have entry_point as a condition
+        location_1_conditions:
+          - { 'location': 'Didcot East Jn', 'line': 'URL' }
+        location_2_conditions:
+          - { 'location': 'Didcot Parkway', 'plat': '4' }
+        then:
+          - modify_location:  { 'location': 'Didcot Parkway', 'path': 'URL' }
+
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'Didcot East Jn', 'line': 'URL' }
+        location_2_conditions:
+          - { 'location': 'Didcot Parkway', 'plat': '5' }
+        then:
+          - modify_location: { 'location': 'Didcot Parkway', 'path': 'URL' }
+
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'Didcot East Jn'}
+        location_2_conditions:
+          - { 'location': 'Didcot North Jn'}
+        then:
+          - modify_location: { 'location': 'Didcot East Jn', 'path': 'RL', 'line': 'AL' }
+
+  'Thingley East Junction':
+    - if_particular_present:
+        conditions:
+          - { 'location': 'Thingley East Junction', 'line': '!DM' }
+          - entry_point: 'EUPMAIN'
+        then:
+          - modify_location: { old_location: 'Thingley East Junction', new_location: 'THNGLYJ' }
+
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'THNGLYJ' }
+        location_2_conditions:
+          - { 'location': 'Thingley East Junction' }
+        then:
+          - remove_1st_of: [ 'Thingley East Junction' ]
+
+  HGHWTHJ:
+    - remove_location:
+        # can have key for other conditions on train
+        other_conditions:
+          - entry_point: '!ECOCKU'
+        location_conditions:
+          - { 'location':'HGHWTHJ', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location':'HGHWTHJ', 'line': 'ML' }
+          - OR
+          - { 'location':'HGHWTHJ', 'path': 'ML' }
+
+  BOURTON:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'BOURTON', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location': 'BOURTON', 'line': 'ML' }
+          - OR
+          - { 'location': 'BOURTON', 'path': 'ML' }
+
+  Steventon:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'Steventon', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location': 'Steventon', 'line': 'ML' }
+          - OR
+          - { 'location': 'Steventon', 'path': 'ML' }
+
+  Milton Junction:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'Milton Junction', '!arr': 'passes', '!line': 'no line', '!path': 'no path' }
+
+  Foxhall Jn [XJF]:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'Foxhall Jn [XJF]', '!arr': 'passes', '!line': 'no line', '!path': 'no path' }
+          - OR
+          - { 'location': 'Foxhall Jn [XJF]', 'line': 'ML' }
+          - OR
+          - { 'location': 'Foxhall Jn [XJF]', 'path': 'ML' }
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'Foxhall Jn [XJF]' }
+        location_2_conditions:
+          - { 'location': 'DIDCOTP', plat: '4' }
+        then:
+          - modify_location: { 'location': 'Foxhall Jn [XJF]', 'line': 'RL' }
+
+  Didcot West End:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'Didcot West End', '!arr': 'train passes' }
+
+    - if_x_y_concurrent:
+        location_1_conditions:
+        - { 'location': 'DIDCOTP', 'line': 'GL' }
+        location_2_conditions:
+          - { 'location': 'Didcot West End' }
+        then:
+          - modify_location: { 'location': 'Didcot West End', 'path': 'GL' }
+
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'DIDCOTP', 'line': 'RL' }
+        location_2_conditions:
+          - { 'location': 'Didcot West End' }
+        then:
+          - modify_location: { 'location': 'Didcot West End', 'path': 'RL' }
+
+  Moreton Cutting:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'Moreton Cutting', '!line': 'no line', '!path': 'no path' }
+    - if_particular_present:
+        conditions:
+          - { 'location': 'Moreton Cutting', 'line': 'ML', '!path': 'no path' }
+          - entry_point: 'EDNRLF'
+          - OR
+          - { 'location': 'Moreton Cutting', 'line': 'ML', 'path': 'ML' }
+          - entry_point: 'EDNRLF'
+        then:
+          - modify_location: { location: 'Moreton Cutting', path: 'RL' }
+
+  Rushey Platt:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'Rushey Platt', '!line': 'no line', '!path': 'no path' }
+
+  REDGWJN:
+    - if_particular_present:
+        conditions:
+          - entry_point: 'EDNRLF'
+          - OR
+          - entry_point: 'EDNMAIN'
+        then:
+          - remove_1st_of: ['REDGWJN', 'Reading']
+
+  Reading:
+    - if_particular_present:
+        conditions:
+          - entry_point: 'EDNRLF'
+          - OR
+          - entry_point: 'EDNMAIN'
+        then:
+          - remove_1st_of: [ 'REDGWJN', 'Reading']
