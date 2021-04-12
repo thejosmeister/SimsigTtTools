@@ -228,7 +228,7 @@ def refine_headcode(train_info: dict) -> str:
     return train_info['uid'][:4]
 
 
-def info_passes_field_criteria(field_name: str, field_criteria: dict, train_info: dict):
+def info_passes_field_criteria(field_name: str, field_criteria: dict, train_info: dict) -> bool:
     if field_name not in train_info:
         if field_criteria['match'] == '.*':
             return True
@@ -677,7 +677,10 @@ def Parse_Rtt_Location_Page(start_time: str, end_time: str, location_page_link: 
     train_links = []
 
     for train in trains:
-        train_links.append(train['href'])
+        train_link = train['href']
+        if 'allox_id' in train_link:
+            train_link = train_link.split('allox_id=')[0] + 'allox_id=0'
+        train_links.append(train_link)
 
     page_header = soup.find_all('div', class_='header-text')
     location = page_header[0].find('h3').get_text().strip().split('\n')[0].strip()
@@ -686,12 +689,12 @@ def Parse_Rtt_Location_Page(start_time: str, end_time: str, location_page_link: 
 
 
 def parse_rtt_train_header(header_string: str) -> dict:
-    parts = header_string.split('to')
-    first_half = re.search('([0-9][A-Z][0-9]{2}|[0-9]{3}[A-Z] )?(\\d{4}) (.+)', parts[0])
+    parts = header_string.split(' to ')
+    first_half = re.search('([0-9][A-Z][0-9]{2} |[0-9]{3}[A-Z] )?(\\d{4}) (.+)', parts[0])
     dest_name = parts[1].strip()
 
     if first_half.group(1) is not None:
-        return {'headcode': first_half.group(1), 'origin_time': first_half.group(2),
+        return {'headcode': first_half.group(1).strip(), 'origin_time': first_half.group(2),
                 'origin_name': first_half.group(3).strip(), 'destination_name': dest_name}
     return {'origin_time': first_half.group(2), 'origin_name': first_half.group(3).strip(), 'destination_name': dest_name}
 
@@ -712,11 +715,14 @@ def parse_rtt_train_info(train_page, allox_train):
 
     if allox_train is True:
         for panel in train_info_panels:
-            for line in panel.findall('li'):
+            for line in panel.find_all('li'):
                 if line.find('i', class_='glyphicons-database') is not None:
                     train_info['uid'] = re.search('UID ([0-9A-Z]+),', line.get_text()).group(1)
                 if line.find('div', class_='allocation') is not None:
-                    alloc_text = re.search('(\\d+(?: \\+ \\d)*)', line.find('span').get_text()).group(1)
+                    if line.find('span') is not None:
+                        alloc_text = re.search('(\\d+(?: \\+ \\d+)*)', line.find('span').get_text()).group(1)
+                    else:
+                        alloc_text = re.search('(\\d+(?: \\+ \\d+)*)', line.find('li').get_text()).group(1)
                     units = alloc_text.split(' + ')
                     ordered_units = sorted([int(u) for u in units])
                     train_info['Allocation'] = ', '.join([str(n) for n in ordered_units])
@@ -740,7 +746,7 @@ def parse_rtt_train_info(train_page, allox_train):
                     timing_load_string = ' '.join([t.get_text() for t in timing_load_parts])
                     if 'max' in timing_load_string:
                         t_l_match_obj = re.search('(?:Pathed|Starts) as (.+) Planned for (.+)mph max', timing_load_string)
-                        train_info['Timing_load'] = t_l_match_obj.group(1)
+                        train_info['Timing_Load'] = t_l_match_obj.group(1)
                         train_info['max_speed'] = t_l_match_obj.group(2)
                     else:
                         t_l_match_obj = re.search('Pathed as (.+)', timing_load_string.strip())
@@ -754,15 +760,19 @@ def parse_rtt_train_locations(locations_object):
 
     for a in locations_object.find_all('div', class_='location'):
         if a.find('a', {'class': 'name'}) is not None and a.find('div', {'class': 'wtt'}) is not None:
-            location = {'location': a.find('a', {'class': 'name'}).text}
+            location = {'Location': a.find('a', {'class': 'name'}).text}
 
             # Arrival Times
             if a.find('div', {'class': 'wtt'}).find('div', {'class': 'arr'}) is not None:
-                location['arr'] = a.find('div', {'class': 'wtt'}).find('div', {'class': 'arr'}).text.replace('½', '.5')
+                arr = a.find('div', {'class': 'wtt'}).find('div', {'class': 'arr'}).text.replace('½', '.5')
+                if arr != '':
+                    location['arr'] = arr
 
             # Departure Times
             if a.find('div', {'class': 'wtt'}).find('div', {'class': 'dep'}) is not None:
-                location['dep'] = a.find('div', {'class': 'wtt'}).find('div', {'class': 'dep'}).text.replace('½', '.5')
+                dep = a.find('div', {'class': 'wtt'}).find('div', {'class': 'dep'}).text.replace('½', '.5')
+                if dep != '':
+                    location['dep'] = dep
 
             # Platform
             if a.find('div', {'class': 'platform'}) is not None:
@@ -840,10 +850,10 @@ def complete_rtt_train_info(train_cat: dict, train_info: dict) -> dict:
     # start_traction, description
     out['start_traction'] = out['electrification']
 
-    if 'Allocation' not in out:
+    if 'Allocation' not in train_info:
         out['description'] = '$template'
     else:
-        out['description'] = f'{out["origin_time"]} {out["origin_name"]} - {out["destination_name"]} ({out["Allocation"]})'
+        out['description'] = f'{out["origin_time"]} {out["origin_name"]} - {out["destination_name"]} ({train_info["Allocation"]})'
     return out
 
 
@@ -882,8 +892,10 @@ def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor,
     train_info['origin_time'] = header_data['origin_time']
     train_info['destination_name'] = header_data['destination_name']
 
-    if 'headcode' not in train_info:
+    if 'headcode' not in header_data:
         train_info['headcode'] = refine_headcode(train_info)
+    else:
+        train_info['headcode'] = header_data['headcode']
 
     # Fetch location data from locations list
     initial_locations = parse_rtt_train_locations(train_page.find('div', class_='locationlist'))
@@ -923,5 +935,6 @@ def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor,
 
 
 if __name__ == '__main__':
-    Parse_Rtt_Train(None, None, None, ' ',
+    Parse_Rtt_Train(common.create_categories_map_from_yaml('default_rtt_categories_map.yaml'), common.create_location_map_from_file('swindid'),
+                    CustomLogicExecutor('swindid',common.create_location_map_from_file('swindid')[1], common.create_location_map_from_file('swindid')[0]), 'SDON',
                     train_link='https://www.realtimetrains.co.uk/train/H07479/2021-04-10/detailed')
