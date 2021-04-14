@@ -1,0 +1,118 @@
+entry_points: 
+  ECEMENT: # cement works
+    readable_names: Westbury Cement Works, Westbury Cement Works Ews, Westbury Tarmac, Westbury Tarmac Colas Rail
+    assoc_sim_location: WSTBYCW
+  EDNMAIN: # chippenham/ wooton basset
+    readable_names: Wootton Bassett Jn
+    assoc_sim_location: WTNBSTJ
+  EDW: # southcote
+    readable_names: Southcote Jn
+    assoc_sim_location: SCOTEJN
+  EMEREDP: # merehead departures
+    readable_names: Merehead Quarry, Merehead Quarry (Fhh)
+    assoc_sim_location: MERHDQ
+  ENEWBYD:
+    readable_names: Newbury Yard
+    assoc_sim_location: NEWBYD
+  EUPALT:
+    readable_names: Cogload Jn
+    assoc_sim_location: COGLOAD
+  EUPBATH:
+    readable_names: Bathampton Jn
+    assoc_sim_location: BTHMPTJ
+  EUPSALS:
+    readable_names: Wilton Jn
+    assoc_sim_location: WILTONJ
+  EUPWSX:
+    readable_names: Yeovil Pen Mill, Yeovil Pen Mill [YVP]
+    assoc_sim_location: YOVILPM
+  # Down yard entry points
+  EWDS1:
+    readable_names: Westbury Down T.C., Westbury Down Tc Gbrf
+    assoc_sim_location: WSTBRDY
+  EWDS2: # Down sidings 2
+    readable_names:
+    assoc_sim_location:
+  EWNS:
+    readable_names:
+    assoc_sim_location:
+  # Engine sdgs in?
+  EWEI:
+    readable_names:
+    assoc_sim_location:
+  EWEO:
+    readable_names: Westbury Dmu Sidings
+    assoc_sim_location: WENGINE
+  EWHATLY:
+    readable_names: Whatley Quarry, Whatley Quarry F Liner Hh
+    assoc_sim_location: WHATLYQ
+  EWUS:
+    readable_names: Westbury Up T.C.
+    assoc_sim_location: WSTBRUY
+ 
+locations: 
+  ALDMSTN: Aldermaston, Aldermaston [AMT]
+  ATHLNEY: Athelney Crossing
+  AVNCLFF: Avoncliff, Avoncliff [AVF]
+  BEDYN: Bedwyn, Bedwyn [BDW]
+  BEDYNS: Bedwyn Reversing Siding, BEDYNRS
+  BLBGJN: Blatchbridge Jn
+  BRDFDJN: Bradford Jn
+  BRDFDOA: Bradford-on-Avon, Bradford-on-Avon [BOA]
+  BRUTON: Bruton, Bruton [BRU]
+  BTHMPTJ: Bathampton Jn
+  CCARY: Castle Cary, Castle Cary [CLC]
+  CCARYDS: Castle Cary (Ce), CCARCE
+  CHIPNHM: Chippenham, Chippenham [CPM]
+  CLNKRDJ: Clink Road Jn
+  COGLOAD: Cogload Jn
+  DILTONM: Dilton Marsh, Dilton Marsh [DMH]
+  ESTSOMJ: East Somerset Jn
+  FRESHFD: Freshford, Freshford [FFD]
+  FROME: Frome, Frome [FRO]
+  FROMNSB: Frome North
+  FRWDJN: Fairwood Jn
+  HUNGDGL: Hungerford Loop
+  HUNGRFD: Hungerford, Hungerford [HGD]
+  HWKRJN: Hawkeridge Jn
+  HWRDJN: Heywood Road Jn
+  KNTBRY: Kintbury, Kintbury [KIT]
+  LAVNGTN: Lavington
+  MELKSHM: Melksham, Melksham [MKM]
+  MERHDQ: Merehead Quarry (Fhh)
+  MERHDQJ: Merehead Quarry Jn
+  MIDGHAM: Midgham, Midgham [MDG]
+  NEWBE: Newbury East Rev
+  NEWBRYR: Newbury Racecourse, Newbury Racecourse [NRC]
+  NEWBURY: Newbury, Newbury [NBY]
+  NEWBW: Newbury West Rev
+  NEWBYD: Newbury Yard
+  PEWSEY: Pewsey, Pewsey [PEW]
+  SCOTEJN: Southcote Jn
+  SLBSPUR: Westbury Down Tc Headshunt
+  THATCHM: Thatcham, Thatcham [THA]
+  THEALE: Theale, Theale [THE]
+  THEALFY: Theale Foster Yeoman, Theale A.R.C, Theale Hope Cement, Theale Lafarge Fhh, Theale Murco
+  THNGLYJ: Thingley Jn, THNGLEJ
+  TROW720: Westbury Up Trowbridge Sdg
+  TROW798: Westbury Dn Trowbridge Sdg
+  TRWBRDG: Trowbridge, Trowbridge [TRO]
+  WAR769: Westbury Ground Signal 753
+  WAR771: Beechgrove Gf
+  WBORO: Woodborough
+  WENGINE: Westbury Dmu Sidings
+  WESTE: Westbury Ground Signal 722
+  WESTINE: Westbury Engine Sidings
+  WESTW: Westbury Signal W699
+  WHATLYQ: Whatley Quarry, Whatley Quarry F Liner Hh
+  WHTSXSG: Whites Crossing Sdg
+  WILTONJ: Wilton Jn
+  WRMNBGS: Warminster Mod Gbrf, Warminster Mod (Army) Sdgs
+  WRMNSTR: Warminster, Warminster [WMN]
+  WSTB707: Westbury Ground Signal 707
+  WSTBRDY: Westbury Down T.C., Westbury Down Tc Gbrf
+  WSTBRUY: Westbury Up T.C.
+  WSTBRYW: Westbury, Westbury [WSB]
+  WSTBYCW: Westbury Cement Works, Westbury Cement Works Ews, Westbury Tarmac, Westbury Tarmac Colas Rail
+  WSTG732: Westbury Ground Pos W732
+  YOVILPM: Yeovil Pen Mill, Yeovil Pen Mill [YVP]

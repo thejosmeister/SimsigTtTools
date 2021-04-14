@@ -1,0 +1,52 @@
+entry_points: 
+  EADWICKJ:
+    readable_names: Adwick Jn
+    assoc_sim_location: ADWICKJ
+  ECRFTNWJ:
+    readable_names: Crofton West Jn
+    assoc_sim_location: CRFTNWJ
+  EFERYBDG:
+    readable_names: Ferrybridge North Jn
+    assoc_sim_location: FERYBDG
+  EHOLBJCN:
+    readable_names: Holbeck Junction
+    assoc_sim_location: HOLBJCN
+
+  ESWINTNF:
+    readable_names: Swinton, Swinton (South Yorkshire) [SWN]
+    assoc_sim_location: SWINTN
+  ESWINTNS: # Want this entry point if the train enters at swinton AND stops there
+    readable_names:
+    assoc_sim_location:
+
+  EWKFLDKG:
+    readable_names: Wakefield Kirkgate, Wakefield Kirkgate [WKK]
+    assoc_sim_location: WKFLDKG
+  EWRNTGBR:
+    readable_names: Wrenthorpe Gbrf, Wrenthorpe Rp Gbrf
+    assoc_sim_location: WRNTGBR
+ 
+locations: 
+  ADWICKJ: Adwick Jn
+  BLTNODR: Bolton-on-Dearne, Bolton-on-Dearne [BTD]
+  COPHWJN: Copley Hill West Jcn
+  CRFTNWJ: Crofton West Jn
+  FERYBDG: Ferrybridge North Jn
+  FITZWLM: Fitzwilliam, Fitzwilliam [FZW]
+  GLDTHRP: Goldthorpe, Goldthorpe [GOE]
+  HAREPKJ: Hare Park Junction
+  HEMSWTH: Hemsworth Loop
+  HOLBJCN: Holbeck Junction
+  MORTHGL: Moorthorpe Goods Loop
+  MORTHRP: Moorthorpe, Moorthorpe [MRP]
+  OUTWOOD: Outwood, Outwood [OUT]
+  PTFTBHL: Pontefract Baghill, Pontefract Baghill [PFR]
+  SABR: Sandal & Agbrigg, Sandal & Agbrigg [SNA]
+  SELMSAL: South Elmsall, South Elmsall [SES]
+  SKIRBYJ: South Kirkby Jn
+  SWINTN: Swinton, Swinton (South Yorkshire) [SWN]
+  TRNO: Thurnscoe, Thurnscoe [THC]
+  WKFLDKG: Wakefield Kirkgate, Wakefield Kirkgate [WKK]
+  WKFLDWG: Wakefield Westgate, Wakefield Westgate [WKF]
+  WRNTGBR: Wrenthorpe Gbrf, Wrenthorpe Rp Gbrf
+  WRNTHPS: Wrenthorpe Recp.
