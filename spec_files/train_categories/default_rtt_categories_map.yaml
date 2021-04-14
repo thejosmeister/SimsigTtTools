@@ -1,37 +1,51 @@
-# Each category will be indexed by their description
-'standard diesel freight':
-  # The criteria will determine what characteristcs are needed for this category.
+# RTT default categories. Much like the charlwoodhouse one except we have slighlty different values appearing in 'criteria'
+# and there is an 'allox_criteria' that we can use if the train in question has a unit/loco allocation.
 
-  # To match a train to a train category it must match the criteria on the fields pulled out of the source page.
-  # A list of fields you can use are listed in the readme.
-  # The match terms all use the same syntax: '!{text_to_not_match}**!{text_to_not_match}**{regex_term_to_match}'
-  # You can have multiple {text_to_not_match} terms and then always 1 {regex_term_to_match}
+# Default category
+'standard diesel freight':
   criteria:
-    # e.g. the expression below will match text that is not 43, 68 or 802 but text that is made up of digits ( '^\d+$' will match 1 or more digits like '1475' )
     Timing_Load: '^Diesel locomotive, trailing load .*$'
     is_freight: '-1'
     max_speed: '!75**!60**!45**.*'
-
-  # This ID is reserved as the default category ID, be careful not to make any other categories in other files with this ID.
   id: 'A0000001'
-  # Goes from 0 (heavy freight) to 4 (light engine)
   accel_brake_index: '1'
-  # Does the train use freight linespeeds: -1 -> yes, 0 -> no.
   is_freight: '-1'
-  # Can the train use goods lines: -1 -> yes, 0 -> no.
   can_use_goods_lines: '-1'
   max_speed: '60'
   train_length: '300'
-  # The value for this is described in a table in https://www.simsig.co.uk/Wiki/Show?page=usertrack:ttuse:xml_timetable
   speed_class: '512'
-  # not sure how this affects things
   power_to_weight_category: '0'
-  # There are more of these but I am yet to add them here
   dwell_times:
     join: '240'
     divide: '240'
     crew_change: '120'
-  # Can be D: diesel, O: overhead elec, OD: bi mode, 3: third rail elec
+  electrification: 'D'
+
+# An example of a category using 'allox_criteria'
+'XC Class 170 (2 car)':
+  criteria:
+    Timing_Load: '^Class 158/168/170/175 DMU.*'
+    operator_code: 'XC'
+    max_speed: '100'
+  # If a train has allocation info then this criteria will be used (if present)
+  allox_criteria:
+    # Allocation will be a sorted list (small to large) of the locos/units in the consist in the form num_1, num_2, ...
+    # The 'Allocation' field will then be matched on like any other criteria field.
+    # This example will match any 2 car class 170 operated by XC (170111 to 170117)
+    Alloction: '17011[1-7]'
+    operator_code: 'XC'
+  id: 'B0000004'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '100'
+  train_length: '47'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
   electrification: 'D'
 
 'standard electric freight':
@@ -157,28 +171,6 @@
     max_speed: '100'
   id: 'B0000003'
   accel_brake_index: '2'
-  is_freight: '0'
-  can_use_goods_lines: '0'
-  max_speed: '100'
-  train_length: '47'
-  speed_class: '16'
-  power_to_weight_category: '0'
-  dwell_times:
-    join: '240'
-    divide: '240'
-    crew_change: '120'
-  electrification: 'D'
-
-'XC Class 170 (2 car)':
-  criteria:
-    Timing_Load: '^Class 158/168/170/175 DMU.*'
-    operator_code: 'XC'
-    max_speed: '100'
-  allox_criteria:
-    Alloction: '17011[1-7]'
-    operator_code: 'XC'
-  id: 'B0000004'
-  accel_brake_index: '3'
   is_freight: '0'
   can_use_goods_lines: '0'
   max_speed: '100'
