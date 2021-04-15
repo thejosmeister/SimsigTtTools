@@ -88,11 +88,11 @@ To map charlwoodhouse trains, the following properties are extracted from the pa
 
 To map RTT trains, the following properties are extracted from the page under the denoted field names. There are two ways a train can match depending on whether the train had allocation info in RTT. This is what will be fetched where there is no allocation info:
 
-![RTT_non_alloc_fields](https://github.com/thejosmeister/SimsigTtTools/blob/add-rtt/assorted_files/RTT_non_alloc_info.png)
+![RTT_non_alloc_fields](https://github.com/thejosmeister/SimsigTtTools/blob/master/assorted_files/RTT_non_alloc_info.png)
 
 If there is allocation info:
 
-![RTT_alloc_fields](https://github.com/thejosmeister/SimsigTtTools/blob/add-rtt/assorted_files/RTT_alloc_info.png)
+![RTT_alloc_fields](https://github.com/thejosmeister/SimsigTtTools/blob/master/assorted_files/RTT_alloc_info.png)
 
 #### Locations Map
 - **Location:** location_maps/{sim_id}.txt
