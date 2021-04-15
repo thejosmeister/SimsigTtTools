@@ -9,7 +9,16 @@ import common
 from customLocationLogic import CustomLogicExecutor
 
 CAPITALS = 'ABCDEFGHIJ'
-RTT_OPERATORS_MAP = {'CrossCountry': 'XC', 'Great Western Railway': 'GW', 'Transport for Wales': 'AW'}
+RTT_OPERATORS_MAP = {'Alliance Rail': 'AR', 'Transport for Wales': 'AW', 'c2c': 'CC', 'Chiltern Railways': 'CH',
+                     'Caledonian Sleeper': 'CS', 'East Midlands Railway': 'EM', 'Eurostar': 'ES', 'Grand Central': 'GC',
+                     'Great Northern': 'GN', 'LNER': 'GR', 'Great Western Railway': 'GW', 'Gatwick Express': 'GX',
+                     'Hull Trains': 'HT', 'Heathrow Express': 'HX', 'Island Line': 'IL', 'Greater Anglia': 'LE',
+                     'West Midlands Trains': 'LM', 'London Overground': 'LO', 'Locomotive Services': 'LS',
+                     'London Underground': 'LT', 'Merseyrail': 'ME', 'Northern': 'NT', 'Southeastern': 'SE',
+                     'Sheffield Supertram': 'SJ', 'SLC Operations': 'SO', 'ScotRail': 'SR', 'Southern': 'SN',
+                     'South Western Railway': 'SW', 'Thameslink': 'TL', 'Transpennine Express': 'TP',
+                     'Tyne & Wear Metro': 'TW', 'Vintage Trains': 'TY', 'Avanti West Coast': 'VT',
+                     'West Coast Railway Company': 'WR', 'CrossCountry': 'XC', 'TfL Rail': 'XR'}
 
 
 def parse_location_times(times_string: str) -> dict:
