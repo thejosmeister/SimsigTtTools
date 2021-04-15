@@ -23,7 +23,7 @@ timetable_header:
 
 
 # Name of the train categories map we wish to use.
-train_categories_file: 'default_categories_map.yaml'
+train_categories_file: 'default_charlwood_categories_map.yaml'
 
 
 

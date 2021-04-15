@@ -1,0 +1,68 @@
+entry_points: 
+  EANDOVER:
+    readable_names: Andover, Andover [ADV]
+    assoc_sim_location: ANDOVER
+  EDINTNMD:
+    readable_names: Dinton M.O.D.
+    assoc_sim_location: DINTNMD
+  EGLHM:
+    readable_names: Gillingham, Gillingham (Dorset) [GIL]
+    assoc_sim_location: GLHM
+  EQUIDECC:
+    readable_names: Quidhampton Sdgs E.C.C.
+    assoc_sim_location: QUIDECC
+  EROMSEY:
+    readable_names: Romsey, Romsey [ROM]
+    assoc_sim_location: ROMSEY
+  ESLSBRYD:
+    readable_names: Salisbury T&R.S.M.D [XFU]
+    assoc_sim_location: SLSBRYD
+  ESLSBRYY:
+    readable_names: Salisbury East Yard
+    assoc_sim_location: SLSBRYY
+  EWRMNSTR:
+    readable_names:  Warminster, Warminster [WMN]
+    assoc_sim_location: WRMNSTR
+ 
+locations: 
+  ANDOVER: Andover, Andover [ADV]
+  DEAN: Dean, Dean [DEN]
+  DINTNMD: Dinton M.O.D.
+  GLHM: Gillingham, Gillingham (Dorset) [GIL]
+  GRATELY: Grateley, Grateley [GRT]
+  LSTOKNJ: Laverstock North Jn
+  LSTOKNJR: Laverstock North Jn (rev)
+  LSTOKSJ: Laverstock South Jn
+  LSTOKSJR: Laverstock South Jn (rev)
+  MOTFONT: Mottisfont & Dunbridge, Mottisfont & Dunbridge [DBG]
+  QUIDECC: Quidhampton Sdgs E.C.C.
+  ROMSEY: Romsey, Romsey [ROM]
+  SLSB213: Salisbury Signal Sy213
+  SLSB215: Salisbury Signal Sy215
+  SLSB217: Salisbury Signal Sy217
+  SLSB225: Salisbury Signal Sy225
+  SLSB240: Salisbury Signal Sy240
+  SLSB43: Salisbury Signal Sy43
+  SLSB52: Salisbury Signal Sy52
+  SLSBY5B: Salisbury 5 Bay
+  SLSBY6B: Salisbury 6 Bay
+  SLSBECS: Salisbury East C.H.S.
+  SLSBRCL: Salisbury Reception Line
+  SLSBRY: Salisbury, Salisbury [SAL]
+  SLSBRYD: Salisbury T&R.S.M.D [XFU]
+  SLSBRYY: Salisbury East Yard
+  SLSBTJN: Tunnel Jn.
+  SLSBWCS: Salisbury West C.S. [XFV], Salisbury West C.S.
+  SLSBYWE: Salisbury West End
+  SLSBYHS: Salisbury H.S.
+  SLSBYTS: Salisbury Through Sdg
+  TISBRYL: Tisbury Loop
+  TISBURY: Tisbury, Tisbury [TIS]
+  UPTNLOV: Upton Lovell
+  WILTON: Wilton
+  WILTONJ: Wilton Jn
+  WRMNSTR: Warminster, Warminster [WMN]
+  WSHFORD: Wishford
+  WYLYAHB: Wylye Ahb
+  WYLYEGF: Wylye Ground Frame
+  WYLYE: Wylye

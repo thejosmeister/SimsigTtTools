@@ -26,7 +26,7 @@ def create_dbs(sim_id: str) -> list:
     return [dbClient.MainHeaderDb(sim_id), dbClient.TrainTtDb(sim_id), dbClient.RulesDb(sim_id)]
 
 
-def determine_sources(spec_data: dict, sim_id: str, categories_map: dict, location_maps: list, custom_location_logic) -> list:
+def determine_sources(spec_data: dict, categories_map: dict, location_maps: list, custom_location_logic) -> list:
     sources, location_parsing_funct, train_parsing_funct = None, None, None
 
     if 'charlwoodhouse_location_pages' in spec_data:
@@ -59,7 +59,7 @@ def determine_sources(spec_data: dict, sim_id: str, categories_map: dict, locati
         location_parsing_funct = lambda start, end, location_page: \
             parseData.Parse_Rtt_Location_Page(start, end, location_page)
         train_parsing_funct = lambda train_link, location: \
-            parseData.Parse_Rtt_Train(sim_id, categories_map, location_maps, custom_location_logic, location, train_link=train_link)
+            parseData.Parse_Rtt_Train(categories_map, location_maps, custom_location_logic, location, train_link=train_link)
 
     return [sources, location_parsing_funct, train_parsing_funct]
 
@@ -116,7 +116,7 @@ def BuildXmlTtFromSource(name_of_spec_file: str):
     categories_map = common.create_categories_map_from_yaml(spec_data['train_categories_file'])
     custom_location_logic = CustomLogicExecutor(sim_id, location_maps[1], location_maps[0])
 
-    sources, parse_location, parse_train = determine_sources(spec_data, sim_id, categories_map, location_maps, custom_location_logic)
+    sources, parse_location, parse_train = determine_sources(spec_data, categories_map, location_maps, custom_location_logic)
 
     header_db.add_header(tt_header_map)
     header_db.add_categories_map(categories_map)

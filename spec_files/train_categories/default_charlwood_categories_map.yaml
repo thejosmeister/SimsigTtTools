@@ -2,7 +2,7 @@
 'standard diesel freight':
   # The criteria will determine what characteristcs are needed for this category.
 
-  # To match a train to a trai category it must match the criteria on the fields pulled out of the source page.
+  # To match a train to a train category it must match the criteria on the fields pulled out of the source page.
   # A list of fields you can use are listed in the readme.
   # The match terms all use the same syntax: '!{text_to_not_match}**!{text_to_not_match}**{regex_term_to_match}'
   # You can have multiple {text_to_not_match} terms and then always 1 {regex_term_to_match}

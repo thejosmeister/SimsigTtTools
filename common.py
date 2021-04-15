@@ -61,18 +61,33 @@ def create_categories_map_from_yaml(categories_yaml_file_name: str) -> dict:
 
     # make criteria a bit more usable
     for cat in category_data.keys():
-        for criteria in category_data[cat]['criteria'].keys():
-            parts = category_data[cat]['criteria'][criteria].split('**')
-            if len(parts) == 1:
-                # just regex
-                category_data[cat]['criteria'][criteria] = {'match': parts[0]}
-                continue
+        if 'criteria' in category_data[cat]:
+            for criteria in category_data[cat]['criteria'].keys():
+                parts = category_data[cat]['criteria'][criteria].split('**')
+                if len(parts) == 1:
+                    # just regex
+                    category_data[cat]['criteria'][criteria] = {'match': parts[0]}
+                    continue
 
-            # We have some terms before regex
-            category_data[cat]['criteria'][criteria] = {'match': parts[-1], 'not': []}
-            for term in parts[:-1]:
-                if term[0] == '!':
-                    category_data[cat]['criteria'][criteria]['not'].append(term[1:])
+                # We have some terms before regex
+                category_data[cat]['criteria'][criteria] = {'match': parts[-1], 'not': []}
+                for term in parts[:-1]:
+                    if term[0] == '!':
+                        category_data[cat]['criteria'][criteria]['not'].append(term[1:])
+
+        if 'allox_criteria' in category_data[cat]:
+            for criteria in category_data[cat]['allox_criteria'].keys():
+                parts = category_data[cat]['allox_criteria'][criteria].split('**')
+                if len(parts) == 1:
+                    # just regex
+                    category_data[cat]['allox_criteria'][criteria] = {'match': parts[0]}
+                    continue
+
+                # We have some terms before regex
+                category_data[cat]['allox_criteria'][criteria] = {'match': parts[-1], 'not': []}
+                for term in parts[:-1]:
+                    if term[0] == '!':
+                        category_data[cat]['allox_criteria'][criteria]['not'].append(term[1:])
 
     return category_data
 
