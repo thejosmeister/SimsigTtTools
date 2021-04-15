@@ -80,10 +80,19 @@ common.py - contains some common code
 #### Train Categories Map
 - **Location:** spec_files/categories/{file_name}.yaml
 - **Purpose:** Used to set properties on each train that we write to a TT. Corresponds to Train Types in the in sim editor.
-- **Example File:** default_categories_map.yaml
+- **Example Files:** default_charlwood_categories_map.yaml, default_rtt_categories_map.yaml (shows allocation matching)
 
 To map charlwoodhouse trains, the following properties are extracted from the page under the denoted field names. Notes in the example file explain how you can match trains to these values:
-![Category_fields](https://github.com/thejosmeister/SimsigTtTools/blob/master/assorted_files/Category_fields.png)
+
+![Charlwood_Category_fields](https://github.com/thejosmeister/SimsigTtTools/blob/master/assorted_files/Category_fields.png)
+
+To map RTT trains, the following properties are extracted from the page under the denoted field names. There are two ways a train can match depending on whether the train had allocation info in RTT. This is what will be fetched where there is no allocation info:
+
+![RTT_non_alloc_fields](https://github.com/thejosmeister/SimsigTtTools/blob/add-rtt/assorted_files/RTT_non_alloc_info.png)
+
+If there is allocation info:
+
+![RTT_alloc_fields](https://github.com/thejosmeister/SimsigTtTools/blob/add-rtt/assorted_files/RTT_alloc_info.png)
 
 #### Locations Map
 - **Location:** location_maps/{sim_id}.txt
