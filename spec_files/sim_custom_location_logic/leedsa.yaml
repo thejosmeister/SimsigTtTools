@@ -1,0 +1,69 @@
+# Leeds Ardsley location logic
+
+entry_point_rules:
+  ESWINTNF:
+    # Train enters as stopping train at Swinton
+    if_entry_location_matching:
+      conditions:
+        - { 'location':'Swinton', 'arr': '!arr is present' }
+      then:
+        - entry_point: 'ESWINTNS'
+        - remove_1st_of: [ 'Swinton' ]
+
+  CRFTNWJ:
+    # TODO sort this
+    if_entry_location_matching:
+      conditions:
+        - { 'location': 'Swinton', 'arr': '!arr is present' }
+      then:
+        - entry_point: 'ESWINTNS'
+        - remove_1st_of: [ 'Swinton' ]
+
+
+
+location_rules:
+  HOLBJCN:
+    - if_particular_present:
+        conditions:
+          - { 'location': 'COPHWJN' }
+          - { 'location': 'HOLBJCN' }
+        then:
+          - remove_1st_of: [ 'HOLBJCN' ]
+
+    - remove_location:
+        other_conditions:
+          - entry_point: 'EHOLBJCN'
+          location_conditions:
+            - { 'location': 'HOLBJCN' }
+
+  'Copley Hill West Jcn':
+    - remove_location:
+        other_conditions:
+          - entry_point: 'EHOLBJCN'
+          location_conditions:
+          - { 'location': 'Copley Hill West Jcn' }
+
+  'Hare Park Junction':
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'Hare Park Junction' }
+        location_2_conditions:
+          - { 'location': 'SABR' }
+        location_3_conditions:
+          - { 'location': 'WKFLDWG' }
+        then:
+          - modify_location: { 'location': 'WKFLDWG', 'plat': '2' }
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'Hare Park Junction' }
+        location_2_conditions:
+          - { 'location': 'WKFLDWG' }
+        then:
+          - modify_location: { 'location': 'WKFLDWG', 'plat': '2' }
+
+  'Wakefield Kirkagte':
+    - if_particular_present:
+        conditions:
+          - entry_point: ECRFTNWJ
+        then:
+          - remove_1st_of: [ 'HOLBJCN' ]

@@ -699,9 +699,9 @@ def Parse_Rtt_Location_Page(start_time: str, end_time: str, location_page_link: 
 
 def parse_rtt_train_header(header_string: str) -> dict:
     parts = header_string.split(' to ')
-    first_half = re.search('([0-9][A-Z][0-9]{2} |[0-9]{3}[A-Z] )?(\\d{4}) (.+)', parts[0])
+    first_half = re.search('([0-9][A-Z][0-9]{2} |[0-9]{3}[A-Z] )?(\\d{4})½? (.+)', parts[0])
     dest_name = parts[1].strip()
-
+    # '601Y 1831½ Appleford Sidings to Milford West Sidings'
     if first_half.group(1) is not None:
         return {'headcode': first_half.group(1).strip(), 'origin_time': first_half.group(2),
                 'origin_name': first_half.group(3).strip(), 'destination_name': dest_name}
@@ -743,6 +743,8 @@ def parse_rtt_train_info(train_page, allox_train):
     else:
         for panel in train_info_panels:
             for line in panel.find_all('li'):
+                if line.find('div', class_='allocation') is not None:
+                    return parse_rtt_train_info(train_page, True)
                 if line.find('i', class_='glyphicons-database') is not None:
                     train_info['uid'] = re.search('UID ([0-9A-Z]+),', line.get_text()).group(1)
                 if line.find('i', class_='glyphicons-folder-open') is not None:
@@ -759,7 +761,7 @@ def parse_rtt_train_info(train_page, allox_train):
                         train_info['max_speed'] = t_l_match_obj.group(2)
                     else:
                         t_l_match_obj = re.search('Pathed as (.+)', timing_load_string.strip())
-                        train_info['Timing_load'] = t_l_match_obj.group(1)
+                        train_info['Timing_Load'] = t_l_match_obj.group(1)
 
     return train_info
 

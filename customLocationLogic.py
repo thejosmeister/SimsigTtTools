@@ -57,6 +57,9 @@ class CustomLogicExecutor:
             if rule == 'if_later_location_matching':
                 return self.if_later_location_matching(rules_for_entry[rule], entry_location, entry_time,
                                                        train_locations, potential_entry)
+            if rule == 'if_entry_location_matching':
+                return self.if_entry_location_matching(rules_for_entry[rule], entry_location, entry_time,
+                                                       train_locations, potential_entry)
 
         return None
 
@@ -234,10 +237,13 @@ class CustomLogicExecutor:
                 return False
             return True
 
+        # True if val in location and not equal, false if equal or prop not in location
         if prop_value[0] == '!':
-            if prop in location and location[prop] == prop_value[1:]:
-                return False
-            return True
+            if prop in location:
+                if location[prop] == prop_value[1:]:
+                    return False
+                return True
+            return False
 
         if prop in location and prop_value == location[prop]:
             return True
@@ -265,6 +271,14 @@ class CustomLogicExecutor:
                 train_locations = self.remove_props_from_location(clause['remove_props_from_location'], train_locations)
 
         return [potential_entry, entry_time, 'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
+
+    def if_entry_location_matching(self, rule, entry_location, entry_time, train_locations, potential_entry):
+        check_entry_location = list(filter(lambda x: x['location'] == entry_location, train_locations))
+        if len(check_entry_location) > 0:
+            if self.rule_conditions_are_met(rule['conditions'], potential_entry, [check_entry_location[0]]):
+                return self.apply_entry_then_clause(rule['then'], entry_location, entry_time, train_locations,
+                                                    potential_entry)
+        return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
 
     def apply_location_logic(self, entry_point, train_locations):
         for location in self.custom_specs['location_rules']:

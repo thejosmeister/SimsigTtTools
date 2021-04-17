@@ -16,12 +16,15 @@ entry_points:
     readable_names: Swinton, Swinton (South Yorkshire) [SWN]
     assoc_sim_location: SWINTN
   ESWINTNS: # Want this entry point if the train enters at swinton AND stops there
-    readable_names:
+    readable_names: Swinton stopping
     assoc_sim_location:
 
   EWKFLDKG:
     readable_names: Wakefield Kirkgate, Wakefield Kirkgate [WKK]
     assoc_sim_location: WKFLDKG
+  EWKFLDWC:
+    readable_names: Wakefield W. Car Compounds
+    assoc_sim_location: WKFLDWC
   EWRNTGBR:
     readable_names: Wrenthorpe Gbrf, Wrenthorpe Rp Gbrf
     assoc_sim_location: WRNTGBR
@@ -47,6 +50,8 @@ locations:
   SWINTN: Swinton, Swinton (South Yorkshire) [SWN]
   TRNO: Thurnscoe, Thurnscoe [THC]
   WKFLDKG: Wakefield Kirkgate, Wakefield Kirkgate [WKK]
+  WKFLDWC: Wakefield W. Car Compounds
   WKFLDWG: Wakefield Westgate, Wakefield Westgate [WKF]
+  WKFLPSD: Wkfld Prison Sdgs
   WRNTGBR: Wrenthorpe Gbrf, Wrenthorpe Rp Gbrf
   WRNTHPS: Wrenthorpe Recp.
