@@ -10,14 +10,21 @@ entry_point_rules:
         - entry_point: 'ESWINTNS'
         - remove_1st_of: [ 'Swinton' ]
 
-  CRFTNWJ:
-    # TODO sort this
-    if_entry_location_matching:
+  ECRFTNWJ:
+    if_later_location_matching:
       conditions:
-        - { 'location': 'Swinton', 'arr': '!arr is present' }
+        - { 'location': 'WKFLDKG' }
       then:
-        - entry_point: 'ESWINTNS'
-        - remove_1st_of: [ 'Swinton' ]
+        - entry_point: 'EWKFLDKG'
+        - remove_1st_of: [ 'WKFLDKG', 'CRFTNWJ' ]
+
+  EWKFLDKG:
+    if_later_location_matching:
+      conditions:
+        - { 'location': 'CRFTNWJ' }
+      then:
+        - entry_point: 'ECRFTNWJ'
+        - remove_1st_of: [ 'WKFLDKG', 'CRFTNWJ' ]
 
 
 
@@ -33,14 +40,14 @@ location_rules:
     - remove_location:
         other_conditions:
           - entry_point: 'EHOLBJCN'
-          location_conditions:
-            - { 'location': 'HOLBJCN' }
+        location_conditions:
+          - { 'location': 'HOLBJCN' }
 
   'Copley Hill West Jcn':
     - remove_location:
         other_conditions:
           - entry_point: 'EHOLBJCN'
-          location_conditions:
+        location_conditions:
           - { 'location': 'Copley Hill West Jcn' }
 
   'Hare Park Junction':
@@ -61,9 +68,25 @@ location_rules:
         then:
           - modify_location: { 'location': 'WKFLDWG', 'plat': '2' }
 
-  'Wakefield Kirkagte':
-    - if_particular_present:
-        conditions:
-          - entry_point: ECRFTNWJ
+  'Wakefield Kirkgate':
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'Wakefield Kirkgate' }
+        location_2_conditions:
+          - { 'location': 'CRFTNWJ' }
         then:
-          - remove_1st_of: [ 'HOLBJCN' ]
+          - remove_1st_of: [ 'CRFTNWJ' ]
+
+  CRFTNWJ:
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'CRFTNWJ' }
+        location_2_conditions:
+          - { 'location': 'Wakefield Kirkgate' }
+        then:
+          - remove_1st_of: [ 'Wakefield Kirkgate' ]
+
+  HEMSWTH:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'HEMSWTH', '!arr': 'does not stop' }

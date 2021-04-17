@@ -412,7 +412,7 @@
     operator_code: 'XC'
     Allocation: '43.{3}, 43.{3}'
   criteria:
-    Timing_Load: 'High Speed Train .*'
+    Timing_Load: 'High Speed Train.*'
     operator_code: 'XC'
     max_speed: '125'
   id: 517101DA
@@ -431,7 +431,7 @@
 
 'EMR HST 2 + 6':
   criteria:
-    Timing_Load: 'High Speed Train .*'
+    Timing_Load: 'High Speed Train.*'
     operator_code: 'EM'
     max_speed: '110'
   id: 517101BE
