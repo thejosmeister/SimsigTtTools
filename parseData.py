@@ -701,7 +701,7 @@ def parse_rtt_train_header(header_string: str) -> dict:
     parts = header_string.split(' to ')
     first_half = re.search('([0-9][A-Z][0-9]{2} |[0-9]{3}[A-Z] )?(\\d{4})½? (.+)', parts[0])
     dest_name = parts[1].strip()
-    # '601Y 1831½ Appleford Sidings to Milford West Sidings'
+
     if first_half.group(1) is not None:
         return {'headcode': first_half.group(1).strip(), 'origin_time': first_half.group(2),
                 'origin_name': first_half.group(3).strip(), 'destination_name': dest_name}
