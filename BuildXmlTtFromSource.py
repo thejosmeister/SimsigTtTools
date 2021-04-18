@@ -136,9 +136,15 @@ def BuildXmlTtFromSource(name_of_spec_file: str):
 
         if location != '':
             if overwrite_trains is True:
-                train_db.add_tt(parse_train(train, location))
+                parsed_train = parse_train(train, location)
+
+                if parsed_train is not None:
+                    train_db.add_tt(parsed_train)
             else:
-                train_db.add_tt_if_not_present(parse_train(train, location))
+                parsed_train = parse_train(train, location)
+
+                if parsed_train is not None:
+                    train_db.add_tt_if_not_present(parsed_train)
 
     if 'rules' in spec_data:
         add_rules(rules_db, spec_data['rules'])

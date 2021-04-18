@@ -500,6 +500,9 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
     # Fetch location data from sched table
     initial_locations = parse_sched_table(train_page.find('table', {'class': 'sched-table'}))
 
+    if len(initial_locations) == 0:
+        return None
+
     if 'arr' in initial_locations[-1]:
         train_info['destination_time'] = initial_locations[-1]['arr']
     else:
@@ -910,6 +913,9 @@ def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor,
 
     # Fetch location data from locations list
     initial_locations = parse_rtt_train_locations(train_page.find('div', class_='locationlist'))
+
+    if len(initial_locations) == 0:
+        return None
 
     if 'arr' in initial_locations[-1]:
         train_info['destination_time'] = initial_locations[-1]['arr']
