@@ -1,6 +1,8 @@
 """
 For executing custom (and some general) logic on sim locations for a train.
 """
+import re
+
 import yaml
 import common
 
@@ -56,6 +58,9 @@ class CustomLogicExecutor:
                 return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
             if rule == 'if_later_location_matching':
                 return self.if_later_location_matching(rules_for_entry[rule], entry_location, entry_time,
+                                                       train_locations, potential_entry)
+            if rule == 'if_entry_location_matching':
+                return self.if_entry_location_matching(rules_for_entry[rule], entry_location, entry_time,
                                                        train_locations, potential_entry)
 
         return None
@@ -234,10 +239,13 @@ class CustomLogicExecutor:
                 return False
             return True
 
+        # True if val in location and not equal, false if equal or prop not in location
         if prop_value[0] == '!':
-            if prop in location and location[prop] == prop_value[1:]:
-                return False
-            return True
+            if prop in location:
+                if location[prop] == prop_value[1:]:
+                    return False
+                return True
+            return False
 
         if prop in location and prop_value == location[prop]:
             return True
@@ -249,6 +257,12 @@ class CustomLogicExecutor:
         for clause in then_clauses:
             if 'entry_point' in clause:
                 potential_entry = clause['entry_point']
+            if 'entry_time' in clause:
+                if re.match('\\d{4}', clause['entry_time']) is not None:
+                    entry_time = clause['entry_time']
+                else:
+                    entry_time = self.determine_entry_time_from_location(clause['entry_time'], train_locations,
+                                                                         entry_time)
             if 'remove_1st_of' in clause:
                 for l_to_remove in clause['remove_1st_of']:
                     train_locations = self.remove_nth_location(
@@ -265,6 +279,14 @@ class CustomLogicExecutor:
                 train_locations = self.remove_props_from_location(clause['remove_props_from_location'], train_locations)
 
         return [potential_entry, entry_time, 'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
+
+    def if_entry_location_matching(self, rule, entry_location, entry_time, train_locations, potential_entry):
+        check_entry_location = list(filter(lambda x: x['location'] == entry_location, train_locations))
+        if len(check_entry_location) > 0:
+            if self.rule_conditions_are_met(rule['conditions'], potential_entry, [check_entry_location[0]]):
+                return self.apply_entry_then_clause(rule['then'], entry_location, entry_time, train_locations,
+                                                    potential_entry)
+        return self.apply_generic_entry_logic(train_locations, entry_location, entry_time, potential_entry)
 
     def apply_location_logic(self, entry_point, train_locations):
         for location in self.custom_specs['location_rules']:
@@ -297,7 +319,8 @@ class CustomLogicExecutor:
             return train_locations
 
         # check all concurrent
-        loc_1_index = self.are_x_y_concurrent(location_conditions[0]['location'], location_conditions[1]['location'], train_locations)
+        loc_1_index = self.are_x_y_concurrent(location_conditions[0]['location'], location_conditions[1]['location'],
+                                              train_locations)
 
         if loc_1_index > -1 and amount_of_locations > 2:
             next_index = loc_1_index + 2
@@ -417,3 +440,16 @@ class CustomLogicExecutor:
                         train_locations.pop(i)
                         return train_locations
         return train_locations
+
+    def determine_entry_time_from_location(self, location_name, train_locations, entry_time):
+        readable_l_name = common.find_readable_location(location_name, self.locations_map)
+        if readable_l_name == '':
+            return entry_time
+        for l in train_locations:
+            if l['location'] == readable_l_name:
+                if 'dep' in l:
+                    return l['dep']
+                if 'arr' in l:
+                    return l['arr']
+        return entry_time
+
