@@ -1,53 +1,53 @@
 entry_points:
-  ETAPMAIN:
-    readable_names: Tapton Jn
-    assoc_sim_location: TAPTONJ
-  EHORBURY:
-    readable_names: Horbury Jn
-    assoc_sim_location: HORBRYJ
-  EMORTHRP:
-    readable_names: Moorthorpe, Moorthorpe [MRP]
-    assoc_sim_location: MORTHRP
-  EBRW1019:
-    readable_names: Barrow Hill Up Sdgs No 2-3
-    assoc_sim_location: BRHLFHH
+  EALDWNWS:
+    readable_names: Aldwarke U.E.S.
+    assoc_sim_location: ALDWNWS
   EBRCLEJN:
     readable_names: Brancliffe East Jn
     assoc_sim_location: BRCLEJN
   EBRW1010:
     readable_names: Barrow Hill Roundhouse
     assoc_sim_location: BRHLRC
-  EROTHGBR:
-    readable_names: Rotherham Booths GB Railfreight, Masboro Booths P S
-    assoc_sim_location: ROTHGBR
-  ETINSLEY:
-    readable_names: Tinsley Yard Gbrf
-    assoc_sim_location: TINSLYY
-  EGRIND:
-    readable_names: Grindleford, Grindleford [GRN]
-    assoc_sim_location: GRNDLFD
-  ESHEFFHS:
-    readable_names: Sheffield H.S.
-    assoc_sim_location: SHEFFHS
-  EMBROSTY:
-    readable_names: Masborough F.D.
-    assoc_sim_location: MBROSTY
-  EHUDD:
-    readable_names: Huddersfield, Huddersfield [HUD]
-    assoc_sim_location: HDRSFLD
+  EBRW1019:
+    readable_names: Barrow Hill Up Sdgs No 2-3
+    assoc_sim_location: BRHLFHH
   EDONC:
     readable_names: Hexthorpe Jn
     assoc_sim_location: DONCHJN
+  EGRIND:
+    readable_names: Grindleford, Grindleford [GRN]
+    assoc_sim_location: GRNDLFD
+  EHORBURY:
+    readable_names: Horbury Jn
+    assoc_sim_location: HORBRYJ
+  EHUDD:
+    readable_names: Huddersfield, Huddersfield [HUD]
+    assoc_sim_location: HDRSFLD
+  EMBROSTY:
+    readable_names: Masborough F.D., Masborough N&W Gbrf
+    assoc_sim_location: MBROSTY
+  EMORTHRP:
+    readable_names: Moorthorpe, Moorthorpe [MRP]
+    assoc_sim_location: MORTHRP
+  EROTHGBR:
+    readable_names: Rotherham Booths GB Railfreight, Masboro Booths P S
+    assoc_sim_location: ROTHGBR
+  ESHEFFHS:
+    readable_names: Sheffield H.S.
+    assoc_sim_location: SHEFFHS
+  # Will need some custom logic to set entry to this
+  ETAPMAIN:
+    readable_names: Tapton Jn
+    assoc_sim_location: TAPTONJ
+  ETAPBAR:
+    readable_names: Tapton Jn Barrow hill
+    assoc_sim_location:
   ETINSMEA:
     readable_names: Tinsley Meadowhall, Tinsley Meadowhall [TIN]
     assoc_sim_location: TINSMEA
-  # Will need some custom logic to set entry to this
-  ETAPBAR:
-    readable_names: Tapton Jn
-    assoc_sim_location:
-  EALDWNWS:
-    readable_names: Aldwarke U.E.S.
-    assoc_sim_location: ALDWNWS
+  ETINSLEY:
+    readable_names: Tinsley Yard Gbrf
+    assoc_sim_location: TINSLYY
   EWDHOFHH:
     readable_names: Woodhouse Junction Sidings Freightliner Heavy Haul, Woodhouse Junc Sdgs (Fhh)
     assoc_sim_location: WDHOFHH
@@ -58,96 +58,96 @@ locations:
   WDHOUSE: Woodhouse [WDH]
 
   # Not sure on this one
-  BRHLRC: Barrow Hill Roundhouse
-  BERRYB: Berry Brow, Berry Brow [BBW]
-  ALDWRKJ: Aldwarke Jn
-  BRHLRS: Barrow Hill Reception Siding, Barrow Hill Reception 4
-  CONBCAD: Conisbrough Up Goods Loop
-  MORTHRP: Moorthorpe, Moorthorpe [MRP]
-  BRGLJN: Broughton Lane Jn
-  PENISTN: Penistone, Penistone [PNS]
-  CONBRGH: Conisbrough, Conisbrough [CNS]
-  ELSC: Elsecar, Elsecar [ELR]
-  ROTHGBR: Rotherham Booths GB Railfreight, Masboro Booths P S
-  KLNHUGL: Kilnhurst Up Gds Loop
-  DNDL: Denby Dale, Denby Dale [DBD]
-  ALDW109: Aldwarke Jn Sig S109
-  WNCOJN: Wincobank Jn., Wincobank Jn
-  BRHLFHH: Barrow Hill Up Sdgs No 2-3
-  HORBRYJ: Horbury Jn
-  HEELEY: Heeley Up Loop
-  KVTNBDG: Kiveton Bridge, Kiveton Bridge [KIV]
-  SHEFFLD: Sheffield, Sheffield [SHF]
-  BRH1005: Barrow Hill Signal 1003
-  THBGJN: Thrybergh Jn
-  BRHLDGF: Barrow Hill Dn Gds (Flhh)
-  TOTLYTE: Totley Tunnel East
-  BLTNODR: Bolton-on-Dearne [BTD]
-  DORESJ: Dore South Jn
-  MBROSSJ: Masborough Sorting Sidings Jn, Masbro S.S. Jn
-  CLYTNWJ: Clayton West Junction
-  DEEPSW: Deepcar Stocksbridge Works, Stocksbridge Works
-  SHEFS77: Sheffield Signal S77
-  BTSDSJN: Brightside Jn,Brightside Station Jn
-  WOLEYCS: Woolley Coal Sdgs S.B.
-  SHEFS81: Sheffield Signal S81
-  SHEFFHS: Sheffield H.S.
-  WDHOFHH: Woodhouse Junction Sidings Freightliner Heavy Haul, Woodhouse Junc Sdgs (Fhh)
-  ECLSFLW: Ecclesfield West Signal Box, Ecclesfield West S.B.
-  MBRONJN: Masborough Jn
-  TINSLNJ: Tinsley North Jn
-  BEGHTJN: Beighton Jn
-  BRHLSJN: Barrow Hill South Jn., Barrow Hill South Jn
-  TREETGL: Treeton Goods Loop
-  TINSLEJ: Tinsley East Jn
-  SWINTN: Swinton, Swinton (South Yorkshire) [SWN]
-  SHPCTLJ: Shepcote Lane Jn
-  ATTREWS: Attercliffe Sdgs Fhh, Attercliffe Sdgs Ews
-  SHEFCS: Sheffield Centre Siding
-  DRONFLD: Dronfield, Dronfield [DRO]
-  ROTHCEN: Rotherham Central, Rotherham Central [RMC]
-  STKSMR: Stocksmoor, Stocksmoor [SSM]
-  BRHLSGF: Barrow Hill Staveley Flhh
-  MILLRJ: Mill Race Jn
   ALDWNWS: Aldwarke U.E.S.
-  GRNDLFD: Grindleford, Grindleford [GRN]
-  CHPLTWN: Chapeltown, Chapeltown [CLN]
-  MEADWHL: Meadowhall, Meadowhall [MHS]
-  TINSMEA: Tinsley Meadowhall, Tinsley Meadowhall [TIN]
-  DORESNJ: Dore Station Jn
-  SHEF142: Sheffield Signal S142
-  WOMBWEL: Wombwell, Wombwell [WOM]
-  CANKLOW: Canklow Loop
-  BKHLS: Brockholes, Brockholes [BHS]
-  HDRSFLD: Huddersfield, Huddersfield [HUD]
-  WDHOUSJ: Woodhouse Jn
+  ALDWRKJ: Aldwarke Jn
+  ALDW109: Aldwarke Jn Sig S109
   ALDW738: Aldwarke Jn Sig S738
-  TAPTONJ: Tapton Jn
-  DORE: Dore & Totley, Dore & Totley [DOR]
-  TINSLYY: Tinsley Yard Gbrf
-  MORTHGL: Moorthorpe Goods Loop
-  BRHLJN: Barrow Hill North Jn
+  ATTREWS: Attercliffe Sdgs Fhh, Attercliffe Sdgs Ews
+  BEGHTJN: Beighton Jn
   BEGHTSJ: Beighton Station Jn
-  SHEFFSS: Sheffield Station Sidings
-  SKSCMN: Silkstone Common, Silkstone Common [SLK]
-  SHEFS80: Sheffield Signal S80, Sheffield Signal S82
-  SPLY: Shepley, Shepley [SPY]
-  ROTHHJN: Holmes Jn, Rotherham Holmes Junction
-  GLDTHRP: Goldthorpe, Goldthorpe [GOE]
-  WDBRNJN: Woodburn Jn
-  MBROSTY: Masborough F.D.
-  DODWRTH: Dodworth, Dodworth [DOD]
-  BRCLEJN: Brancliffe East Jn
-  DOREWJ: Dore West Jn
-  LKWD: Lockwood, Lockwood [LCK]
-  DARNALL: Darnall, Darnall [DAN]
-  TREETNJ: Treeton Jn
+  BERRYB: Berry Brow, Berry Brow [BBW]
+  BKHLS: Brockholes, Brockholes [BHS]
+  BLTNODR: Bolton-on-Dearne [BTD]
   BNSLY: Barnsley, Barnsley [BNY]
-  TINSLSJ: Tinsley South Jn
-  HONLEY: Honley, Honley [HOY]
-  MEXBRGH: Mexborough, Mexborough [MEX]
+  BRCLEJN: Brancliffe East Jn
+  BRGLJN: Broughton Lane Jn
+  BRHLDGF: Barrow Hill Dn Gds (Flhh)
+  BRHLFHH: Barrow Hill Up Sdgs No 2-3
+  BRHLJN: Barrow Hill North Jn
+  BRHLRC: Barrow Hill Roundhouse
+  BRHLRS: Barrow Hill Reception Siding, Barrow Hill Reception 4
+  BRHLSGF: Barrow Hill Staveley Flhh
+  BRHLSJN: Barrow Hill South Jn., Barrow Hill South Jn
+  BRH1005: Barrow Hill Signal 1003
+  BTSDSJN: Brightside Jn,Brightside Station Jn
+  CANKLOW: Canklow Loop
+  CHPLTWN: Chapeltown, Chapeltown [CLN]
+  CLYTNWJ: Clayton West Junction
+  CONBCAD: Conisbrough Up Goods Loop
+  CONBRGH: Conisbrough, Conisbrough [CNS]
+  DARNALL: Darnall, Darnall [DAN]
+  DEEPSW: Deepcar Stocksbridge Works, Stocksbridge Works
+  DNDL: Denby Dale, Denby Dale [DBD]
+  DODWRTH: Dodworth, Dodworth [DOD]
+  DORE: Dore & Totley, Dore & Totley [DOR]
+  DORESJ: Dore South Jn
+  DORESNJ: Dore Station Jn
+  DOREWJ: Dore West Jn
+  DRONFLD: Dronfield, Dronfield [DRO]
   DRTN: Darton, Darton [DRT]
-  NNRYMLJ: Nunnery Main Line Jn
+  ECLSFLW: Ecclesfield West Signal Box, Ecclesfield West S.B.
+  ELSC: Elsecar, Elsecar [ELR]
+  GLDTHRP: Goldthorpe, Goldthorpe [GOE]
+  GRNDLFD: Grindleford, Grindleford [GRN]
+  HDRSFLD: Huddersfield, Huddersfield [HUD]
+  HEELEY: Heeley Up Loop
+  HONLEY: Honley, Honley [HOY]
+  HORBRYJ: Horbury Jn
+  KLNHUGL: Kilnhurst Up Gds Loop
+  KVTNBDG: Kiveton Bridge, Kiveton Bridge [KIV]
   KVTNPK: Kiveton Park, Kiveton Park [KVP]
-  TRNO: Thurnscoe, Thurnscoe [THC]
+  LKWD: Lockwood, Lockwood [LCK]
+  MBRONJN: Masborough Jn
+  MBROSSJ: Masborough Sorting Sidings Jn, Masbro S.S. Jn
+  MBROSTY: Masborough F.D., Masborough N&W Gbrf
+  MEADWHL: Meadowhall, Meadowhall [MHS]
+  MEXBRGH: Mexborough, Mexborough [MEX]
+  MILLRJ: Mill Race Jn
+  MORTHGL: Moorthorpe Goods Loop
+  MORTHRP: Moorthorpe, Moorthorpe [MRP]
+  NNRYMLJ: Nunnery Main Line Jn
   PARKGAT: Parkgate, Parkgate [PAQ]
+  PENISTN: Penistone, Penistone [PNS]
+  ROTHCEN: Rotherham Central, Rotherham Central [RMC]
+  ROTHHJN: Holmes Jn, Rotherham Holmes Junction
+  ROTHGBR: Rotherham Booths GB Railfreight, Masboro Booths P S
+  SHEFCS: Sheffield Centre Siding
+  SHEFFHS: Sheffield H.S.
+  SHEFFLD: Sheffield, Sheffield [SHF]
+  SHEFFSS: Sheffield Station Sidings
+  SHEFS77: Sheffield Signal S77
+  SHEFS80: Sheffield Signal S80, Sheffield Signal S82
+  SHEFS81: Sheffield Signal S81
+  SHEF142: Sheffield Signal S142
+  SHPCTLJ: Shepcote Lane Jn
+  SKSCMN: Silkstone Common, Silkstone Common [SLK]
+  SPLY: Shepley, Shepley [SPY]
+  STKSMR: Stocksmoor, Stocksmoor [SSM]
+  SWINTN: Swinton, Swinton (South Yorkshire) [SWN]
+  TAPTONJ: Tapton Jn
+  TINSLEJ: Tinsley East Jn
+  TINSLNJ: Tinsley North Jn
+  TINSLSJ: Tinsley South Jn
+  TINSLYY: Tinsley Yard Gbrf
+  TINSMEA: Tinsley Meadowhall, Tinsley Meadowhall [TIN]
+  THBGJN: Thrybergh Jn
+  TOTLYTE: Totley Tunnel East
+  TREETGL: Treeton Goods Loop
+  TREETNJ: Treeton Jn
+  TRNO: Thurnscoe, Thurnscoe [THC]
+  WDBRNJN: Woodburn Jn
+  WDHOFHH: Woodhouse Junction Sidings Freightliner Heavy Haul, Woodhouse Junc Sdgs (Fhh)
+  WDHOUSJ: Woodhouse Jn
+  WNCOJN: Wincobank Jn., Wincobank Jn
+  WOLEYCS: Woolley Coal Sdgs S.B.
+  WOMBWEL: Wombwell, Wombwell [WOM]

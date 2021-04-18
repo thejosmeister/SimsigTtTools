@@ -1,0 +1,71 @@
+# Sheffield location logic
+
+entry_point_rules:
+  ETAPMAIN:
+    # Train enters on the old road
+    if_later_location_matching:
+      conditions:
+        - { 'location':'BEGHTJN' }
+        - OR
+        - { 'location':'BRHLJN' }
+        - OR
+        - { 'location':'BRHLSJN' }
+      then:
+        - entry_point: 'ETAPBAR'
+        - remove_1st_of: [ 'Tapton Jn' ]
+
+  EMORTHRP:
+    if_later_location_matching:
+      conditions:
+        - { 'location': 'Moorthorpe Goods Loop' }
+      then:
+        - remove_1st_of: [ 'Moorthorpe', 'Moorthorpe Goods Loop' ]
+
+
+location_rules:
+  'Thrybergh Jn':
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'SWINTN' }
+        location_2_conditions:
+          - { 'location': 'ALDWRKJ' }
+        location_3_conditions:
+          - { 'location': 'Thrybergh Jn' }
+        then:
+          - remove_1st_of: [ 'ALDWRKJ', 'Thrybergh Jn' ]
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'Thrybergh Jn' }
+        location_2_conditions:
+          - { 'location': 'ALDWRKJ' }
+        location_3_conditions:
+          - { 'location': 'SWINTN' }
+        then:
+          - remove_1st_of: [ 'ALDWRKJ', 'Thrybergh Jn' ]
+
+  CANKLOW:
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'TREETNJ' }
+        location_2_conditions:
+          - { 'location': 'CANKLOW' }
+        then:
+          - remove_1st_of: [ 'TREETNJ' ]
+    - remove_location:
+        location_conditions:
+          - { 'location': 'CANKLOW', '!arr': 'train just passes' }
+    - if_particular_present:
+        conditions:
+          - { 'location': 'CANKLOW', 'arr': '!arr is present' }
+        then:
+          - modify_location: { 'location': 'MBROSSJ', 'line': 'UGL' }
+          - modify_location: { 'location': 'CANKLOW', 'line': 'UGL' }
+
+  DORE:
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'DRONFLD' }
+        location_2_conditions:
+          - { 'location': 'DORE' }
+        then:
+          - remove_1st_of: [ 'DORE' ]
