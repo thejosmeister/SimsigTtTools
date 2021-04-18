@@ -90,3 +90,8 @@ location_rules:
     - remove_location:
         location_conditions:
           - { 'location': 'HEMSWTH', '!arr': 'does not stop' }
+
+  MORTHGL:
+    - remove_location:
+        location_conditions:
+          - { 'location': 'MORTHGL', '!arr': 'does not stop' }
