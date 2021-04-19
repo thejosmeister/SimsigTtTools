@@ -16,7 +16,11 @@ def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict, first_loc_is_stop: boo
     out = []
     for trip in list_of_trip_elts:
         location = {}
-        location['location'] = tiploc_dict[trip.find('Location').text][0]
+        location_text = trip.find('Location').text
+        if location_text in tiploc_dict:
+            location['location'] = tiploc_dict[trip.find('Location').text][0]
+        else:
+            location['location'] = location_text
         if trip.find('DepPassTime') is not None:
             location['dep'] = common.convert_sec_to_time(int(trip.find('DepPassTime').text))
             if trip.find('ArrTime') is None and first_loc_is_stop is True:

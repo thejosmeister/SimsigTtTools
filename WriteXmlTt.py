@@ -16,6 +16,8 @@ def sub_in_tiploc(sorted_locations: list, tiploc_dict: dict) -> list:
             if l['location'] in tiploc_dict[t]:
                 l['location'] = str(t)
                 out.append(l)
+            else:
+                print(f'no location found in locations map for {l["location"]}')
 
     return out
 
