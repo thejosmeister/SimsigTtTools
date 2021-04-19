@@ -8,17 +8,21 @@ import common
 from xml.sax.saxutils import escape
 
 
+def is_location_in_dict(location: str, tiploc_dict: dict) -> str:
+    for t in tiploc_dict.keys():
+        if location in tiploc_dict[t]:
+            return str(t)
+    print(f'no location found in locations map for {location}')
+    return ''
+
 # Will sub in TIPLOC codes for locations in the sim
 def sub_in_tiploc(sorted_locations: list, tiploc_dict: dict) -> list:
     out = []
     for l in sorted_locations:
-        for t in tiploc_dict.keys():
-            if l['location'] in tiploc_dict[t]:
-                l['location'] = str(t)
-                out.append(l)
-            else:
-                print(f'no location found in locations map for {l["location"]}')
-
+        location = is_location_in_dict(l['location'], tiploc_dict)
+        if location != '':
+            l['location'] = location
+            out.append(l)
     return out
 
 

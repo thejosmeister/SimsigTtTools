@@ -759,7 +759,7 @@ def parse_rtt_train_info(train_page, allox_train):
                     timing_load_parts = line.find_all('div')
                     timing_load_string = ' '.join([t.get_text() for t in timing_load_parts])
                     if 'max' in timing_load_string:
-                        t_l_match_obj = re.search('(?:Pathed|Starts) as (.+) Planned for (.+)mph max', timing_load_string)
+                        t_l_match_obj = re.search('(?:Pathed|Starts) as (.+) (?:p|P)lanned (?:for|at) (.+)mph max', timing_load_string)
                         train_info['Timing_Load'] = t_l_match_obj.group(1)
                         train_info['max_speed'] = t_l_match_obj.group(2)
                     else:

@@ -161,6 +161,21 @@
     crew_change: '120'
   electrification: 'D'
 
+Class 399 Supertram:
+  criteria:
+    # Standard class 158 timing load
+    Timing_Load: '^Class 399 EMU.*'
+    max_speed: '60'
+  id: 'AEF15345'
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '38'
+  speed_class: '1024'
+  power_to_weight_category: '0'
+  electrification: 'T'
+
 'GWR Class 158 (2 car)':
   criteria:
     # Standard class 158 timing load
