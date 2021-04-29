@@ -72,7 +72,10 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
         cat_id = 'A0000001'
 
     json_tt['category'] = categories_dict[cat_id]['description']
-    json_tt['uid'] = xml_tt.find('UID').text
+    if xml_tt.find('UID') is not None:
+        json_tt['uid'] = xml_tt.find('UID').text
+    else:
+        json_tt['uid'] = str(int(hashlib.sha1(xml_tt.find('ID').text.encode("utf-8")).hexdigest(), 16))[:8]
     json_tt['headcode'] = xml_tt.find('ID').text
     json_tt['max_speed'] = xml_tt.find('MaxSpeed').text
     json_tt['train_length'] = xml_tt.find('TrainLength').text
@@ -125,6 +128,17 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
     else:
         json_tt['speed_class'] = categories_dict[cat_id]['speed_class']
 
+    if xml_tt.find('Notes') is not None:
+        json_tt['notes'] = xml_tt.find('Notes').text
+
+    if xml_tt.find('SeedingGap') is not None:
+        json_tt['seeding_gap'] = xml_tt.find('SeedingGap').text
+    else:
+        json_tt['seeding_gap'] = '15'
+
+    if xml_tt.find('SeedGroup') is not None:
+        json_tt['seed_group'] = xml_tt.find('SeedGroup').text
+
     # Some actually optional stuff
     if xml_tt.find('EntryPoint') is not None:
         json_tt['entry_point'] = xml_tt.find('EntryPoint').text
@@ -165,9 +179,16 @@ def parse_individual_xml_rule(rule: ET.Element) -> dict:
                        '5': 'XDepAfterYEnt', '6': 'XDepAfterYLve', '7': 'XDepAfterYJoin', '8': 'XDepAfterYDiv',
                        '9': 'XDepAfterYForm', '10': 'XYMutExc', '11': 'XAppAfterYJoin', '12': 'XAppAfterYDiv',
                        '13': 'XAppAfterYForm', '14': 'XYAlternatives'}
-    json_rule = {'name': RULE_NAMES_DICT[rule.find('Rule').text],
-                 'train_x': rule.find('TrainUID').text,
-                 'train_y': rule.find('Train2UID').text}
+    json_rule = {'name': RULE_NAMES_DICT[rule.find('Rule').text]}
+
+    if rule.find('TrainUID') is not None:
+        json_rule['train_x_uid'] = rule.find('TrainUID').text
+    if rule.find('Train2UID') is not None:
+        json_rule['train_y_uid'] = rule.find('Train2UID').text
+    if rule.find('Train') is not None:
+        json_rule['train_x'] = rule.find('Train').text
+    if rule.find('Train2') is not None:
+        json_rule['train_y'] = rule.find('Train2').text
 
     if rule.find('Time') is not None:
         json_rule['time'] = rule.find('Time').text
@@ -236,6 +257,16 @@ def parse_train_categories_to_map(xml_tt_root) -> dict:
         if category.find('DwellTimes') is not None:
             dwell_times = category.find('DwellTimes')
             dwell_times_dict = {}
+            if dwell_times.find('RedSignalMoveOff') is not None:
+                dwell_times_dict['red_signal_move_off'] = dwell_times.find('RedSignalMoveOff').text
+            if dwell_times.find('StationForward') is not None:
+                dwell_times_dict['station_forward'] = dwell_times.find('StationForward').text
+            if dwell_times.find('StationReverse') is not None:
+                dwell_times_dict['station_reverse'] = dwell_times.find('StationReverse').text
+            if dwell_times.find('TerminateForward') is not None:
+                dwell_times_dict['terminate_forward'] = dwell_times.find('TerminateForward').text
+            if dwell_times.find('TerminateReverse') is not None:
+                dwell_times_dict['terminate_reverse'] = dwell_times.find('TerminateReverse').text
             if dwell_times.find('Join') is not None:
                 dwell_times_dict['join'] = dwell_times.find('Join').text
             if dwell_times.find('Divide') is not None:
@@ -271,6 +302,10 @@ def Parse_Full_Xml_Tt(file: str, overwrite_existing: bool):
                  'v_minor': root.find('VMinor').text,
                  'v_build': root.find('VBuild').text,
                  'train_description_template': root.find('Description').text}
+
+    if root.find('SeedGroupSummary') is not None:
+        tt_header['seed_group_summary'] = root.find('SeedGroupSummary').text
+
     locations_map = common.create_location_map_from_file(tt_header['sim_id'])[1]
 
     tt_db = TrainTtDb(tt_header['name'])
@@ -299,3 +334,14 @@ def Parse_Full_Xml_Tt(file: str, overwrite_existing: bool):
                 rules_db.add_rule(parse_individual_xml_rule(rule))
             else:
                 rules_db.add_rule_if_not_present(parse_individual_xml_rule(rule))
+
+    if root.find('SeedGroups') is not None:
+        list_of_seed_groups = root.find('SeedGroups').findall('SeedGroup')
+
+        list_to_add_to_db = []
+        for seed_group in list_of_seed_groups:
+            list_to_add_to_db.append({'id': seed_group.find('ID').text,
+                                      'start_time': common.convert_sec_to_time(int(seed_group.find('StartTime').text))})
+
+        header_db.add_seed_groups(list_to_add_to_db)
+

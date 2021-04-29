@@ -291,6 +291,15 @@ class MainHeaderDb:
             self.db.remove(doc_ids=[2])
         self.db.insert(table.Document({'categories_map': cat_map}, doc_id=2))
 
+    def add_seed_groups(self, seed_groups: list):
+        """
+        Adds the seed groups to the main header DB overwriting any if present.
+        :param seed_groups: list of seed groups to add.
+        """
+        if self.db.contains(doc_id=3):
+            self.db.remove(doc_ids=[3])
+        self.db.insert(table.Document({'seed_groups': seed_groups}, doc_id=3))
+
     def get_header(self) -> dict:
         """
         :return: TT header stored.
@@ -302,3 +311,11 @@ class MainHeaderDb:
         :return: train categories map stored.
         """
         return self.db.get(doc_id=2)['categories_map']
+
+    def get_seed_groups(self) -> list:
+        """
+        :return: seed groups list if stored, empty list if not.
+        """
+        if self.db.contains(doc_id=3):
+            return self.db.get(doc_id=3)['seed_groups']
+        return []

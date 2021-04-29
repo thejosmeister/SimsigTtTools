@@ -15,6 +15,7 @@ def is_location_in_dict(location: str, tiploc_dict: dict) -> str:
     print(f'no location found in locations map for {location}')
     return ''
 
+
 # Will sub in TIPLOC codes for locations in the sim
 def sub_in_tiploc(sorted_locations: list, tiploc_dict: dict) -> list:
     out = []
@@ -219,6 +220,12 @@ def build_xml_header(header_db: MainHeaderDb) -> str:
         name = json_tt_header['actual_name']
     else:
         name = json_tt_header['name']
+
+    if 'seed_group_summary' in json_tt_header:
+        sgs = json_tt_header['seed_group_summary']
+    else:
+        sgs = ''
+
     out = '<SimSigTimetable ID="' + json_tt_header['sim_id'] + '" Version="' + json_tt_header['version'] + '">' + \
           '<Name>' + name + '</Name><Description>' + json_tt_header['description'] + '</Description>' + \
           '<StartTime>' + str(common.convert_time_to_secs(json_tt_header['start_time'])) + '</StartTime><FinishTime>' + \
@@ -226,7 +233,8 @@ def build_xml_header(header_db: MainHeaderDb) -> str:
           '</FinishTime><VMajor>' + json_tt_header['v_major'] + '</VMajor><VMinor>' + json_tt_header['v_minor'] + \
           '</VMinor><VBuild>' + json_tt_header['v_build'] + '</VBuild>' + '<TrainDescriptionTemplate>' + \
           json_tt_header['train_description_template'] + \
-          '</TrainDescriptionTemplate><SeedGroupSummary></SeedGroupSummary><ScenarioOptions></ScenarioOptions>'
+          '</TrainDescriptionTemplate><SeedGroupSummary>' + sgs + '</SeedGroupSummary>' \
+                                                                  '<ScenarioOptions></ScenarioOptions>'
 
     return out
 
@@ -250,7 +258,8 @@ def build_xml_list_of_tts(tt_name: str, output_filename: str, locations_map: dic
     train_cat_by_desc = categories_map
     for tt in tt_db.get_all_in_db():
         print('Building xml TT for ' + tt['headcode'])
-        xml_tts.append(convert_individual_json_tt_to_xml(tt, locations_map, train_cat_by_id, train_cat_by_desc, use_default_category))
+        xml_tts.append(convert_individual_json_tt_to_xml(tt, locations_map, train_cat_by_id, train_cat_by_desc,
+                                                         use_default_category))
 
     create_xml_tt_list_file(xml_tts, output_filename)
 
@@ -287,6 +296,16 @@ def convert_categories_to_xml(categories_map: dict) -> str:
             out += f'<Electrification>{categories_map[category_desc]["electrification"]}</Electrification>'
         if 'dwell_times' in categories_map[category_desc]:
             out += '<DwellTimes>'
+            if 'red_signal_move_off' in categories_map[category_desc]['dwell_times']:
+                out += f"<RedSignalMoveOff>{categories_map[category_desc]['dwell_times']['red_signal_move_off']}</RedSignalMoveOff>"
+            if 'station_forward' in categories_map[category_desc]['dwell_times']:
+                out += f"<StationForward>{categories_map[category_desc]['dwell_times']['station_forward']}</StationForward>"
+            if 'station_reverse' in categories_map[category_desc]['dwell_times']:
+                out += f"<StationReverse>{categories_map[category_desc]['dwell_times']['station_reverse']}</StationReverse>"
+            if 'terminate_forward' in categories_map[category_desc]['dwell_times']:
+                out += f"<TerminateForward>{categories_map[category_desc]['dwell_times']['terminate_forward']}</TerminateForward>"
+            if 'terminate_reverse' in categories_map[category_desc]['dwell_times']:
+                out += f"<TerminateReverse>{categories_map[category_desc]['dwell_times']['terminate_reverse']}</TerminateReverse>"
             if 'join' in categories_map[category_desc]['dwell_times']:
                 out += f'<Join>{categories_map[category_desc]["dwell_times"]["join"]}</Join>'
             if 'divide' in categories_map[category_desc]['dwell_times']:
@@ -302,6 +321,18 @@ def convert_categories_to_xml(categories_map: dict) -> str:
     return out
 
 
+def build_xml_list_of_seed_groups(header_db) -> str:
+    list_of_sg = header_db.get_seed_groups()
+    if len(list_of_sg) == 0:
+        return ''
+
+    out = '<SeedGroups>'
+    for sg in list_of_sg:
+        out += f"<SeedGroup><ID>{sg['id']}</ID><StartTime>{str(common.convert_time_to_secs(sg['start_time']))}</StartTime></SeedGroup>"
+    out += '</SeedGroups>'
+    return out
+
+
 def Write_Full_Xml_Tt(tt_name: str, output_filename: str, use_default_category: bool):
     header_db = MainHeaderDb(tt_name)
     header = build_xml_header(header_db)
@@ -309,6 +340,7 @@ def Write_Full_Xml_Tt(tt_name: str, output_filename: str, use_default_category: 
     locations_map = common.create_location_map_from_file(header_db.get_header()['sim_id'])[1]
     build_xml_list_of_tts(tt_name, output_filename + 'TT_List.xml', locations_map, categories, use_default_category)
     rules = build_xml_list_of_rules(tt_name, locations_map)
+    seed_groups = build_xml_list_of_seed_groups(header_db)
 
     if os.path.exists(output_filename) is False:
         os.mkdir(output_filename)
@@ -332,6 +364,9 @@ def Write_Full_Xml_Tt(tt_name: str, output_filename: str, use_default_category: 
             for rule in rules:
                 print(rule, file=f_to_write)
             print('</TimetableRules>', file=f_to_write)
+
+        if seed_groups != '':
+            print(seed_groups, file=f_to_write)
 
         print('</SimSigTimetable>', file=f_to_write)
 
