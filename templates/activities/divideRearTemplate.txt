@@ -1,1 +1,1 @@
-<Activity><Activity>1</Activity><AssociatedUID>${UID}</AssociatedUID></Activity>
+<Activity><Activity>1</Activity>${Assoc}</Activity>

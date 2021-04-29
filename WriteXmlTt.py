@@ -40,15 +40,18 @@ def read_in_tt_template(timetable_template_location) -> str:
 # Adds activities if specified in a trip
 def add_xml_location_activities(location: dict) -> str:
     out = '<Activities>'
-    for activity in location['activities'].keys():
-        f = open('templates/activities/' + str(activity) + 'Template.txt', "r")
-        if 'crewChange' in str(activity):
+    for activity in location['activities']:
+        f = open('templates/activities/' + activity[0] + 'Template.txt', "r")
+        if 'crewChange' in activity[0]:
             for fl in f:
                 out += fl.rstrip()
         else:
+            if '*' in activity[1]:
+                phrase_to_insert = f"<AssociatedUID>{activity[1].replace('*', '')}</AssociatedUID>"
+            else:
+                phrase_to_insert = f"<AssociatedTrain>{activity[1]}</AssociatedTrain>"
             for fl in f:
-                uid_to_insert = location['activities'][activity]
-                out += fl.rstrip().replace('${UID}', uid_to_insert)
+                out += fl.rstrip().replace('${Assoc}', phrase_to_insert)
         f.close()
 
     return out + '</Activities>'
