@@ -129,9 +129,24 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
         category = train_cat_by_desc[json_tt['category']]['id']
 
     if 'dwell_times' in json_tt:
-        dwell_times = '<Join>' + json_tt['dwell_times']['join'] + '</Join><Divide>' + \
-                      json_tt['dwell_times']['divide'] + '</Divide><CrewChange>' + \
-                      json_tt['dwell_times']['crew_change'] + '</CrewChange>'
+        dwell_times = ''
+        for dt in json_tt['dwell_times']:
+            if 'red_signal_move_off' in dt:
+                dwell_times += f"<RedSignalMoveOff>{json_tt['dwell_times']['red_signal_move_off']}</RedSignalMoveOff>"
+            if 'station_forward' in dt:
+                dwell_times += f"<StationForward>{json_tt['dwell_times']['station_forward']}</StationForward>"
+            if 'station_reverse' in dt:
+                dwell_times += f"<StationReverse>{json_tt['dwell_times']['station_reverse']}</StationReverse>"
+            if 'terminate_forward' in dt:
+                dwell_times += f"<TerminateForward>{json_tt['dwell_times']['terminate_forward']}</TerminateForward>"
+            if 'terminate_reverse' in dt:
+                dwell_times += f"<TerminateReverse>{json_tt['dwell_times']['terminate_reverse']}</TerminateReverse>"
+            if 'join' in dt:
+                dwell_times += f"<Join>{json_tt['dwell_times']['join']}</Join>"
+            if 'divide' in dt:
+                dwell_times += f"<Divide>{json_tt['dwell_times']['divide']}</Divide>"
+            if 'crew_change' in dt:
+                dwell_times += f"<CrewChange>{json_tt['dwell_times']['crew_change']}</CrewChange>"
     else:
         dwell_times = ''
 

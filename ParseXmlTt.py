@@ -133,11 +133,26 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
     if xml_tt.find('DepartTime') is not None:
         json_tt['entry_time'] = common.convert_sec_to_time(int(xml_tt.find('DepartTime').text))
 
+    json_tt['dwell_times'] = {}
+    if xml_tt.find('RedSignalMoveOff') is not None:
+        json_tt['dwell_times']['red_signal_move_off'] = xml_tt.find('RedSignalMoveOff').text
+    if xml_tt.find('StationForward') is not None:
+        json_tt['dwell_times']['station_forward'] = xml_tt.find('StationForward').text
+    if xml_tt.find('StationReverse') is not None:
+        json_tt['dwell_times']['station_reverse'] = xml_tt.find('StationReverse').text
+    if xml_tt.find('TerminateForward') is not None:
+        json_tt['dwell_times']['terminate_forward'] = xml_tt.find('TerminateForward').text
+    if xml_tt.find('TerminateReverse') is not None:
+        json_tt['dwell_times']['terminate_reverse'] = xml_tt.find('TerminateReverse').text
     if xml_tt.find('Join') is not None:
-        json_tt['dwell_times'] = {}
         json_tt['dwell_times']['join'] = xml_tt.find('Join').text
+    if xml_tt.find('Divide') is not None:
         json_tt['dwell_times']['divide'] = xml_tt.find('Divide').text
+    if xml_tt.find('CrewChange') is not None:
         json_tt['dwell_times']['crew_change'] = xml_tt.find('CrewChange').text
+
+    if len(json_tt['dwell_times']) == 0:
+        json_tt.pop('dwell_times')
 
     json_tt['locations'] = parse_xml_trips(xml_tt.find('Trips').findall('Trip'), tiploc_dict, first_loc_is_stop)
     print('Parsed ' + json_tt['headcode'])
