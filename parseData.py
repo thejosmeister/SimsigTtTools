@@ -413,7 +413,7 @@ def convert_train_locations(initial_locations: list, location_maps: list, source
     for location in initial_locations:
         if 'Activities' in location:
             if 'Stops to change trainmen' in location['Activities']:
-                location['activities'] = {"crewChange": ""}
+                location['activities'] = [["crewChange", None]]
 
         if location['Location'] in list_of_entry_points and potential_entry_point is None:
             for entry_point in entry_points.keys():
@@ -499,6 +499,9 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
 
     # Fetch location data from sched table
     initial_locations = parse_sched_table(train_page.find('table', {'class': 'sched-table'}))
+
+    if len(initial_locations) == 0:
+        return None
 
     if 'arr' in initial_locations[-1]:
         train_info['destination_time'] = initial_locations[-1]['arr']
@@ -756,7 +759,7 @@ def parse_rtt_train_info(train_page, allox_train):
                     timing_load_parts = line.find_all('div')
                     timing_load_string = ' '.join([t.get_text() for t in timing_load_parts])
                     if 'max' in timing_load_string:
-                        t_l_match_obj = re.search('(?:Pathed|Starts) as (.+) Planned for (.+)mph max', timing_load_string)
+                        t_l_match_obj = re.search('(?:Pathed|Starts) as (.+) (?:p|P)lanned (?:for|at) (.+)mph max', timing_load_string)
                         train_info['Timing_Load'] = t_l_match_obj.group(1)
                         train_info['max_speed'] = t_l_match_obj.group(2)
                     else:
@@ -910,6 +913,9 @@ def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor,
 
     # Fetch location data from locations list
     initial_locations = parse_rtt_train_locations(train_page.find('div', class_='locationlist'))
+
+    if len(initial_locations) == 0:
+        return None
 
     if 'arr' in initial_locations[-1]:
         train_info['destination_time'] = initial_locations[-1]['arr']
