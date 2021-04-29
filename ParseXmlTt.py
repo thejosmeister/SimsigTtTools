@@ -301,7 +301,7 @@ def Parse_Full_Xml_Tt(file: str, overwrite_existing: bool):
                  'v_major': root.find('VMajor').text,
                  'v_minor': root.find('VMinor').text,
                  'v_build': root.find('VBuild').text,
-                 'train_description_template': root.find('Description').text}
+                 'train_description_template': root.find('TrainDescriptionTemplate').text}
 
     if root.find('SeedGroupSummary') is not None:
         tt_header['seed_group_summary'] = root.find('SeedGroupSummary').text

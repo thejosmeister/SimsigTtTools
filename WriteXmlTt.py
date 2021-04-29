@@ -129,6 +129,9 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
     else:
         category = train_cat_by_desc[json_tt['category']]['id']
 
+    if 'notes' in json_tt:
+        extras += f'<Notes>{json_tt["notes"]}</Notes>'
+
     if 'dwell_times' in json_tt:
         dwell_times = ''
         for dt in json_tt['dwell_times']:
@@ -153,6 +156,8 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
 
     if 'non_ars' in json_tt:
         extras += '<NonARSOnEntry>-1</NonARSOnEntry>'
+    if 'seed_group' in json_tt:
+        extras += f'<SeedGroup>{json_tt["seed_group"]}</SeedGroup>'
 
     # Compose our string that makes up a TT.
     tt_string = tt_template.replace('${ID}', headcode).replace('${UID}', uid) \
@@ -172,7 +177,11 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
         return tt_string.replace('${EntryPoint}', entry_point).replace('${DepartTime}', depart_time)
     elif 'seed_point' in json_tt:
         seed_point = json_tt['seed_point']
-        depart_time = str(common.convert_time_to_secs(json_tt['entry_time']))
+        if 'entry_time' in json_tt:
+            depart_time = f"<DepartTime>{str(common.convert_time_to_secs(json_tt['entry_time']))}</DepartTime>"
+        else:
+            depart_time = ''
+
         return tt_string.replace('${SeedPoint}', seed_point).replace('${DepartTime}', depart_time)
     else:
         return tt_string
@@ -194,14 +203,19 @@ def build_xml_rule(json_rule: dict, locations_map: dict) -> str:
         if RULE_NAMES_DICT[num] == json_rule['name']:
             rule_num = str(num)
 
-    out = '<TimetableRule><Rule>' + rule_num + '</Rule><TrainUID>' + json_rule['train_x'] + '</TrainUID>' \
-          + '<Train2UID>' + json_rule['train_y'] + '</Train2UID>'
+    out = '<TimetableRule><Rule>' + rule_num + '</Rule>'
+    if 'train_x' in json_rule:
+        out += f"<Train>{json_rule['train_x']}</Train>"
+    if 'train_y' in json_rule:
+        out += f"<Train2>{json_rule['train_y']}</Train2>"
+    if 'train_x_uid' in json_rule:
+        out += f"<TrainUID>{json_rule['train_x_uid']}</TrainUID>"
+    if 'train_y_uid' in json_rule:
+        out += f"<Train2UID>{json_rule['train_y_uid']}</Train2UID>"
     if 'time' in json_rule:
         out += '<Time>' + json_rule['time'] + '</Time>'
     if 'location' in json_rule:
-        for tiploc in locations_map:
-            if json_rule['location'] in locations_map[tiploc]:
-                location = str(tiploc)
+        location = common.find_tiploc_for_location(json_rule['location'], locations_map)
         out += '<Location>' + location + '</Location>'
 
     return out + '</TimetableRule>'

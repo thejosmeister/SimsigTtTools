@@ -18,5 +18,6 @@
 <StartTraction>${StartTraction}</StartTraction>
 <Category>${Category}</Category>
 ${Extras}
+${DwellTimes}
 <Trips>${Trips}</Trips>
 </Timetable>

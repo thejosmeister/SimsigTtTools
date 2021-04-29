@@ -5,7 +5,7 @@
 <AsRequiredPercent>50</AsRequiredPercent>
 <Description>${Description}</Description>
 <SeedPoint>${SeedPoint}</SeedPoint>
-<DepartTime>${DepartTime}</DepartTime>
+${DepartTime}
 <SeedingGap>15</SeedingGap>
 <Started>-1</Started>
 <MaxSpeed>${MaxSpeed}</MaxSpeed>
@@ -21,5 +21,6 @@
 <StartTraction>${StartTraction}</StartTraction>
 <Category>${Category}</Category>
 ${Extras}
+${DwellTimes}
 <Trips>${Trips}</Trips>
 </Timetable>
