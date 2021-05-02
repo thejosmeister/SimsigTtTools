@@ -2,9 +2,21 @@ entry_points:
   EANDOVER:
     readable_names: Andover, Andover [ADV]
     assoc_sim_location: ANDOVER
+  EDEANCE:
+    readable_names: Dean C.E. Siding
+    assoc_sim_location: DEANCE
+  EDEANHLS:
+    readable_names: Dean Hill M.O.D.
+    assoc_sim_location: DEANHLS
   EDINTNMD:
-    readable_names: Dinton M.O.D.
+    readable_names: Dinton M.O.D. Navy
     assoc_sim_location: DINTNMD
+  EDINTNAF:
+    readable_names: Dinton M.O.D. Air
+    assoc_sim_location: DINTNAF
+  EEGRMECC:
+    readable_names: East Grimstead Sidings
+    assoc_sim_location: EGRMECC
   EGLHM:
     readable_names: Gillingham, Gillingham (Dorset) [GIL]
     assoc_sim_location: GLHM
@@ -27,7 +39,14 @@ entry_points:
 locations: 
   ANDOVER: Andover, Andover [ADV]
   DEAN: Dean, Dean [DEN]
-  DINTNMD: Dinton M.O.D.
+  DEANCE: Dean C.E. Siding
+  DEANHLS: Dean Hill M.O.D.
+  DEANHLSGF: Dean Hill M.O.D. GF
+  DINTON: Dinton GF
+  DINTNMD: Dinton M.O.D. Navy
+  DINTNAF: Dinton M.O.D. Air
+  EGRMECC: East Grimstead Sidings
+  EGRMECC3: East Grimstead GF
   GLHM: Gillingham, Gillingham (Dorset) [GIL]
   GRATELY: Grateley, Grateley [GRT]
   LSTOKNJ: Laverstock North Jn
@@ -46,6 +65,7 @@ locations:
   SLSB52: Salisbury Signal Sy52
   SLSBY5B: Salisbury 5 Bay
   SLSBY6B: Salisbury 6 Bay
+  SLSBYEHS: Salisbury East Yard Headshunt
   SLSBECS: Salisbury East C.H.S.
   SLSBRCL: Salisbury Reception Line
   SLSBRY: Salisbury, Salisbury [SAL]
@@ -61,6 +81,7 @@ locations:
   UPTNLOV: Upton Lovell
   WILTON: Wilton
   WILTONJ: Wilton Jn
+  WILTONJR: Wilton Jn (Rev)
   WRMNSTR: Warminster, Warminster [WMN]
   WSHFORD: Wishford
   WYLYAHB: Wylye Ahb

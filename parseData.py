@@ -531,8 +531,10 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
         train_to_return['entry_time'] = entry_time
 
     train_to_return['tt_template'] = tt_template
-
     train_to_return['locations'] = final_locations
+
+    train_to_return['as_required_percent'] = '50'
+    train_to_return['seeding_gap'] = '15'
 
     return train_to_return
 
@@ -945,8 +947,10 @@ def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor,
         train_to_return['entry_time'] = entry_time
 
     train_to_return['tt_template'] = tt_template
-
     train_to_return['locations'] = final_locations
+
+    train_to_return['as_required_percent'] = '50'
+    train_to_return['seeding_gap'] = '15'
 
     return train_to_return
 

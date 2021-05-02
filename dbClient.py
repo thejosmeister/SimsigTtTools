@@ -241,7 +241,11 @@ class RulesDb:
         Adds Rule to Rules DB overwriting one with the same id if present.
         :param rule: Rule to add.
         """
-        doc_id = generate_id_from_uid(rule['train_x'] + rule['name'])
+        if 'train_x' in rule:
+            doc_id = generate_id_from_uid(rule['train_x'] + rule['name'])
+        elif 'train_x_uid' in rule:
+            doc_id = generate_id_from_uid(rule['train_x_uid'] + rule['name'])
+
         if self.db.contains(doc_id=doc_id):
             self.db.remove(doc_ids=[doc_id])
         self.db.insert(table.Document(rule, doc_id=doc_id))
@@ -251,7 +255,11 @@ class RulesDb:
         Adds Rule to Rules DB if one with the same id is NOT already present.
         :param rule: Rule to add.
         """
-        doc_id = generate_id_from_uid(rule['train_x'] + rule['name'])
+        if 'train_x' in rule:
+            doc_id = generate_id_from_uid(rule['train_x'] + rule['name'])
+        elif 'train_x_uid' in rule:
+            doc_id = generate_id_from_uid(rule['train_x_uid'] + rule['name'])
+
         if not self.db.contains(doc_id=doc_id):
             self.db.insert(table.Document(rule, doc_id=doc_id))
 
