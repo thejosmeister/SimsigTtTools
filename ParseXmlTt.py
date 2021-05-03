@@ -9,7 +9,7 @@ DEFAULT_CATEGORY = {'id': 'A0000001', 'accel_brake_index': '1',
                     'dwell_times': {'join': '240', 'divide': '240', 'crew_change': '120'}, 'electrification': 'D'}
 
 
-def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict, first_loc_is_stop: bool) -> list:
+def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict) -> list:
     ACT_DICT = {'0': 'trainBecomes', '1': 'divideRear', '2': 'divideFront', '3': 'trainJoins', '4': 'detatchRear',
                 '5': 'detatchFront', '6': 'dropRear', '7': 'dropFront', '8': 'joins2', '9': 'platformShare',
                 '10': 'crewChange'}
@@ -23,9 +23,6 @@ def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict, first_loc_is_stop: boo
             location['location'] = location_text
         if trip.find('DepPassTime') is not None:
             location['dep'] = common.convert_sec_to_time(int(trip.find('DepPassTime').text))
-            if trip.find('ArrTime') is None and first_loc_is_stop is True:
-                first_loc_is_stop = False
-                location['isOrigin'] = 'yes'
         if trip.find('ArrTime') is not None:
             location['arr'] = common.convert_sec_to_time(int(trip.find('ArrTime').text))
         if trip.find('Platform') is not None:
@@ -38,6 +35,8 @@ def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict, first_loc_is_stop: boo
             location['pth allow'] = trip.find('PathAllowance').text
         if trip.find('EngAllowance') is not None:
             location['eng allow'] = trip.find('EngAllowance').text
+        if trip.find('IsPassTime') is not None:
+            location['is_pass_time'] = trip.find('IsPassTime').text
 
         if trip.find('Activities') is not None:
             location['activities'] = []
@@ -48,14 +47,13 @@ def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict, first_loc_is_stop: boo
                     location['activities'].append([ACT_DICT[activity.find('Activity').text], f"{activity.find('AssociatedTrain').text}"])
                 else:
                     location['activities'].append([ACT_DICT[activity.find('Activity').text], None])
-
         out.append(location)
     return out
 
 
 def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_dict: dict, use_default_category: bool) -> dict:
     json_tt = {}
-    first_loc_is_stop = False
+    # first_loc_is_stop = False
     json_tt['tt_template'] = 'templates/timetables/defaultTimetable.txt'
 
     if xml_tt.find('Category') is not None:
@@ -189,7 +187,7 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
     if len(json_tt['shunt_times']) == 0:
         json_tt.pop('shunt_times')
 
-    json_tt['locations'] = parse_xml_trips(xml_tt.find('Trips').findall('Trip'), tiploc_dict, first_loc_is_stop)
+    json_tt['locations'] = parse_xml_trips(xml_tt.find('Trips').findall('Trip'), tiploc_dict)
     print('Parsed ' + json_tt['headcode'])
     return json_tt
 

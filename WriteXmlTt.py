@@ -62,10 +62,10 @@ def create_xml_trip(location: dict) -> str:
     out = '<Trip><Location>' + location['location'] + '</Location>'
     if 'dep' in location:
         out += '<DepPassTime>' + str(common.convert_time_to_secs(location['dep'])) + '</DepPassTime>'
-        if 'arr' not in location and 'isOrigin' not in location:
-            out += '<IsPassTime>-1</IsPassTime>'
     if 'arr' in location:
         out += '<ArrTime>' + str(common.convert_time_to_secs(location['arr'])) + '</ArrTime>'
+    if 'is_pass_time' in location or 'isOrigin' in location:
+        out += '<IsPassTime>-1</IsPassTime>'
     if 'plat' in location:
         out += '<Platform>' + location['plat'] + '</Platform>'
     if 'line' in location:
@@ -172,14 +172,14 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
     if 'category' in json_tt:
         if 'standard diesel freight' == json_tt['category'] and use_default_category is True:
             # Train has default category
-            category = train_cat_by_desc[json_tt['category']]['id']
+            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
         elif 'A0000001' == json_tt['category'] and use_default_category is True:
             # Train has default category
-            category = json_tt['category']
+            category = f"<Category>{json_tt['category']}</Category>"
         elif json_tt['category'] in train_cat_by_id:
-            category = json_tt['category']
+            category = f"<Category>{json_tt['category']}</Category>"
         else:
-            category = train_cat_by_desc[json_tt['category']]['id']
+            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
     else:
         category = ''
 
