@@ -13,6 +13,22 @@ def generate_id_from_uid(uid: str):
     return int(hashlib.sha1(uid.encode("utf-8")).hexdigest(), 16)
 
 
+def generate_rule_id(rule: dict) -> int:
+    id_to_transform = ''
+    if 'train_x' in rule:
+        id_to_transform += rule['train_x']
+    if 'train_x_uid' in rule:
+        id_to_transform += rule['train_x_uid']
+    if 'train_y' in rule:
+        id_to_transform += rule['train_y']
+    if 'train_y_uid' in rule:
+        id_to_transform += rule['train_y_uid']
+
+    id_to_transform += rule['name']
+
+    return generate_id_from_uid(id_to_transform)
+
+
 class TrainTtDb:
     """
     Class managing a TinyDB instance for list of json TT for a particular TT.
@@ -241,10 +257,7 @@ class RulesDb:
         Adds Rule to Rules DB overwriting one with the same id if present.
         :param rule: Rule to add.
         """
-        if 'train_x' in rule:
-            doc_id = generate_id_from_uid(rule['train_x'] + rule['name'])
-        elif 'train_x_uid' in rule:
-            doc_id = generate_id_from_uid(rule['train_x_uid'] + rule['name'])
+        doc_id = generate_rule_id(rule)
 
         if self.db.contains(doc_id=doc_id):
             self.db.remove(doc_ids=[doc_id])
@@ -255,10 +268,7 @@ class RulesDb:
         Adds Rule to Rules DB if one with the same id is NOT already present.
         :param rule: Rule to add.
         """
-        if 'train_x' in rule:
-            doc_id = generate_id_from_uid(rule['train_x'] + rule['name'])
-        elif 'train_x_uid' in rule:
-            doc_id = generate_id_from_uid(rule['train_x_uid'] + rule['name'])
+        doc_id = generate_rule_id(rule)
 
         if not self.db.contains(doc_id=doc_id):
             self.db.insert(table.Document(rule, doc_id=doc_id))
