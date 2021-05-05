@@ -64,7 +64,7 @@ def create_xml_trip(location: dict) -> str:
         out += '<DepPassTime>' + str(common.convert_time_to_secs(location['dep'])) + '</DepPassTime>'
     if 'arr' in location:
         out += '<ArrTime>' + str(common.convert_time_to_secs(location['arr'])) + '</ArrTime>'
-    if 'is_pass_time' in location or 'isOrigin' in location:
+    if 'is_pass_time' in location:
         out += '<IsPassTime>-1</IsPassTime>'
     if 'plat' in location:
         out += '<Platform>' + location['plat'] + '</Platform>'

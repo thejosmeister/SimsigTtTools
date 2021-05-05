@@ -826,7 +826,7 @@ def parse_rtt_train_locations(locations_object):
                 else:
                     location['Activities'] = addl.get_text()
 
-            if is_1st_loc is False or 'arr' not in location:
+            if is_1st_loc is False and 'arr' not in location:
                 location['is_pass_time'] = '-1'
 
             is_1st_loc = False
@@ -834,6 +834,7 @@ def parse_rtt_train_locations(locations_object):
 
 
     # TODO Will possibly need to sort these by time SO TEST
+    # Later note: seems to work OK with no sorting
 
     return dicts_of_locations
 
