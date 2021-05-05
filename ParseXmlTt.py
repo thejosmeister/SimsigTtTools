@@ -304,7 +304,7 @@ def Parse_Full_Xml_Tt(file: str, overwrite_existing: bool, use_default_category:
     Parses a .WTT file into the relevant json data.
     :param file: The name and location of the .WTT file you want to parse
     :param overwrite_existing: If we have parsed a tt with the same name then we can overwrite any trains with the same UID.
-    :param use_default_category: If a train has not category assigned then this will give the train a default category.
+    :param use_default_category: If a train has no category assigned then this will give the train a default category.
     """
     with zipfile.ZipFile(file, 'r') as zip_ref:
         zip_ref.extractall('temp_parsing_dir')
