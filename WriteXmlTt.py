@@ -15,6 +15,7 @@ def is_location_in_dict(location: str, tiploc_dict: dict) -> str:
     print(f'no location found in locations map for {location}')
     return ''
 
+
 # Will sub in TIPLOC codes for locations in the sim
 def sub_in_tiploc(sorted_locations: list, tiploc_dict: dict) -> list:
     out = []
@@ -61,10 +62,10 @@ def create_xml_trip(location: dict) -> str:
     out = '<Trip><Location>' + location['location'] + '</Location>'
     if 'dep' in location:
         out += '<DepPassTime>' + str(common.convert_time_to_secs(location['dep'])) + '</DepPassTime>'
-        if 'arr' not in location and 'isOrigin' not in location:
-            out += '<IsPassTime>-1</IsPassTime>'
     if 'arr' in location:
         out += '<ArrTime>' + str(common.convert_time_to_secs(location['arr'])) + '</ArrTime>'
+    if 'is_pass_time' in location:
+        out += '<IsPassTime>-1</IsPassTime>'
     if 'plat' in location:
         out += '<Platform>' + location['plat'] + '</Platform>'
     if 'line' in location:
@@ -100,43 +101,208 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
     trips = ''.join([create_xml_trip(l) for l in locations_on_sim])
 
     # Sort all the parameters to plug in to template.
-    accel_brake_index = json_tt['accel_brake_index']
-    uid = json_tt['uid']
-    headcode = json_tt['headcode']
-    max_speed = json_tt['max_speed']
-    is_freight = json_tt['is_freight']
-    train_length = json_tt['train_length']
-    electrification = json_tt['electrification']
-    origin_name = escape(json_tt['origin_name'])
-    destination_name = escape(json_tt['destination_name'])
-    origin_time = str(common.convert_time_to_secs(json_tt['origin_time']))
-    description = escape(json_tt['description'])
-    destination_time = str(common.convert_time_to_secs(json_tt['destination_time']))
-    operator_code = json_tt['operator_code']
-    start_traction = json_tt['start_traction']
-    speed_class = json_tt['speed_class']
-    extras = ''
+    headcode = f"<ID>{json_tt['headcode']}</ID>"
 
-    if 'standard diesel freight' == json_tt['category'] and use_default_category is True:
-        # Train has default category
-        category = train_cat_by_desc[json_tt['category']]['id']
-    elif 'A0000001' == json_tt['category'] and use_default_category is True:
-        # Train has default category
-        category = json_tt['category']
-    elif json_tt['category'] in train_cat_by_id:
-        category = json_tt['category']
+    extras = ''
+    category_as_dict = None
+
+    if 'category' in json_tt:
+        if 'standard diesel freight' == json_tt['category'] and use_default_category is True:
+            # Train has default category
+            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
+        elif 'A0000001' == json_tt['category'] and use_default_category is True:
+            # Train has default category
+            category = f"<Category>{json_tt['category']}</Category>"
+        elif json_tt['category'] in train_cat_by_desc:
+            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
+            category_as_dict = train_cat_by_desc[json_tt['category']]
+        else:
+            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
     else:
-        category = train_cat_by_desc[json_tt['category']]['id']
+        category = ''
+
+    if 'accel_brake_index' in json_tt:
+        accel_brake_index = f"<AccelBrakeIndex>{json_tt['accel_brake_index']}</AccelBrakeIndex>"
+    elif category_as_dict is not None and 'accel_brake_index' in category_as_dict:
+        accel_brake_index = f"<AccelBrakeIndex>{category_as_dict['accel_brake_index']}</AccelBrakeIndex>"
+    else:
+        accel_brake_index = ''
+
+    if 'uid' in json_tt:
+        uid = f"<UID>{json_tt['uid']}</UID>"
+    else:
+        uid = ''
+
+    if 'max_speed' in json_tt:
+        max_speed = f"<MaxSpeed>{json_tt['max_speed']}</MaxSpeed>"
+    elif category_as_dict is not None and 'accel_brake_index' in category_as_dict:
+        max_speed = f"<MaxSpeed>{category_as_dict['max_speed']}</MaxSpeed>"
+    else:
+        max_speed = ''
+
+    if 'is_freight' in json_tt:
+        is_freight = f"<IsFreight>{json_tt['is_freight']}</IsFreight>"
+    elif category_as_dict is not None and 'is_freight' in category_as_dict:
+        is_freight = f"<IsFreight>{category_as_dict['is_freight']}</IsFreight>"
+    else:
+        is_freight = ''
+
+    if 'can_use_goods_lines' in json_tt:
+        extras += f"<CanUseGoodsLines>{json_tt['can_use_goods_lines']}</CanUseGoodsLines>"
+    elif category_as_dict is not None and 'can_use_goods_lines' in category_as_dict:
+        extras += f"<CanUseGoodsLines>{category_as_dict['can_use_goods_lines']}</CanUseGoodsLines>"
+
+    if 'power_to_weight_category' in json_tt:
+        extras += f"<PowerToWeightCategory>{json_tt['power_to_weight_category']}</PowerToWeightCategory>"
+    elif category_as_dict is not None and 'power_to_weight_category' in category_as_dict:
+        extras += f"<PowerToWeightCategory>{category_as_dict['power_to_weight_category']}</PowerToWeightCategory>"
+
+    if 'train_length' in json_tt:
+        train_length = f"<TrainLength>{json_tt['train_length']}</TrainLength>"
+    elif category_as_dict is not None and 'train_length' in category_as_dict:
+        train_length = f"<TrainLength>{category_as_dict['train_length']}</TrainLength>"
+    else:
+        train_length = ''
+
+    if 'electrification' in json_tt:
+        electrification = f"<Electrification>{json_tt['electrification']}</Electrification>"
+    elif category_as_dict is not None and 'electrification' in category_as_dict:
+        electrification = f"<Electrification>{category_as_dict['electrification']}</Electrification>"
+    else:
+        electrification = ''
+
+    if 'speed_class' in json_tt:
+        speed_class = f"<SpeedClass>{json_tt['speed_class']}</SpeedClass>"
+    elif category_as_dict is not None and 'speed_class' in category_as_dict:
+        speed_class = f"<SpeedClass>{category_as_dict['speed_class']}</SpeedClass>"
+    else:
+        speed_class = ''
+
+    if 'origin_name' in json_tt:
+        origin_name = f"<OriginName>{escape(json_tt['origin_name'])}</OriginName>"
+    else:
+        origin_name = ''
+    if 'destination_name' in json_tt:
+        destination_name = f"<DestinationName>{escape(json_tt['destination_name'])}</DestinationName>"
+    else:
+        destination_name = ''
+    if 'origin_time' in json_tt:
+        origin_time = f"<OriginTime>{str(common.convert_time_to_secs(json_tt['origin_time']))}</OriginTime>"
+    else:
+        origin_time = ''
+    if 'destination_time' in json_tt:
+        destination_time = f"<DestinationTime>{str(common.convert_time_to_secs(json_tt['destination_time']))}</DestinationTime>"
+    else:
+        destination_time = ''
+    if 'description' in json_tt:
+        description = f"<Description>{escape(json_tt['description'])}</Description>"
+    else:
+        description = ''
+    if 'operator_code' in json_tt:
+        operator_code = f"<OperatorCode>{json_tt['operator_code']}</OperatorCode>"
+    else:
+        operator_code = ''
+    if 'start_traction' in json_tt:
+        start_traction = f"<StartTraction>{json_tt['start_traction']}</StartTraction>"
+    else:
+        start_traction = ''
+    if 'seeding_gap' in json_tt:
+        seeding_gap = f"<SeedingGap>{json_tt['seeding_gap']}</SeedingGap>"
+    else:
+        seeding_gap = ''
+    if 'as_required_percent' in json_tt:
+        as_required_percent = f"<AsRequiredPercent>{json_tt['as_required_percent']}</AsRequiredPercent>"
+    else:
+        as_required_percent = ''
+
+    if 'notes' in json_tt:
+        extras += f'<Notes>{json_tt["notes"]}</Notes>'
 
     if 'dwell_times' in json_tt:
-        dwell_times = '<Join>' + json_tt['dwell_times']['join'] + '</Join><Divide>' + \
-                      json_tt['dwell_times']['divide'] + '</Divide><CrewChange>' + \
-                      json_tt['dwell_times']['crew_change'] + '</CrewChange>'
+        dwell_times = ''
+        for dt in json_tt['dwell_times']:
+            if 'red_signal_move_off' in dt:
+                dwell_times += f"<RedSignalMoveOff>{json_tt['dwell_times']['red_signal_move_off']}</RedSignalMoveOff>"
+            if 'station_forward' in dt:
+                dwell_times += f"<StationForward>{json_tt['dwell_times']['station_forward']}</StationForward>"
+            if 'station_reverse' in dt:
+                dwell_times += f"<StationReverse>{json_tt['dwell_times']['station_reverse']}</StationReverse>"
+            if 'terminate_forward' in dt:
+                dwell_times += f"<TerminateForward>{json_tt['dwell_times']['terminate_forward']}</TerminateForward>"
+            if 'terminate_reverse' in dt:
+                dwell_times += f"<TerminateReverse>{json_tt['dwell_times']['terminate_reverse']}</TerminateReverse>"
+            if 'join' in dt:
+                dwell_times += f"<Join>{json_tt['dwell_times']['join']}</Join>"
+            if 'divide' in dt:
+                dwell_times += f"<Divide>{json_tt['dwell_times']['divide']}</Divide>"
+            if 'crew_change' in dt:
+                dwell_times += f"<CrewChange>{json_tt['dwell_times']['crew_change']}</CrewChange>"
+    elif category_as_dict is not None and 'dwell_times' in category_as_dict:
+        dwell_times = ''
+        for dt in category_as_dict['dwell_times']:
+            if 'red_signal_move_off' in dt:
+                dwell_times += f"<RedSignalMoveOff>{category_as_dict['dwell_times']['red_signal_move_off']}</RedSignalMoveOff>"
+            if 'station_forward' in dt:
+                dwell_times += f"<StationForward>{category_as_dict['dwell_times']['station_forward']}</StationForward>"
+            if 'station_reverse' in dt:
+                dwell_times += f"<StationReverse>{category_as_dict['dwell_times']['station_reverse']}</StationReverse>"
+            if 'terminate_forward' in dt:
+                dwell_times += f"<TerminateForward>{category_as_dict['dwell_times']['terminate_forward']}</TerminateForward>"
+            if 'terminate_reverse' in dt:
+                dwell_times += f"<TerminateReverse>{category_as_dict['dwell_times']['terminate_reverse']}</TerminateReverse>"
+            if 'join' in dt:
+                dwell_times += f"<Join>{category_as_dict['dwell_times']['join']}</Join>"
+            if 'divide' in dt:
+                dwell_times += f"<Divide>{category_as_dict['dwell_times']['divide']}</Divide>"
+            if 'crew_change' in dt:
+                dwell_times += f"<CrewChange>{category_as_dict['dwell_times']['crew_change']}</CrewChange>"
     else:
         dwell_times = ''
 
     if 'non_ars' in json_tt:
         extras += '<NonARSOnEntry>-1</NonARSOnEntry>'
+    if 'seed_group' in json_tt:
+        extras += f'<SeedGroup>{json_tt["seed_group"]}</SeedGroup>'
+
+    # Add entry point and time if needed.
+    if 'entry_point' in json_tt:
+        extras += f"<EntryPoint>{json_tt['entry_point']}</EntryPoint>"
+        if 'entry_time' in json_tt:
+            extras += f"<DepartTime>{str(common.convert_time_to_secs(json_tt['entry_time']))}</DepartTime>"
+    elif 'seed_point' in json_tt:
+        extras += f"<SeedPoint>{json_tt['seed_point']}</SeedPoint><Started>-1</Started>"
+        if 'entry_time' in json_tt:
+            extras += f"<DepartTime>{str(common.convert_time_to_secs(json_tt['entry_time']))}</DepartTime>"
+
+    if 'increment_on_transfer' in json_tt:
+        extras += f"<IncrementOnTransfer>{json_tt['increment_on_transfer']}</IncrementOnTransfer>"
+    if 'class_of_service' in json_tt:
+        extras += f"<ClassOfService>{json_tt['class_of_service']}</ClassOfService>"
+    if 'stp' in json_tt:
+        extras += f"<STP>{json_tt['stp']}</STP>"
+    if 'bonus_score' in json_tt:
+        extras += f"<BonusScore>{json_tt['bonus_score']}</BonusScore>"
+    if 'shunt_move' in json_tt:
+        extras += f"<ShuntMove>{json_tt['shunt_move']}</ShuntMove>"
+    if 'shunt_phone' in json_tt:
+        extras += f"<ShuntPhone>{json_tt['shunt_phone']}</ShuntPhone>"
+    if 'shunt_interpose' in json_tt:
+        extras += f"<ShuntInterpose>{json_tt['shunt_interpose']}</ShuntInterpose>"
+
+    if 'shunt_times' in json_tt:
+        extras += '<ShuntTimes>'
+        for st in json_tt['shunt_times']:
+            extras += '<ShuntTime>'
+            if 'start_time' in st:
+                extras += f"<StartTime>{st['start_time']}</StartTime>"
+            if 'end_time' in st:
+                extras += f"<EndTime>{st['end_time']}</EndTime>"
+            if 'min_interval' in st:
+                extras += f"<MinInterval>{st['min_interval']}</MinInterval>"
+            if 'max_interval' in st:
+                extras += f"<MaxInterval>{st['max_interval']}</MaxInterval>"
+            extras += '</ShuntTime>'
+        extras += '</ShuntTimes>'
 
     # Compose our string that makes up a TT.
     tt_string = tt_template.replace('${ID}', headcode).replace('${UID}', uid) \
@@ -147,19 +313,10 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
         .replace('${DestinationTime}', destination_time).replace('${OperatorCode}', operator_code) \
         .replace('${StartTraction}', start_traction).replace('${SpeedClass}', speed_class) \
         .replace('${Category}', category).replace('${Trips}', trips).replace('${DwellTimes}', dwell_times) \
+        .replace('${SeedingGap}', seeding_gap).replace('${AsRequiredPercent}', as_required_percent) \
         .replace('${Extras}', extras)
 
-    # Add entry point and time if needed.
-    if 'entry_point' in json_tt:
-        entry_point = json_tt['entry_point']
-        depart_time = str(common.convert_time_to_secs(json_tt['entry_time']))
-        return tt_string.replace('${EntryPoint}', entry_point).replace('${DepartTime}', depart_time)
-    elif 'seed_point' in json_tt:
-        seed_point = json_tt['seed_point']
-        depart_time = str(common.convert_time_to_secs(json_tt['entry_time']))
-        return tt_string.replace('${SeedPoint}', seed_point).replace('${DepartTime}', depart_time)
-    else:
-        return tt_string
+    return tt_string
 
 
 def build_xml_rule(json_rule: dict, locations_map: dict) -> str:
@@ -178,14 +335,19 @@ def build_xml_rule(json_rule: dict, locations_map: dict) -> str:
         if RULE_NAMES_DICT[num] == json_rule['name']:
             rule_num = str(num)
 
-    out = '<TimetableRule><Rule>' + rule_num + '</Rule><TrainUID>' + json_rule['train_x'] + '</TrainUID>' \
-          + '<Train2UID>' + json_rule['train_y'] + '</Train2UID>'
+    out = '<TimetableRule><Rule>' + rule_num + '</Rule>'
+    if 'train_x' in json_rule:
+        out += f"<Train>{json_rule['train_x']}</Train>"
+    if 'train_y' in json_rule:
+        out += f"<Train2>{json_rule['train_y']}</Train2>"
+    if 'train_x_uid' in json_rule:
+        out += f"<TrainUID>{json_rule['train_x_uid']}</TrainUID>"
+    if 'train_y_uid' in json_rule:
+        out += f"<Train2UID>{json_rule['train_y_uid']}</Train2UID>"
     if 'time' in json_rule:
         out += '<Time>' + json_rule['time'] + '</Time>'
     if 'location' in json_rule:
-        for tiploc in locations_map:
-            if json_rule['location'] in locations_map[tiploc]:
-                location = str(tiploc)
+        location = common.find_tiploc_for_location(json_rule['location'], locations_map)
         out += '<Location>' + location + '</Location>'
 
     return out + '</TimetableRule>'
@@ -204,14 +366,25 @@ def build_xml_header(header_db: MainHeaderDb) -> str:
         name = json_tt_header['actual_name']
     else:
         name = json_tt_header['name']
+
+    if 'seed_group_summary' in json_tt_header and json_tt_header['seed_group_summary'] is not None:
+        sgs = json_tt_header['seed_group_summary']
+    else:
+        sgs = ''
+
+    if 'train_description_template' in json_tt_header and json_tt_header['train_description_template'] is not None:
+        train_description_template = json_tt_header['train_description_template']
+    else:
+        train_description_template = ''
+
     out = '<SimSigTimetable ID="' + json_tt_header['sim_id'] + '" Version="' + json_tt_header['version'] + '">' + \
           '<Name>' + name + '</Name><Description>' + json_tt_header['description'] + '</Description>' + \
           '<StartTime>' + str(common.convert_time_to_secs(json_tt_header['start_time'])) + '</StartTime><FinishTime>' + \
           str(common.convert_time_to_secs(json_tt_header['finish_time'])) + \
           '</FinishTime><VMajor>' + json_tt_header['v_major'] + '</VMajor><VMinor>' + json_tt_header['v_minor'] + \
           '</VMinor><VBuild>' + json_tt_header['v_build'] + '</VBuild>' + '<TrainDescriptionTemplate>' + \
-          json_tt_header['train_description_template'] + \
-          '</TrainDescriptionTemplate><SeedGroupSummary></SeedGroupSummary><ScenarioOptions></ScenarioOptions>'
+          train_description_template + '</TrainDescriptionTemplate><SeedGroupSummary>'\
+          + sgs + '</SeedGroupSummary><ScenarioOptions></ScenarioOptions>'
 
     return out
 
@@ -235,7 +408,8 @@ def build_xml_list_of_tts(tt_name: str, output_filename: str, locations_map: dic
     train_cat_by_desc = categories_map
     for tt in tt_db.get_all_in_db():
         print('Building xml TT for ' + tt['headcode'])
-        xml_tts.append(convert_individual_json_tt_to_xml(tt, locations_map, train_cat_by_id, train_cat_by_desc, use_default_category))
+        xml_tts.append(convert_individual_json_tt_to_xml(tt, locations_map, train_cat_by_id, train_cat_by_desc,
+                                                         use_default_category))
 
     create_xml_tt_list_file(xml_tts, output_filename)
 
@@ -253,7 +427,7 @@ def convert_categories_to_xml(categories_map: dict) -> str:
     out = '<TrainCategories>'
     for category_desc in categories_map:
         out += f'<TrainCategory ID="{categories_map[category_desc]["id"]}">'
-        out += f'<Description>{category_desc}</Description>'
+        out += f'<Description>{escape(category_desc)}</Description>'
         if 'accel_brake_index' in categories_map[category_desc]:
             out += f'<AccelBrakeIndex>{categories_map[category_desc]["accel_brake_index"]}</AccelBrakeIndex>'
         if 'is_freight' in categories_map[category_desc]:
@@ -272,6 +446,16 @@ def convert_categories_to_xml(categories_map: dict) -> str:
             out += f'<Electrification>{categories_map[category_desc]["electrification"]}</Electrification>'
         if 'dwell_times' in categories_map[category_desc]:
             out += '<DwellTimes>'
+            if 'red_signal_move_off' in categories_map[category_desc]['dwell_times']:
+                out += f"<RedSignalMoveOff>{categories_map[category_desc]['dwell_times']['red_signal_move_off']}</RedSignalMoveOff>"
+            if 'station_forward' in categories_map[category_desc]['dwell_times']:
+                out += f"<StationForward>{categories_map[category_desc]['dwell_times']['station_forward']}</StationForward>"
+            if 'station_reverse' in categories_map[category_desc]['dwell_times']:
+                out += f"<StationReverse>{categories_map[category_desc]['dwell_times']['station_reverse']}</StationReverse>"
+            if 'terminate_forward' in categories_map[category_desc]['dwell_times']:
+                out += f"<TerminateForward>{categories_map[category_desc]['dwell_times']['terminate_forward']}</TerminateForward>"
+            if 'terminate_reverse' in categories_map[category_desc]['dwell_times']:
+                out += f"<TerminateReverse>{categories_map[category_desc]['dwell_times']['terminate_reverse']}</TerminateReverse>"
             if 'join' in categories_map[category_desc]['dwell_times']:
                 out += f'<Join>{categories_map[category_desc]["dwell_times"]["join"]}</Join>'
             if 'divide' in categories_map[category_desc]['dwell_times']:
@@ -287,6 +471,18 @@ def convert_categories_to_xml(categories_map: dict) -> str:
     return out
 
 
+def build_xml_list_of_seed_groups(header_db) -> str:
+    list_of_sg = header_db.get_seed_groups()
+    if len(list_of_sg) == 0:
+        return ''
+
+    out = '<SeedGroups>'
+    for sg in list_of_sg:
+        out += f"<SeedGroup><ID>{sg['id']}</ID><StartTime>{str(common.convert_time_to_secs(sg['start_time']))}</StartTime></SeedGroup>"
+    out += '</SeedGroups>'
+    return out
+
+
 def Write_Full_Xml_Tt(tt_name: str, output_filename: str, use_default_category: bool):
     header_db = MainHeaderDb(tt_name)
     header = build_xml_header(header_db)
@@ -294,6 +490,7 @@ def Write_Full_Xml_Tt(tt_name: str, output_filename: str, use_default_category: 
     locations_map = common.create_location_map_from_file(header_db.get_header()['sim_id'])[1]
     build_xml_list_of_tts(tt_name, output_filename + 'TT_List.xml', locations_map, categories, use_default_category)
     rules = build_xml_list_of_rules(tt_name, locations_map)
+    seed_groups = build_xml_list_of_seed_groups(header_db)
 
     if os.path.exists(output_filename) is False:
         os.mkdir(output_filename)
@@ -317,6 +514,9 @@ def Write_Full_Xml_Tt(tt_name: str, output_filename: str, use_default_category: 
             for rule in rules:
                 print(rule, file=f_to_write)
             print('</TimetableRules>', file=f_to_write)
+
+        if seed_groups != '':
+            print(seed_groups, file=f_to_write)
 
         print('</SimSigTimetable>', file=f_to_write)
 

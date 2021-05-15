@@ -47,9 +47,7 @@ Directories present for spec/templates:
 /location_maps/{sim_id}_locations.txt                         # Location of sim location maps
              /{sim_id}_locations.txt
              ...
-/templates/tt_templates/defaultTimetableNoEP.txt
-          |            /defaultTimetableSeedPoint.txt
-          |            /defaultTimetableWithEntryPoint.txt
+/templates/tt_templates/defaultTimetable.txt
           /activity_templates/crewChangeTemplate.txt
                              /detatchFrontTemplate.txt
                              /detatchRearTemplate.txt
@@ -148,18 +146,18 @@ There are a number of things that will require manual editing after creating the
 - Locations Map file for the particular sim
 
 **Actions:**
-Run ParseXmlTt.Parse_Full_Xml_Tt in RunMe.py with arg ( {.WTT filepath and name}, {True if you want to overwrite existing trains in the TT DB, False if not} )
+Run ParseXmlTt.Parse_Full_Xml_Tt in RunMe.py with args ( {.WTT filepath and name}, {True if you want to overwrite existing trains in the TT DB, False if not}, {True if trains without a category are assigned a default one} )
 
 **What happens:**
 The code will populate a set of Json TT DBs under the filepath db/{parsed_TT_name}.
 
-All trains will be converted to a Json representation of what they end up as in a Simsig TT and placed into the train_tts.json database file. Timetable header information will be in the main_header.json DB file. Any rules will be in the rules.json DB file.
+All trains will be converted to a Json representation of what they end up as in a Simsig TT and placed into the train_tts.json database file. Categories, seed groups and timetable header information will be in the main_header.json DB file. Any rules will be in the rules.json DB file.
 
 Methods in the dbClient.py file can be used to query and modify data in the Json DBs.
 
 **Notes:**
 
-If want to parse a TT with the same name as an old one and overwite all trains from the last, then make sure you delete the DB files for that particular TT name before to avoid old data being left around.
+If you want to parse a TT with the same name as an old one and overwrite **all** trains from the last, then make sure you delete the DB files for that particular TT name before to avoid old data being left around.
 
 
 ### Write info strored in Json DB to a .WTT file

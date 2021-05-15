@@ -177,16 +177,16 @@ class CustomLogicExecutor:
         # If we cant find anything then bail out with a default
         if entry_location is None and potential_entry is not None:
             return [potential_entry, potential_entry_time,
-                    'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
+                    'templates/timetables/defaultTimetable.txt', train_locations]
 
         # If entry is first location then we delete first location and are done.
         if train_locations[0]['location'] == entry_location:
             train_locations = self.remove_nth_location(entry_location, 1, train_locations)
             return [potential_entry, potential_entry_time,
-                    'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
+                    'templates/timetables/defaultTimetable.txt', train_locations]
 
         # Assume starts on sim.
-        return [None, None, 'templates/timetables/defaultTimetableNoEP.txt', train_locations]
+        return [None, None, 'templates/timetables/defaultTimetable.txt', train_locations]
 
     def if_later_location_matching(self, rule_root, entry_location, entry_time, train_locations, potential_entry):
         """
@@ -278,7 +278,7 @@ class CustomLogicExecutor:
             if 'remove_props_from_location' in clause:
                 train_locations = self.remove_props_from_location(clause['remove_props_from_location'], train_locations)
 
-        return [potential_entry, entry_time, 'templates/timetables/defaultTimetableWithEntryPoint.txt', train_locations]
+        return [potential_entry, entry_time, 'templates/timetables/defaultTimetable.txt', train_locations]
 
     def if_entry_location_matching(self, rule, entry_location, entry_time, train_locations, potential_entry):
         check_entry_location = list(filter(lambda x: x['location'] == entry_location, train_locations))

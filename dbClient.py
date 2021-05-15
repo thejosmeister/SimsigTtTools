@@ -13,6 +13,22 @@ def generate_id_from_uid(uid: str):
     return int(hashlib.sha1(uid.encode("utf-8")).hexdigest(), 16)
 
 
+def generate_rule_id(rule: dict) -> int:
+    id_to_transform = ''
+    if 'train_x' in rule:
+        id_to_transform += rule['train_x']
+    if 'train_x_uid' in rule:
+        id_to_transform += rule['train_x_uid']
+    if 'train_y' in rule:
+        id_to_transform += rule['train_y']
+    if 'train_y_uid' in rule:
+        id_to_transform += rule['train_y_uid']
+
+    id_to_transform += rule['name']
+
+    return generate_id_from_uid(id_to_transform)
+
+
 class TrainTtDb:
     """
     Class managing a TinyDB instance for list of json TT for a particular TT.
@@ -241,7 +257,8 @@ class RulesDb:
         Adds Rule to Rules DB overwriting one with the same id if present.
         :param rule: Rule to add.
         """
-        doc_id = generate_id_from_uid(rule['train_x'] + rule['name'])
+        doc_id = generate_rule_id(rule)
+
         if self.db.contains(doc_id=doc_id):
             self.db.remove(doc_ids=[doc_id])
         self.db.insert(table.Document(rule, doc_id=doc_id))
@@ -251,7 +268,8 @@ class RulesDb:
         Adds Rule to Rules DB if one with the same id is NOT already present.
         :param rule: Rule to add.
         """
-        doc_id = generate_id_from_uid(rule['train_x'] + rule['name'])
+        doc_id = generate_rule_id(rule)
+
         if not self.db.contains(doc_id=doc_id):
             self.db.insert(table.Document(rule, doc_id=doc_id))
 
@@ -291,6 +309,15 @@ class MainHeaderDb:
             self.db.remove(doc_ids=[2])
         self.db.insert(table.Document({'categories_map': cat_map}, doc_id=2))
 
+    def add_seed_groups(self, seed_groups: list):
+        """
+        Adds the seed groups to the main header DB overwriting any if present.
+        :param seed_groups: list of seed groups to add.
+        """
+        if self.db.contains(doc_id=3):
+            self.db.remove(doc_ids=[3])
+        self.db.insert(table.Document({'seed_groups': seed_groups}, doc_id=3))
+
     def get_header(self) -> dict:
         """
         :return: TT header stored.
@@ -302,3 +329,11 @@ class MainHeaderDb:
         :return: train categories map stored.
         """
         return self.db.get(doc_id=2)['categories_map']
+
+    def get_seed_groups(self) -> list:
+        """
+        :return: seed groups list if stored, empty list if not.
+        """
+        if self.db.contains(doc_id=3):
+            return self.db.get(doc_id=3)['seed_groups']
+        return []

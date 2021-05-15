@@ -28,13 +28,13 @@ def parse_location_times(times_string: str) -> dict:
     pas = re.match('.*p\\. (\\d{2}:\\d{2}(?:\\.5)?)', formatted_times_string)
 
     if dep is not None and arr is None:
-        return {'dep': dep.group(1).replace(':', ''), 'isOrigin': 'yes'}
+        return {'dep': dep.group(1).replace(':', '')}
     if dep is not None and arr is not None:
         return {'dep': dep.group(1).replace(':', ''), 'arr': arr.group(1).replace(':', '')}
     if dep is None and arr is not None:
         return {'arr': arr.group(1).replace(':', '')}
     if pas is not None:
-        return {'dep': pas.group(1).replace(':', '')}
+        return {'dep': pas.group(1).replace(':', ''), 'is_pass_time': '-1'}
 
 
 def parse_allowances(allow_string: str) -> dict:
@@ -531,8 +531,10 @@ def Parse_Charlwood_Train(categories_map: dict, location_maps: list, custom_logi
         train_to_return['entry_time'] = entry_time
 
     train_to_return['tt_template'] = tt_template
-
     train_to_return['locations'] = final_locations
+
+    train_to_return['as_required_percent'] = '50'
+    train_to_return['seeding_gap'] = '15'
 
     return train_to_return
 
@@ -771,6 +773,7 @@ def parse_rtt_train_info(train_page, allox_train):
 
 def parse_rtt_train_locations(locations_object):
     dicts_of_locations = []
+    is_1st_loc = True
 
     for a in locations_object.find_all('div', class_='location'):
         if a.find('a', {'class': 'name'}) is not None and a.find('div', {'class': 'wtt'}) is not None:
@@ -823,10 +826,15 @@ def parse_rtt_train_locations(locations_object):
                 else:
                     location['Activities'] = addl.get_text()
 
+            if is_1st_loc is False and 'arr' not in location:
+                location['is_pass_time'] = '-1'
+
+            is_1st_loc = False
             dicts_of_locations.append(location)
 
 
     # TODO Will possibly need to sort these by time SO TEST
+    # Later note: seems to work OK with no sorting
 
     return dicts_of_locations
 
@@ -945,8 +953,10 @@ def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor,
         train_to_return['entry_time'] = entry_time
 
     train_to_return['tt_template'] = tt_template
-
     train_to_return['locations'] = final_locations
+
+    train_to_return['as_required_percent'] = '50'
+    train_to_return['seeding_gap'] = '15'
 
     return train_to_return
 
