@@ -103,30 +103,81 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
     # Sort all the parameters to plug in to template.
     headcode = f"<ID>{json_tt['headcode']}</ID>"
 
+    extras = ''
+    category_as_dict = None
+
+    if 'category' in json_tt:
+        if 'standard diesel freight' == json_tt['category'] and use_default_category is True:
+            # Train has default category
+            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
+        elif 'A0000001' == json_tt['category'] and use_default_category is True:
+            # Train has default category
+            category = f"<Category>{json_tt['category']}</Category>"
+        elif json_tt['category'] in train_cat_by_desc:
+            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
+            category_as_dict = train_cat_by_desc[json_tt['category']]
+        else:
+            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
+    else:
+        category = ''
+
     if 'accel_brake_index' in json_tt:
         accel_brake_index = f"<AccelBrakeIndex>{json_tt['accel_brake_index']}</AccelBrakeIndex>"
+    elif category_as_dict is not None and 'accel_brake_index' in category_as_dict:
+        accel_brake_index = f"<AccelBrakeIndex>{category_as_dict['accel_brake_index']}</AccelBrakeIndex>"
     else:
         accel_brake_index = ''
+
     if 'uid' in json_tt:
         uid = f"<UID>{json_tt['uid']}</UID>"
     else:
         uid = ''
+
     if 'max_speed' in json_tt:
         max_speed = f"<MaxSpeed>{json_tt['max_speed']}</MaxSpeed>"
+    elif category_as_dict is not None and 'accel_brake_index' in category_as_dict:
+        max_speed = f"<MaxSpeed>{category_as_dict['max_speed']}</MaxSpeed>"
     else:
         max_speed = ''
+
     if 'is_freight' in json_tt:
         is_freight = f"<IsFreight>{json_tt['is_freight']}</IsFreight>"
+    elif category_as_dict is not None and 'is_freight' in category_as_dict:
+        is_freight = f"<IsFreight>{category_as_dict['is_freight']}</IsFreight>"
     else:
         is_freight = ''
+
+    if 'can_use_goods_lines' in json_tt:
+        extras += f"<CanUseGoodsLines>{json_tt['can_use_goods_lines']}</CanUseGoodsLines>"
+    elif category_as_dict is not None and 'can_use_goods_lines' in category_as_dict:
+        extras += f"<CanUseGoodsLines>{category_as_dict['can_use_goods_lines']}</CanUseGoodsLines>"
+
+    if 'power_to_weight_category' in json_tt:
+        extras += f"<PowerToWeightCategory>{json_tt['power_to_weight_category']}</PowerToWeightCategory>"
+    elif category_as_dict is not None and 'power_to_weight_category' in category_as_dict:
+        extras += f"<PowerToWeightCategory>{category_as_dict['power_to_weight_category']}</PowerToWeightCategory>"
+
     if 'train_length' in json_tt:
         train_length = f"<TrainLength>{json_tt['train_length']}</TrainLength>"
+    elif category_as_dict is not None and 'train_length' in category_as_dict:
+        train_length = f"<TrainLength>{category_as_dict['train_length']}</TrainLength>"
     else:
         train_length = ''
+
     if 'electrification' in json_tt:
         electrification = f"<Electrification>{json_tt['electrification']}</Electrification>"
+    elif category_as_dict is not None and 'electrification' in category_as_dict:
+        electrification = f"<Electrification>{category_as_dict['electrification']}</Electrification>"
     else:
         electrification = ''
+
+    if 'speed_class' in json_tt:
+        speed_class = f"<SpeedClass>{json_tt['speed_class']}</SpeedClass>"
+    elif category_as_dict is not None and 'speed_class' in category_as_dict:
+        speed_class = f"<SpeedClass>{category_as_dict['speed_class']}</SpeedClass>"
+    else:
+        speed_class = ''
+
     if 'origin_name' in json_tt:
         origin_name = f"<OriginName>{escape(json_tt['origin_name'])}</OriginName>"
     else:
@@ -155,10 +206,6 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
         start_traction = f"<StartTraction>{json_tt['start_traction']}</StartTraction>"
     else:
         start_traction = ''
-    if 'speed_class' in json_tt:
-        speed_class = f"<SpeedClass>{json_tt['speed_class']}</SpeedClass>"
-    else:
-        speed_class = ''
     if 'seeding_gap' in json_tt:
         seeding_gap = f"<SeedingGap>{json_tt['seeding_gap']}</SeedingGap>"
     else:
@@ -167,21 +214,6 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
         as_required_percent = f"<AsRequiredPercent>{json_tt['as_required_percent']}</AsRequiredPercent>"
     else:
         as_required_percent = ''
-    extras = ''
-
-    if 'category' in json_tt:
-        if 'standard diesel freight' == json_tt['category'] and use_default_category is True:
-            # Train has default category
-            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
-        elif 'A0000001' == json_tt['category'] and use_default_category is True:
-            # Train has default category
-            category = f"<Category>{json_tt['category']}</Category>"
-        elif json_tt['category'] in train_cat_by_id:
-            category = f"<Category>{json_tt['category']}</Category>"
-        else:
-            category = f"<Category>{train_cat_by_desc[json_tt['category']]['id']}</Category>"
-    else:
-        category = ''
 
     if 'notes' in json_tt:
         extras += f'<Notes>{json_tt["notes"]}</Notes>'
@@ -205,6 +237,25 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
                 dwell_times += f"<Divide>{json_tt['dwell_times']['divide']}</Divide>"
             if 'crew_change' in dt:
                 dwell_times += f"<CrewChange>{json_tt['dwell_times']['crew_change']}</CrewChange>"
+    elif category_as_dict is not None and 'dwell_times' in category_as_dict:
+        dwell_times = ''
+        for dt in category_as_dict['dwell_times']:
+            if 'red_signal_move_off' in dt:
+                dwell_times += f"<RedSignalMoveOff>{category_as_dict['dwell_times']['red_signal_move_off']}</RedSignalMoveOff>"
+            if 'station_forward' in dt:
+                dwell_times += f"<StationForward>{category_as_dict['dwell_times']['station_forward']}</StationForward>"
+            if 'station_reverse' in dt:
+                dwell_times += f"<StationReverse>{category_as_dict['dwell_times']['station_reverse']}</StationReverse>"
+            if 'terminate_forward' in dt:
+                dwell_times += f"<TerminateForward>{category_as_dict['dwell_times']['terminate_forward']}</TerminateForward>"
+            if 'terminate_reverse' in dt:
+                dwell_times += f"<TerminateReverse>{category_as_dict['dwell_times']['terminate_reverse']}</TerminateReverse>"
+            if 'join' in dt:
+                dwell_times += f"<Join>{category_as_dict['dwell_times']['join']}</Join>"
+            if 'divide' in dt:
+                dwell_times += f"<Divide>{category_as_dict['dwell_times']['divide']}</Divide>"
+            if 'crew_change' in dt:
+                dwell_times += f"<CrewChange>{category_as_dict['dwell_times']['crew_change']}</CrewChange>"
     else:
         dwell_times = ''
 
