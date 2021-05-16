@@ -76,6 +76,8 @@ def create_xml_trip(location: dict) -> str:
         out += '<PathAllowance>' + location['pth allow'] + '</PathAllowance>'
     if 'eng allow' in location:
         out += '<EngAllowance>' + location['eng allow'] + '</EngAllowance>'
+    if 'berths_here' in location:
+        out += '<BerthsHere>' + location['berths_here'] + '</BerthsHere>'
 
     # Add activities
     if 'activities' in location:

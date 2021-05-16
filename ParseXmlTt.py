@@ -37,6 +37,8 @@ def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict) -> list:
             location['eng allow'] = trip.find('EngAllowance').text
         if trip.find('IsPassTime') is not None:
             location['is_pass_time'] = trip.find('IsPassTime').text
+        if trip.find('BerthsHere') is not None:
+            location['berths_here'] = trip.find('BerthsHere').text
 
         if trip.find('Activities') is not None:
             location['activities'] = []
