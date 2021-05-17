@@ -2,10 +2,9 @@ from string import capwords
 
 f = open('cif_sample.cif', mode='r')
 
-import_tiploc = True
+import_tiploc = False
 import_associations = True
-import_atoc_schedule = True
-current_schedule_id = None
+import_atoc_schedule = False
 current_schedule = {}
 i = 0
 
@@ -15,18 +14,15 @@ for line in f:
 
     elif line[0:2] == 'TI':  # TIPLOC Insert
         if import_tiploc is True:
-            db_values = {'tiploc': line[2:9],
-                         'nlc': line[11:17],
-                         'tps_description': capwords(line[18:44]),
-                         'stanox': line[44:49],
-                         'crs_code': line[53:56],
-                         'short_description': line[56:72]}
+            db_values = {'tiploc': line[2:9].strip(),
+                         'tps_description': capwords(line[18:44]).strip()}
 
-            for value in db_values:
-                if value.strip() == '':
+            for value in db_values.values():
+                if value == '':
                     value = None
 
             # Insert into db
+            print(db_values)
 
     elif line[0:2] == 'TA':  # TIPLOC Delete
         continue
@@ -37,8 +33,8 @@ for line in f:
     elif line[0:2] == 'AA':  # Associations
         if import_associations is True:
             # Only want ones that apply to our specific day so any deletions or ones on the wrong day are not needed.
-            transaction_type = line[2:3]
-            stp_indicator = line[79:80]
+            transaction_type = line[2:3].strip()
+            stp_indicator = line[79:80].strip()
             if transaction_type == 'D' or stp_indicator == 'C':
                 continue
 
@@ -46,17 +42,17 @@ for line in f:
             # TODO day filtering
 
             db_values = {'transaction_type': transaction_type,
-                         'main_train_uid': line[3:9],
-                         'assoc_train_uid': line[9:15],
-                         'start_date': line[15:21],
-                         'end_date': line[21:27],
-                         'days_run': line[27:34],
-                         'category': line[34:36],
-                         'date_indicator': line[36:37],
-                         'location': line[37:44],
-                         'base_location_suffix': line[44:45],
-                         'assoc_location_suffix': line[45:46],
-                         'type': line[46:47],
+                         'main_train_uid': line[3:9].strip(),
+                         'assoc_train_uid': line[9:15].strip(),
+                         'start_date': line[15:21].strip(),
+                         'end_date': line[21:27].strip(),
+                         'days_run': line[27:34].strip(),
+                         'category': line[34:36].strip(),
+                         'date_indicator': line[36:37].strip(),
+                         'location': line[37:44].strip(),
+                         'base_location_suffix': line[44:45].strip(),
+                         'assoc_location_suffix': line[45:46].strip(),
+                         'type': line[46:47].strip(),
                          'stp_indicator': stp_indicator}
 
             # dayno = 0
@@ -64,11 +60,12 @@ for line in f:
             #     db_values['day' + str(dayno)] = day
             #     dayno += 1
 
-            for value in db_values:
-                if value.strip() == '':
+            for value in db_values.values():
+                if value == '':
                     value = None
 
             # Insert into db
+            print(db_values)
 
 
     elif line[0:2] == 'BS':  # Basic Schedule
@@ -83,19 +80,19 @@ for line in f:
             # 'bank_holiday_running'	: line[28:29],
 
             # not a train
-            train_status = line[29:30]
+            train_status = line[29:30].strip()
             if train_status in ['B', 'S', '4', '5']:
                 continue
 
-            current_schedule = {'uid': line[3:9],
+            current_schedule = {'uid': line[3:9].strip(),
                                 'train_status': train_status,
-                                'Train_Category': line[30:32],
-                                'headcode': line[32:36],
-                                'Portion_Id': line[49:50],
-                                'Power_Type': line[50:53],
-                                'Timing_Load': line[53:57],
-                                'speed': line[57:60],
-                                'Operating_Characteristics': line[60:66],
+                                'Train_Category': line[30:32].strip(),
+                                'headcode': line[32:36].strip(),
+                                'Portion_Id': line[49:50].strip(),
+                                'Power_Type': line[50:53].strip(),
+                                'Timing_Load': line[53:57].strip(),
+                                'speed': line[57:60].strip(),
+                                'Operating_Characteristics': line[60:66].strip(),
                                 # TODO check if needed.
                                 # 'service_branding'	: line[74:78],
                                 # 'stp_indicator'	: line[79:80]
@@ -106,8 +103,8 @@ for line in f:
             #     db_values['day' + str(dayno)] = day
             #     dayno += 1
 
-            for value in current_schedule:
-                if value.strip() == '':
+            for value in current_schedule.values():
+                if value == '':
                     value = None
 
 
@@ -117,9 +114,9 @@ for line in f:
             if line[2:3] == 'D' or line[79:80] == 'C':
                 continue
 
-            operator_code = line[11:13]
+            operator_code = line[11:13].strip()
 
-            if operator_code.strip() != '':
+            if operator_code != '':
                 current_schedule['operator_code'] = line[11:13]
             else:
                 current_schedule['operator_code'] = None
@@ -130,19 +127,19 @@ for line in f:
 
     elif line[0:2] == 'LO':  # Location Origin
         if import_atoc_schedule is True and len(current_schedule) > 0:
-            location = {'Tiploc_Code': line[2:9],
+            location = {'Tiploc_Code': line[2:9].strip(),
                         # 'tiploc_instance'	: line[9:10],
-                        'dep': line[10:15],
+                        'dep': line[10:15].strip(),
                         # 'public_departure'	: convert_time(line[15:19]),
-                        'plat': line[19:22],
-                        'line': line[22:25],
-                        'eng allow': line[25:27],
-                        'pth allow': line[27:29],
-                        'Activity': line[29:41],
-                        'prf allow': line[41:43]}
+                        'plat': line[19:22].strip(),
+                        'line': line[22:25].strip(),
+                        'eng allow': line[25:27].strip(),
+                        'pth allow': line[27:29].strip(),
+                        'Activity': line[29:41].strip(),
+                        'prf allow': line[41:43].strip()}
 
-            for value in location:
-                if value.strip() == '':
+            for value in location.values():
+                if value == '':
                     value = None
 
             current_schedule['locations'].append(location)
@@ -150,40 +147,42 @@ for line in f:
 
     elif line[0:2] == 'LI':  # Location Intermediate
         if import_atoc_schedule is True and len(current_schedule) > 0:
-            location = {'Tiploc_Code': line[2:9],
+            location = {'Tiploc_Code': line[2:9].strip(),
                         # 'tiploc_instance'	: line[9:10],
-                        'arr': line[10:15],
-                        'dep': line[15:20],
-                        'pass': line[20:25],
-                        'plat': line[33:36],
-                        'line': line[36:39],
-                        'path': line[39:42],
-                        'Activity': line[42:54],
-                        'eng allow': line[54:56],
-                        'pth allow': line[56:58],
-                        'prf allow': line[58:60]}
+                        'arr': line[10:15].strip(),
+                        'dep': line[15:20].strip(),
+                        'pass': line[20:25].strip(),
+                        'plat': line[33:36].strip(),
+                        'line': line[36:39].strip(),
+                        'path': line[39:42].strip(),
+                        'Activity': line[42:54].strip(),
+                        'eng allow': line[54:56].strip(),
+                        'pth allow': line[56:58].strip(),
+                        'prf allow': line[58:60].strip()}
 
-            for value in location:
-                if value.strip() == '':
+            for value in location.values():
+                if value == '':
                     value = None
 
             current_schedule['locations'].append(location)
 
     elif line[0:2] == 'LT':  # Location Terminus
         if import_atoc_schedule is True and len(current_schedule) > 0:
-            location = {'Tiploc_Code': line[2:9],
-                        'arr': line[10:15],
-                        'plat': line[19:22],
-                        'path': line[22:25],
-                        'Activity': line[25:37]}
+            location = {'Tiploc_Code': line[2:9].strip(),
+                        'arr': line[10:15].strip(),
+                        'plat': line[19:22].strip(),
+                        'path': line[22:25].strip(),
+                        'Activity': line[25:37].strip()}
 
-            for value in location:
-                if value.strip() == '':
+            for value in location.values():
+                if value == '':
                     value = None
 
             current_schedule['locations'].append(location)
 
             # insert current schedule into DB
+            # print(current_schedule)
+            current_schedule = {}
 
     elif line[0:2] == 'C  ':  # Change en route
         continue
