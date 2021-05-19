@@ -1,11 +1,16 @@
 from string import capwords
 import datetime
+from pymongo import MongoClient
 
 DOES_NOT_RUN = 0
 RUNS_ON_PREV_DATE = 1
 RUNS_ON_DATE = 2
 RUNS_ON_BOTH_DATES = 3
 
+mongo_client = MongoClient('db_url')
+mongo_db = mongo_client['date_of_db']
+schedules_on_date_collection = mongo_db['date_of_db']
+schedules_on_previous_date_collection = mongo_db['date_before_of_db']
 
 def dates_and_days_apply(date_of_tt_as_int: int, day_of_date: int, start_date: str, end_date: str, days_run: str) -> int:
 
@@ -63,15 +68,60 @@ def times_cross_midnight(locations: list) -> bool:
     return False
 
 
-def remove_basic_schedule_from_db(uid: str, date_runs: int):
+def remove_basic_schedule_from_db(uid: str, date_runs: int, stp_indicator: str):
+
+    if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_PREV_DATE:
+        if stp_indicator == 'C':
+            # Uncancel schedule from yesterday
+            print('Uncancel schedule from yesterday')
+        else:
+            # Remove from yesterday
+            print('Remove from yesterday')
+    if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_DATE:
+        if stp_indicator == 'C':
+            # Uncancel schedule from today
+            print('Uncancel schedule from today')
+        else:
+            # Remove from today
+            print('Remove from today')
+
+    pass
+
+
+def temporarily_cancel_schedule(uid, date_runs):
+    # find sched in relevant db(s) and insert cancelled flag
+    if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_PREV_DATE:
+        # Cancel schedule from yesterday
+        print('Cancel schedule from yesterday')
+    if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_DATE:
+        # Cancel schedule from today
+        print('Cancel schedule from today')
     pass
 
 
 def add_schedule_to_yesterday_db(current_schedule: dict, transaction_type: str, stp_indicator: str):
-    pass
+    add_schedule_to_db(current_schedule, transaction_type, stp_indicator, schedules_on_previous_date_collection)
 
 
 def add_schedule_to_today_db(current_schedule: dict, transaction_type: str, stp_indicator: str):
+    add_schedule_to_db(current_schedule, transaction_type, stp_indicator, schedules_on_date_collection)
+
+
+def add_schedule_to_db(current_schedule: dict, transaction_type: str, stp_indicator: str, db):
+    if stp_indicator == 'O':
+        if transaction_type == 'R':
+            # replace the overlay that should be there
+            print()
+        else:
+            # change _id to suffix with O for original and then insert this one in place
+            print()
+    else:
+        if transaction_type == 'R':
+            # replace sched that should be there
+            print()
+        else:
+            # add new schedule
+            db.insert_one()
     pass
 
 
@@ -166,11 +216,17 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                 stp_indicator = line[79:80]
                 uid = line[3:9].strip()
 
-                if transaction_type == 'D' or stp_indicator == 'C':
+                if transaction_type == 'D':
                     if import_full_atoc_schedule is True:
                         continue
                     # Update so remove from db
-                    remove_basic_schedule_from_db(uid, date_runs)
+                    remove_basic_schedule_from_db(uid, date_runs, stp_indicator)
+
+                if stp_indicator == 'C':
+                    if import_full_atoc_schedule is True:
+                        continue
+                    # Update so we want to move original sched to cancelled
+                    temporarily_cancel_schedule(uid, date_runs)
 
                 # not a train
                 train_status = line[29:30].strip()
