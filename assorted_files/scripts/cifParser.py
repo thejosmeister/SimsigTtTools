@@ -7,10 +7,13 @@ RUNS_ON_PREV_DATE = 1
 RUNS_ON_DATE = 2
 RUNS_ON_BOTH_DATES = 3
 
+date_of_tt = '181118'
+
 mongo_client = MongoClient('db_url')
-mongo_db = mongo_client['date_of_db']
-schedules_on_date_collection = mongo_db['date_of_db']
-schedules_on_previous_date_collection = mongo_db['date_before_of_db']
+mongo_db = mongo_client[date_of_tt]
+schedules_on_date_collection = mongo_db[date_of_tt]
+schedules_on_previous_date_collection = mongo_db[date_of_tt + 'previous']
+
 
 def dates_and_days_apply(date_of_tt_as_int: int, day_of_date: int, start_date: str, end_date: str, days_run: str) -> int:
 
@@ -69,33 +72,36 @@ def times_cross_midnight(locations: list) -> bool:
 
 
 def remove_basic_schedule_from_db(uid: str, date_runs: int, stp_indicator: str):
-
     if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_PREV_DATE:
-        if stp_indicator == 'C':
-            # Uncancel schedule from yesterday
-            print('Uncancel schedule from yesterday')
+        if stp_indicator in 'CO':
+            # Remove overlay and set uid of original back
+            if stp_indicator == 'O':
+                schedules_on_previous_date_collection.delete_one({'uid': uid})
+            schedules_on_previous_date_collection.update_one({'uid': uid + stp_indicator}, {'$set': {'uid': uid}})
         else:
-            # Remove from yesterday
-            print('Remove from yesterday')
-    if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_DATE:
-        if stp_indicator == 'C':
-            # Uncancel schedule from today
-            print('Uncancel schedule from today')
-        else:
-            # Remove from today
-            print('Remove from today')
+            # Remove the schedule
+            schedules_on_previous_date_collection.delete_one({'uid': uid})
 
-    pass
+    if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_DATE:
+        if stp_indicator in 'CO':
+            # Remove overlay and set uid of original back
+            if stp_indicator == 'O':
+                schedules_on_date_collection.delete_one({'uid': uid})
+            schedules_on_date_collection.update_one({'uid': uid + stp_indicator}, {'$set': {'uid': uid}})
+        else:
+            # Remove the schedule
+            schedules_on_previous_date_collection.delete_one({'uid': uid})
 
 
 def temporarily_cancel_schedule(uid, date_runs):
-    # find sched in relevant db(s) and insert cancelled flag
+    # find schedule in relevant db(s) and insert cancelled flag
     if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_PREV_DATE:
         # Cancel schedule from yesterday
-        print('Cancel schedule from yesterday')
+        schedules_on_previous_date_collection.update_one({'uid': uid}, {'$set': {'uid': uid + 'C'}})
+
     if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_DATE:
         # Cancel schedule from today
-        print('Cancel schedule from today')
+        schedules_on_date_collection.update_one({'uid': uid}, {'$set': {'uid': uid + 'C'}})
     pass
 
 
@@ -111,18 +117,20 @@ def add_schedule_to_db(current_schedule: dict, transaction_type: str, stp_indica
     if stp_indicator == 'O':
         if transaction_type == 'R':
             # replace the overlay that should be there
-            print()
+            db.delete_one({'uid': current_schedule['uid']})
+            db.insert_one(current_schedule)
         else:
             # change _id to suffix with O for original and then insert this one in place
-            print()
+            db.update_one({'uid': current_schedule['uid']}, {'$set': {'uid': current_schedule['uid'] + 'O'}})
+            db.insert_one(current_schedule)
     else:
         if transaction_type == 'R':
             # replace sched that should be there
-            print()
+            db.delete_one({'uid': current_schedule['uid']})
+            db.insert_one(current_schedule)
         else:
             # add new schedule
-            db.insert_one()
-    pass
+            db.insert_one(current_schedule)
 
 
 def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
@@ -341,3 +349,10 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
         if i % 1000 == 0:
             print(f"Imported to line {i}")
     f.close()
+
+
+if __name__ == "__main__":
+    parse_cif_file('full_tt_fri', date_of_tt, import_full_atoc_schedule=True)
+    parse_cif_file('update_tt_thurs', date_of_tt, import_update_atoc_schedule=True)
+    parse_cif_file('update_tt_fri', date_of_tt, import_update_atoc_schedule=True)
+    parse_cif_file('update_tt_sat', date_of_tt, import_update_atoc_schedule=True)
