@@ -8,8 +8,11 @@ DEFAULT_CATEGORY = {'id': 'A0000001', 'accel_brake_index': '1',
                     'speed_class': '512', 'power_to_weight_category': '0',
                     'dwell_times': {'join': '240', 'divide': '240', 'crew_change': '120'}, 'electrification': 'D'}
 
+categories_by_id = {}
+
 
 def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict) -> list:
+    global categories_by_id
     ACT_DICT = {'0': 'trainBecomes', '1': 'divideRear', '2': 'divideFront', '3': 'trainJoins', '4': 'detatchRear',
                 '5': 'detatchFront', '6': 'dropRear', '7': 'dropFront', '8': 'joins2', '9': 'platformShare',
                 '10': 'crewChange'}
@@ -39,6 +42,27 @@ def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict) -> list:
             location['is_pass_time'] = trip.find('IsPassTime').text
         if trip.find('BerthsHere') is not None:
             location['berths_here'] = trip.find('BerthsHere').text
+        if trip.find('SetDownOnly') is not None:
+            location['set_down_only'] = trip.find('SetDownOnly').text
+        if trip.find('AllowStopsOnThroughLines') is not None:
+            location['allow_stops_on_through'] = trip.find('AllowStopsOnThroughLines').text
+        if trip.find('StopLocation') is not None:
+            location['stop_location'] = trip.find('StopLocation').text
+        if trip.find('StopAdjustment') is not None:
+            location['stop_adjustment'] = trip.find('StopAdjustment').text
+        if trip.find('WaitForBookedTime') is not None:
+            location['wait_for_booked_time'] = trip.find('WaitForBookedTime').text
+        if trip.find('RequestPercent') is not None:
+            location['request_percent'] = trip.find('RequestPercent').text
+        if trip.find('DwellTime') is not None:
+            location['dwell_time'] = trip.find('DwellTime').text
+        if trip.find('NewCategory') is not None:
+            new_cat = trip.find('NewCategory').text
+            if new_cat in categories_by_id:
+                location['new_category'] = categories_by_id[new_cat]['description']
+            else:
+                location['new_category'] = new_cat
+
 
         if trip.find('Activities') is not None:
             location['activities'] = []
@@ -53,7 +77,8 @@ def parse_xml_trips(list_of_trip_elts, tiploc_dict: dict) -> list:
     return out
 
 
-def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_dict: dict, use_default_category: bool) -> dict:
+def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, use_default_category: bool) -> dict:
+    global categories_by_id
     json_tt = {}
     # first_loc_is_stop = False
     json_tt['tt_template'] = 'templates/timetables/defaultTimetable.txt'
@@ -67,7 +92,7 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
         cat_id = ''
 
     if cat_id != '':
-        json_tt['category'] = categories_dict[cat_id]['description']
+        json_tt['category'] = categories_by_id[cat_id]['description']
 
     if xml_tt.find('UID') is not None:
         json_tt['uid'] = xml_tt.find('UID').text
@@ -90,17 +115,17 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
     if xml_tt.find('AccelBrakeIndex') is not None:
         json_tt['accel_brake_index'] = xml_tt.find('AccelBrakeIndex').text
     elif cat_id != '':
-        json_tt['accel_brake_index'] = categories_dict[cat_id]['accel_brake_index']
+        json_tt['accel_brake_index'] = categories_by_id[cat_id]['accel_brake_index']
 
     if xml_tt.find('IsFreight') is not None:
         json_tt['is_freight'] = xml_tt.find('IsFreight').text
     elif cat_id != '':
-        json_tt['is_freight'] = categories_dict[cat_id]['is_freight']
+        json_tt['is_freight'] = categories_by_id[cat_id]['is_freight']
 
     if xml_tt.find('CanUseGoodsLines') is not None:
         json_tt['can_use_goods_lines'] = xml_tt.find('CanUseGoodsLines').text
-    elif cat_id != '' and 'can_use_goods_lines' in categories_dict[cat_id]:
-        json_tt['can_use_goods_lines'] = categories_dict[cat_id]['can_use_goods_lines']
+    elif cat_id != '' and 'can_use_goods_lines' in categories_by_id[cat_id]:
+        json_tt['can_use_goods_lines'] = categories_by_id[cat_id]['can_use_goods_lines']
 
     if xml_tt.find('OriginName') is not None:
         json_tt['origin_name'] = xml_tt.find('OriginName').text
@@ -116,7 +141,7 @@ def parse_individual_xml_tt(xml_tt: ET.Element, tiploc_dict: dict, categories_di
     if xml_tt.find('SpeedClass') is not None:
         json_tt['speed_class'] = xml_tt.find('SpeedClass').text
     elif cat_id != '':
-        json_tt['speed_class'] = categories_dict[cat_id]['speed_class']
+        json_tt['speed_class'] = categories_by_id[cat_id]['speed_class']
 
     if xml_tt.find('Notes') is not None:
         json_tt['notes'] = xml_tt.find('Notes').text
@@ -308,6 +333,7 @@ def Parse_Full_Xml_Tt(file: str, overwrite_existing: bool, use_default_category:
     :param overwrite_existing: If we have parsed a tt with the same name then we can overwrite any trains with the same UID.
     :param use_default_category: If a train has no category assigned then this will give the train a default category.
     """
+    global categories_by_id
     with zipfile.ZipFile(file, 'r') as zip_ref:
         zip_ref.extractall('temp_parsing_dir')
 
@@ -350,9 +376,9 @@ def Parse_Full_Xml_Tt(file: str, overwrite_existing: bool, use_default_category:
 
     for tt in list_of_tt_elts:
         if overwrite_existing is True:
-            tt_db.add_tt(parse_individual_xml_tt(tt, locations_map, categories_by_id, use_default_category))
+            tt_db.add_tt(parse_individual_xml_tt(tt, locations_map, use_default_category))
         else:
-            tt_db.add_tt_if_not_present(parse_individual_xml_tt(tt, locations_map, categories_by_id, use_default_category))
+            tt_db.add_tt_if_not_present(parse_individual_xml_tt(tt, locations_map, use_default_category))
 
     if root.find('TimetableRules') is not None:
         list_of_rule_elts = root.find('TimetableRules').findall('TimetableRule')

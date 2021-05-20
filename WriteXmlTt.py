@@ -13,7 +13,7 @@ def is_location_in_dict(location: str, tiploc_dict: dict) -> str:
         if location in tiploc_dict[t]:
             return str(t)
     print(f'no location found in locations map for {location}')
-    return ''
+    return location
 
 
 # Will sub in TIPLOC codes for locations in the sim
@@ -58,7 +58,7 @@ def add_xml_location_activities(location: dict) -> str:
     return out + '</Activities>'
 
 
-def create_xml_trip(location: dict) -> str:
+def create_xml_trip(location: dict, train_cat_by_desc: dict) -> str:
     out = '<Trip><Location>' + location['location'] + '</Location>'
     if 'dep' in location:
         out += '<DepPassTime>' + str(common.convert_time_to_secs(location['dep'])) + '</DepPassTime>'
@@ -78,6 +78,25 @@ def create_xml_trip(location: dict) -> str:
         out += '<EngAllowance>' + location['eng allow'] + '</EngAllowance>'
     if 'berths_here' in location:
         out += '<BerthsHere>' + location['berths_here'] + '</BerthsHere>'
+    if 'set_down_only' in location:
+        out += '<SetDownOnly>' + location['set_down_only'] + '</SetDownOnly>'
+    if 'allow_stops_on_through' in location:
+        out += '<AllowStopsOnThroughLines>' + location['allow_stops_on_through'] + '</AllowStopsOnThroughLines>'
+    if 'stop_location' in location:
+        out += '<StopLocation>' + location['stop_location'] + '</StopLocation>'
+    if 'stop_adjustment' in location:
+        out += '<StopAdjustment>' + location['stop_adjustment'] + '</StopAdjustment>'
+    if 'wait_for_booked_time' in location:
+        out += '<WaitForBookedTime>' + location['wait_for_booked_time'] + '</WaitForBookedTime>'
+    if 'request_percent' in location:
+        out += '<RequestPercent>' + location['request_percent'] + '</RequestPercent>'
+    if 'dwell_time' in location:
+        out += '<DwellTime>' + location['dwell_time'] + '</DwellTime>'
+    if 'new_category' in location:
+        new_cat = location['new_category']
+        if new_cat in train_cat_by_desc:
+            new_cat = train_cat_by_desc[new_cat]['id']
+        out += '<NewCategory>' + new_cat + '</NewCategory>'
 
     # Add activities
     if 'activities' in location:
@@ -100,7 +119,7 @@ def convert_individual_json_tt_to_xml(json_tt: dict, locations_map: dict, train_
 
     tt_template = read_in_tt_template(json_tt['tt_template'])
     locations_on_sim = sub_in_tiploc(json_tt['locations'], locations_map)
-    trips = ''.join([create_xml_trip(l) for l in locations_on_sim])
+    trips = ''.join([create_xml_trip(l, train_cat_by_desc) for l in locations_on_sim])
 
     # Sort all the parameters to plug in to template.
     headcode = f"<ID>{json_tt['headcode']}</ID>"
@@ -379,8 +398,14 @@ def build_xml_header(header_db: MainHeaderDb) -> str:
     else:
         train_description_template = ''
 
+    if 'description' in json_tt_header and json_tt_header['description'] is not None:
+        description = json_tt_header['description']
+    else:
+        description = ''
+
+
     out = '<SimSigTimetable ID="' + json_tt_header['sim_id'] + '" Version="' + json_tt_header['version'] + '">' + \
-          '<Name>' + name + '</Name><Description>' + json_tt_header['description'] + '</Description>' + \
+          '<Name>' + name + '</Name><Description>' + description + '</Description>' + \
           '<StartTime>' + str(common.convert_time_to_secs(json_tt_header['start_time'])) + '</StartTime><FinishTime>' + \
           str(common.convert_time_to_secs(json_tt_header['finish_time'])) + \
           '</FinishTime><VMajor>' + json_tt_header['v_major'] + '</VMajor><VMinor>' + json_tt_header['v_minor'] + \
