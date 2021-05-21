@@ -7,15 +7,24 @@ RUNS_ON_PREV_DATE = 1
 RUNS_ON_DATE = 2
 RUNS_ON_BOTH_DATES = 3
 
-date_of_tt = '181118'
+date_of_tt = '181126'
 
-mongo_client = MongoClient('db_url')
+mongo_client = MongoClient('mongodb://localhost:27017/')
 mongo_db = mongo_client[date_of_tt]
 schedules_on_date_collection = mongo_db[date_of_tt]
 schedules_on_previous_date_collection = mongo_db[date_of_tt + 'previous']
 
 
 def dates_and_days_apply(date_of_tt_as_int: int, day_of_date: int, start_date: str, end_date: str, days_run: str) -> int:
+
+    if end_date.strip() == '' or days_run.strip() == '':
+        if start_date.strip() == '':
+            return DOES_NOT_RUN
+        elif int(start_date) == date_of_tt_as_int:
+            return RUNS_ON_DATE
+        elif int(start_date) == date_of_tt_as_int - 1:
+            return RUNS_ON_PREV_DATE
+        return DOES_NOT_RUN
 
     start_after_date = int(start_date) > date_of_tt_as_int
     end_before_previous = int(end_date) < date_of_tt_as_int - 1
@@ -72,6 +81,19 @@ def times_cross_midnight(locations: list) -> bool:
 
 
 def remove_basic_schedule_from_db(uid: str, date_runs: int, stp_indicator: str):
+    if date_runs == DOES_NOT_RUN:
+        if stp_indicator in 'C':
+            if schedules_on_previous_date_collection.count_documents({'uid': uid + stp_indicator}, limit=1) != 0:
+                # We have cancelled sched from yesterday
+
+            # Remove overlay and set uid of original back
+            if stp_indicator == 'O':
+                schedules_on_previous_date_collection.delete_one({'uid': uid})
+            schedules_on_previous_date_collection.update_one({'uid': uid + stp_indicator}, {'$set': {'uid': uid}})
+        else:
+            # Remove the schedule
+            schedules_on_previous_date_collection.delete_one({'uid': uid})
+
     if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_PREV_DATE:
         if stp_indicator in 'CO':
             # Remove overlay and set uid of original back
@@ -90,7 +112,7 @@ def remove_basic_schedule_from_db(uid: str, date_runs: int, stp_indicator: str):
             schedules_on_date_collection.update_one({'uid': uid + stp_indicator}, {'$set': {'uid': uid}})
         else:
             # Remove the schedule
-            schedules_on_previous_date_collection.delete_one({'uid': uid})
+            schedules_on_date_collection.delete_one({'uid': uid})
 
 
 def temporarily_cancel_schedule(uid, date_runs):
@@ -137,7 +159,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
     f = open(filename, mode='r')
 
     date_of_tt_as_int = int(date_of_tt)
-    day_of_date = datetime.datetime(int(f'20{date_of_tt[0:2]}'), int(date_of_tt[2:4]), int(date_of_tt[4:6]))
+    day_of_date = datetime.datetime(int(f'20{date_of_tt[0:2]}'), int(date_of_tt[2:4]), int(date_of_tt[4:6])).weekday()
 
     import_tiploc = 'import_tiploc' in kwargs and kwargs['import_tiploc'] is True
     import_associations = 'import_associations' in kwargs and kwargs['import_associations'] is True
@@ -216,19 +238,25 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
             if import_full_atoc_schedule is True or import_update_atoc_schedule is True:
 
                 # Don't want to do it if not applicable to day
-                date_runs = dates_and_days_apply(date_of_tt_as_int, day_of_date, line[9:15], line[15:21], line[21:28])
-                if date_runs == 0:
-                    continue
+                start_date = line[9:15]
+                end_date = line[15:21]
+                days_run = line[21:28]
+                date_runs = dates_and_days_apply(date_of_tt_as_int, day_of_date, start_date, end_date, days_run)
 
                 transaction_type = line[2:3]
                 stp_indicator = line[79:80]
                 uid = line[3:9].strip()
 
+                # Handle record deletion first because info can be incomplete
                 if transaction_type == 'D':
                     if import_full_atoc_schedule is True:
                         continue
                     # Update so remove from db
                     remove_basic_schedule_from_db(uid, date_runs, stp_indicator)
+
+
+                if date_runs == 0:
+                    continue
 
                 if stp_indicator == 'C':
                     if import_full_atoc_schedule is True:
@@ -352,7 +380,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
 
 
 if __name__ == "__main__":
-    parse_cif_file('full_tt_fri', date_of_tt, import_full_atoc_schedule=True)
-    parse_cif_file('update_tt_thurs', date_of_tt, import_update_atoc_schedule=True)
-    parse_cif_file('update_tt_fri', date_of_tt, import_update_atoc_schedule=True)
-    parse_cif_file('update_tt_sat', date_of_tt, import_update_atoc_schedule=True)
+    # parse_cif_file('23-full.cif', date_of_tt, import_full_atoc_schedule=True)
+    parse_cif_file('23-update.cif', date_of_tt, import_update_atoc_schedule=True)
+    parse_cif_file('24-update.cif', date_of_tt, import_update_atoc_schedule=True)
+    parse_cif_file('25-update.cif', date_of_tt, import_update_atoc_schedule=True)
