@@ -1041,7 +1041,7 @@ def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, sch
     end_as_float = float(end_time)
 
     # fetch all trains from sched on day that match location
-    scheds_on_date = schedules_on_date_collection.find({'locations': {'$elemMatch': {'Tiploc_Code': tiploc_location}}})
+    scheds_on_date = list(schedules_on_date_collection.find({'locations': {'$elemMatch': {'location': tiploc_location}}}))
     # filter by times that were input
     scheds_on_date = list(filter(lambda x: any(
         location_in_time_window(start_as_float, end_as_float, tiploc_location, l) for l in x['locations']),
@@ -1052,8 +1052,8 @@ def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, sch
     final_list_of_scheds = []
 
     # fetch all trains from sched on previous day that match location
-    scheds_on_prev_date = schedules_on_previous_date_collection.find(
-        {'locations': {'$elemMatch': {'Tiploc_Code': tiploc_location}}})
+    scheds_on_prev_date = list(schedules_on_previous_date_collection.find(
+        {'locations': {'$elemMatch': {'Tiploc_Code': tiploc_location}}}))
     # filter out any which cross midnight with the location only on the previous side of midnight
     scheds_on_prev_date = list(filter(lambda x: any(
         location_in_time_window(start_as_float, end_as_float, tiploc_location, l) for l in x['locations']),
@@ -1110,20 +1110,22 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
 
     # TODO translate tiploc for origin and dest
 
-    train_to_return = {'origin_name': schedule['locations'][0]['location'],
+    train_info = {'origin_name': schedule['locations'][0]['location'],
                        'destination_name': schedule['locations'][-1]['location'],
                        'origin_time': schedule['locations'][0]['dep'],
-                       'destination_time': schedule['locations'][0]['arr']}
+                       'destination_time': schedule['locations'][-1]['arr']}
+
+    # TODO transfer these props to schedule
 
 
     print(
-        f"parsing train {train_to_return['origin_time']} {train_to_return['origin_name']} - {train_to_return['destination_name']}")
+        f"parsing train {train_info['origin_time']} {train_info['origin_name']} - {train_info['destination_name']}")
 
     # Sort headcode
-    if 'headcode' not in schedule:
-        train_to_return['headcode'] = refine_headcode(schedule)
+    if 'headcode' not in schedule or schedule['headcode'] == '':
+        train_info['headcode'] = refine_headcode(schedule)
     else:
-        train_to_return['headcode'] = schedule['headcode']
+        train_info['headcode'] = schedule['headcode']
 
 
 
@@ -1133,9 +1135,13 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
     if len(initial_locations) == 0:
         return None
 
-    # TODO determine if freight before passing into here
+    if schedule['Train_Status'] in ['P', '1']:
+        schedule['is_freight'] = '0'
+    else:
+        schedule['is_freight'] = '-1'
+
     # Work out other fields for train from train cat dict
-    train_info = complete_charlwood_train_info(categories_map, train_info)
+    train_info = complete_charlwood_train_info(categories_map, schedule)
 
     # Filter locations out via sim locations and translate TIPLOC to readable
     [readable_locations, potential_entry_point, potential_entry_time] = convert_train_locations(initial_locations,
@@ -1146,8 +1152,7 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
     entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
                                                                                               potential_entry_point,
                                                                                               potential_entry_time)
-
-
+    train_to_return = {}
 
     for field in train_info:
         train_to_return[field] = train_info[field]
@@ -1163,6 +1168,7 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
     train_to_return['seeding_gap'] = '15'
 
     return train_to_return
+
 
 if __name__ == '__main__':
     Parse_Rtt_Train(common.create_categories_map_from_yaml('default_rtt_categories_map.yaml'),

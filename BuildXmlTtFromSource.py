@@ -13,6 +13,7 @@ import common
 from customLocationLogic import CustomLogicExecutor
 import parseData
 import WriteXmlTt
+from pymongo import MongoClient
 
 
 def check_overwrite(spec_data):
@@ -34,7 +35,8 @@ def determine_sources(spec_data: dict, categories_map: dict, location_maps: list
         location_parsing_funct = lambda start, end, location_page: \
             parseData.Parse_Charlwood_House_Location_Page(start, end, location_page)
         train_parsing_funct = lambda train_link, location: \
-            parseData.Parse_Charlwood_Train(categories_map, location_maps, custom_location_logic, location, train_link=train_link)
+            parseData.Parse_Charlwood_Train(categories_map, location_maps, custom_location_logic, location,
+                                            train_link=train_link)
 
     elif 'charlwoodhouse_location_files' in spec_data:
         sources = spec_data['charlwoodhouse_location_files']
@@ -59,7 +61,26 @@ def determine_sources(spec_data: dict, categories_map: dict, location_maps: list
         location_parsing_funct = lambda start, end, location_page: \
             parseData.Parse_Rtt_Location_Page(start, end, location_page)
         train_parsing_funct = lambda train_link, location: \
-            parseData.Parse_Rtt_Train(categories_map, location_maps, custom_location_logic, location, train_link=train_link)
+            parseData.Parse_Rtt_Train(categories_map, location_maps, custom_location_logic, location,
+                                      train_link=train_link)
+
+    elif 'cif_file' in spec_data:
+        sources = spec_data['cif_file']['locations']
+        db_name = spec_data['cif_file']['db_name']
+
+        mongo_client = MongoClient('mongodb://localhost:27017/')
+        mongo_db = mongo_client[db_name]
+        schedules_on_date_collection = mongo_db['sched_on_day']
+        schedules_on_previous_date_collection = mongo_db['sched_previous_day']
+        # assoc_on_date_collection = mongo_db['assoc_on_day']
+        # assoc_on_previous_date_collection = mongo_db['assoc_previous_day']
+
+        location_parsing_funct = lambda start, end, location_page: \
+            parseData.Parse_Cif_Location(start, end, location_page, schedules_on_date_collection,
+                                         schedules_on_previous_date_collection)
+        train_parsing_funct = lambda train_link, location: \
+            parseData.Parse_Cif_Train(categories_map, location_maps, custom_location_logic, location,
+                                      schedules_on_date_collection, schedules_on_previous_date_collection, train_link)
 
     return [sources, location_parsing_funct, train_parsing_funct]
 
@@ -116,7 +137,8 @@ def BuildXmlTtFromSource(name_of_spec_file: str):
     categories_map = common.create_categories_map_from_yaml(spec_data['train_categories_file'])
     custom_location_logic = CustomLogicExecutor(sim_id, location_maps[1], location_maps[0])
 
-    sources, parse_location, parse_train = determine_sources(spec_data, categories_map, location_maps, custom_location_logic)
+    sources, parse_location, parse_train = determine_sources(spec_data, categories_map, location_maps,
+                                                             custom_location_logic)
 
     header_db.add_header(tt_header_map)
     header_db.add_categories_map(categories_map)

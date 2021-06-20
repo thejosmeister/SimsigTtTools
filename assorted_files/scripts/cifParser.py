@@ -184,8 +184,11 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
 
     import_tiploc = 'import_tiploc' in kwargs and kwargs['import_tiploc'] is True
     import_associations = 'import_associations' in kwargs and kwargs['import_associations'] is True
-    import_atoc_schedule = 'import_atoc_schedule' in kwargs and kwargs['import_full_atoc_schedule'] is True
-    is_update = 'is_update' in kwargs and kwargs['is_update'] is True
+    import_atoc_schedule = 'import_full_atoc_schedule' in kwargs and kwargs['import_full_atoc_schedule'] is True
+    is_update = 'import_update_atoc_schedule' in kwargs and kwargs['import_update_atoc_schedule'] is True
+
+    if is_update is True:
+        import_atoc_schedule = True
 
     if sum([import_tiploc, import_associations, import_atoc_schedule]) != 1:
         raise Exception('Wrong boolean args')
@@ -298,13 +301,13 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                 current_schedule = {'uid': uid,
                                     'Start_Date': start_date,
                                     'STP_Indicator': stp_indicator,
-                                    'train_status': train_status,
+                                    'Train_Status': train_status,
                                     'Train_Category': line[30:32].strip(),
                                     'headcode': line[32:36].strip(),
                                     'Portion_Id': line[49:50].strip(),
                                     'Power_Type': line[50:53].strip(),
                                     'Timing_Load': line[53:57].strip(),
-                                    'speed': line[57:60].strip(),
+                                    'max_speed': line[57:60].strip(),
                                     'Operating_Characteristics': line[60:66].strip(),
                                     'locations': []}
 
@@ -323,47 +326,46 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
 
         elif line[0:2] == 'LO':  # Location Origin
             if date_runs > 0 and import_atoc_schedule is True and len(current_schedule) > 0:
-                location = {'Tiploc_Code': line[2:9].strip(),
+                location = {'location': line[2:9].strip(),
                             # 'tiploc_instance'	: line[9:10],
                             'dep': line[10:15].strip().replace('H', '.5'),
                             'plat': line[19:22].strip(),
                             'line': line[22:25].strip(),
                             'eng allow': line[25:27].strip().replace('H', '.5'),
                             'pth allow': line[27:29].strip().replace('H', '.5'),
-                            'Activity': line[29:41].strip(),
+                            'Activities': line[29:41].strip(),
                             'prf allow': line[41:43].strip().replace('H', '.5')}
 
                 current_schedule['locations'].append(location)
-
 
         elif line[0:2] == 'LI':  # Location Intermediate
             if date_runs > 0 and import_atoc_schedule is True and len(current_schedule) > 0:
                 arr = line[10:15].strip().replace('H', '.5')
                 dep = line[15:20].strip().replace('H', '.5')
-                _pass = line[20:25].strip()
+                _pass = line[20:25].strip().replace('H', '.5')
                 if (arr == '' or dep == '') and _pass != '':
                     dep = _pass
-                    location = {'Tiploc_Code': line[2:9].strip(),
+                    location = {'location': line[2:9].strip(),
                                 # 'tiploc_instance'	: line[9:10],
                                 'arr': arr,
                                 'dep': dep,
                                 'plat': line[33:36].strip(),
                                 'line': line[36:39].strip(),
                                 'path': line[39:42].strip(),
-                                'Activity': line[42:54].strip(),
+                                'Activities': line[42:54].strip(),
                                 'eng allow': line[54:56].strip().replace('H', '.5'),
                                 'pth allow': line[56:58].strip().replace('H', '.5'),
                                 'prf allow': line[58:60].strip().replace('H', '.5'),
                                 'is_pass_time': '-1'}
                 else:
-                    location = {'Tiploc_Code': line[2:9].strip(),
+                    location = {'location': line[2:9].strip(),
                                 # 'tiploc_instance'	: line[9:10],
                                 'arr': arr,
                                 'dep': dep,
                                 'plat': line[33:36].strip(),
                                 'line': line[36:39].strip(),
                                 'path': line[39:42].strip(),
-                                'Activity': line[42:54].strip(),
+                                'Activities': line[42:54].strip(),
                                 'eng allow': line[54:56].strip().replace('H', '.5'),
                                 'pth allow': line[56:58].strip().replace('H', '.5'),
                                 'prf allow': line[58:60].strip().replace('H', '.5')}
@@ -372,11 +374,11 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
 
         elif line[0:2] == 'LT':  # Location Terminus
             if date_runs > 0 and import_atoc_schedule is True and len(current_schedule) > 0:
-                location = {'Tiploc_Code': line[2:9].strip(),
+                location = {'location': line[2:9].strip(),
                             'arr': line[10:15].strip().replace('H', '.5'),
                             'plat': line[19:22].strip(),
                             'path': line[22:25].strip(),
-                            'Activity': line[25:37].strip()}
+                            'Activities': line[25:37].strip()}
 
                 current_schedule['locations'].append(location)
 
