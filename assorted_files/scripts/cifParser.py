@@ -6,6 +6,7 @@ DOES_NOT_RUN = 0
 RUNS_ON_PREV_DATE = 1
 RUNS_ON_DATE = 2
 RUNS_ON_BOTH_DATES = 3
+ASSOCIATION_DICT = {'JJ': 'trainJoins', 'VV': 'divideRear', 'NP': 'trainBecomes'}
 
 date_of_tt = '181126'
 date_of_tt_as_datetime = datetime.datetime(int(f'20{date_of_tt[0:2]}'), int(date_of_tt[2:4]), int(date_of_tt[4:6]))
@@ -327,7 +328,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
         elif line[0:2] == 'LO':  # Location Origin
             if date_runs > 0 and import_atoc_schedule is True and len(current_schedule) > 0:
                 location = {'location': line[2:9].strip(),
-                            # 'tiploc_instance'	: line[9:10],
+                            'Location_Instance': line[9:10].strip(),
                             'dep': line[10:15].strip().replace('H', '.5'),
                             'plat': line[19:22].strip(),
                             'line': line[22:25].strip(),
@@ -346,7 +347,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                 if (arr == '' or dep == '') and _pass != '':
                     dep = _pass
                     location = {'location': line[2:9].strip(),
-                                # 'tiploc_instance'	: line[9:10],
+                                'Location_Instance': line[9:10],
                                 'arr': arr,
                                 'dep': dep,
                                 'plat': line[33:36].strip(),
@@ -359,7 +360,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                                 'is_pass_time': '-1'}
                 else:
                     location = {'location': line[2:9].strip(),
-                                # 'tiploc_instance'	: line[9:10],
+                                'Location_Instance': line[9:10],
                                 'arr': arr,
                                 'dep': dep,
                                 'plat': line[33:36].strip(),
@@ -375,6 +376,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
         elif line[0:2] == 'LT':  # Location Terminus
             if date_runs > 0 and import_atoc_schedule is True and len(current_schedule) > 0:
                 location = {'location': line[2:9].strip(),
+                            'Location_Instance': line[9:10],
                             'arr': line[10:15].strip().replace('H', '.5'),
                             'plat': line[19:22].strip(),
                             'path': line[22:25].strip(),
