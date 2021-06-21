@@ -1110,22 +1110,20 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
 
     # TODO translate tiploc for origin and dest
 
-    train_info = {'origin_name': schedule['locations'][0]['location'],
-                       'destination_name': schedule['locations'][-1]['location'],
-                       'origin_time': schedule['locations'][0]['dep'],
-                       'destination_time': schedule['locations'][-1]['arr']}
+    schedule['origin_name'] = schedule['locations'][0]['location']
+    schedule['origin_name'] = schedule['locations'][-1]['location']
+    schedule['origin_name'] = schedule['locations'][0]['dep']
+    schedule['origin_name'] = schedule['locations'][-1]['arr']
 
     # TODO transfer these props to schedule
 
 
     print(
-        f"parsing train {train_info['origin_time']} {train_info['origin_name']} - {train_info['destination_name']}")
+        f"parsing train {schedule['origin_time']} {schedule['origin_name']} - {schedule['destination_name']}")
 
     # Sort headcode
     if 'headcode' not in schedule or schedule['headcode'] == '':
-        train_info['headcode'] = refine_headcode(schedule)
-    else:
-        train_info['headcode'] = schedule['headcode']
+        schedule['headcode'] = refine_headcode(schedule)
 
 
 

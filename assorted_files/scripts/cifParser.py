@@ -122,7 +122,7 @@ def add_schedule_to_today_db(current_schedule: dict, transaction_type: str):
 
 
 def add_schedule_to_db(current_schedule: dict, transaction_type: str, db):
-    if transaction_type == 'R':
+    if transaction_type == 'R' or current_schedule['STP_Indicator'] == 'O':
         # try to replace existing schedule
         db.find_one_and_replace({'uid': current_schedule['uid'], 'Start_Date': current_schedule['Start_Date'],
                                  'STP_Indicator': current_schedule['STP_Indicator']}, current_schedule, upsert=True)
@@ -166,7 +166,7 @@ def add_assoc_to_today_db(assoc_record: dict, transaction_type: str):
 
 
 def add_assoc_to_db(assoc_record: dict, transaction_type: str, db):
-    if transaction_type == 'R':
+    if transaction_type == 'R' or assoc_record['STP_Indicator'] == 'O':
         db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                  'assoc_train_uid': assoc_record['assoc_train_uid'],
                                  'start_date': assoc_record['start_date'],
