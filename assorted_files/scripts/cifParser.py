@@ -167,7 +167,28 @@ def add_assoc_to_today_db(assoc_record: dict, transaction_type: str):
 
 
 def add_assoc_to_db(assoc_record: dict, transaction_type: str, db):
-    if transaction_type == 'R' or assoc_record['STP_Indicator'] == 'O':
+
+    if assoc_record['STP_Indicator'] == 'O':
+        if assoc_record['activity'] == '':
+            # find original and input the activity
+            current_record = db.find_one({'main_train_uid': assoc_record['main_train_uid'],
+                                     'assoc_train_uid': assoc_record['assoc_train_uid'],
+                                     'start_date': assoc_record['start_date'],
+                                     'STP_Indicator': 'P'})
+
+            if current_record is not None:
+                assoc_record['activity'] = current_record['activity']
+                db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
+                                         'assoc_train_uid': assoc_record['assoc_train_uid'],
+                                         'start_date': assoc_record['start_date'],
+                                         'STP_Indicator': assoc_record['STP_Indicator']}, assoc_record, upsert=True)
+        else:
+            db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
+                                     'assoc_train_uid': assoc_record['assoc_train_uid'],
+                                     'start_date': assoc_record['start_date'],
+                                     'STP_Indicator': assoc_record['STP_Indicator']}, assoc_record, upsert=True)
+
+    elif transaction_type == 'R':
         db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                  'assoc_train_uid': assoc_record['assoc_train_uid'],
                                  'start_date': assoc_record['start_date'],
@@ -407,6 +428,45 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
             print(f"Imported to line {i}")
     f.close()
 
+def apply_associations_to_schedules():
+    # For reference
+    a = {'main_train_uid': main_train_uid,
+                             'assoc_train_uid': assoc_train_uid,
+                             'start_date': line[15:21].strip(),
+                             'end_date': line[21:27].strip(),
+                             'days_run': line[27:34].strip(),
+                             'activity': line[34:36].strip(),
+                             'date_indicator': line[36:37].strip(),
+                             'location': line[37:44].strip(),
+                             'base_location_suffix': line[44:45].strip(),
+                             'assoc_location_suffix': line[45:46].strip(),
+                             'STP_Indicator': stp_indicator}
+
+
+    # TODO implement this
+
+    for assoc in assoc_on_date_collection.find():
+        # check activity type
+        activity = assoc['activity']
+        if activity == 'JJ':
+            # need to find both schedules
+            main_uid = assoc['main_train_uid']
+            assoc_uid = assoc['assoc_train_uid']
+
+            main_train = find_sched_in_current(main_uid)
+            if main_train is not None:
+                assoc_train = find_sched_in_current(assoc_uid)
+
+            schedules_on_date_collection
+            schedules_on_previous_date_collection
+            # if we can find both then will disregard
+
+            # now update schedules
+
+        if activity == 'VV':
+            #
+
+        if activity == 'NP':
 
 if __name__ == "__main__":
     parse_cif_file('23-full.cif', date_of_tt, import_full_atoc_schedule=True)

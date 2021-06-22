@@ -1115,8 +1115,6 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
     schedule['origin_name'] = schedule['locations'][0]['dep']
     schedule['origin_name'] = schedule['locations'][-1]['arr']
 
-    # TODO transfer these props to schedule
-
 
     print(
         f"parsing train {schedule['origin_time']} {schedule['origin_name']} - {schedule['destination_name']}")
