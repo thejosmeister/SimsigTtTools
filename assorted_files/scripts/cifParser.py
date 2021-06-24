@@ -125,6 +125,7 @@ def add_schedule_to_today_db(current_schedule: dict, transaction_type: str):
 def add_schedule_to_db(current_schedule: dict, transaction_type: str, db):
     if transaction_type == 'R' or current_schedule['STP_Indicator'] == 'O':
         # try to replace existing schedule
+        # TODO don't find by start date, workout fields
         db.find_one_and_replace({'uid': current_schedule['uid'], 'Start_Date': current_schedule['Start_Date'],
                                  'STP_Indicator': current_schedule['STP_Indicator']}, current_schedule, upsert=True)
     else:
@@ -145,17 +146,19 @@ def remove_assoc_from_db(main_train_uid: str, assoc_train_uid: str, start_date: 
              'STP_Indicator': stp_indicator})
 
 
-def temporarily_cancel_assoc(main_train_uid: str, assoc_train_uid: str, start_date: str, date_runs: int,
-                             stp_indicator: str):
+def temporarily_cancel_assoc(main_train_uid: str, assoc_train_uid: str, start_date: str, date_runs: int, location: str,
+                             base_location_suffix: str, assoc_location_suffix: str, stp_indicator: str):
     if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_PREV_DATE:
         assoc_on_previous_date_collection.insert_one(
-            {'main_train_uid': main_train_uid, 'assoc_train_uid': assoc_train_uid, 'start_date': start_date,
-             'STP_Indicator': stp_indicator})
+            {'main_train_uid': main_train_uid, 'assoc_train_uid': assoc_train_uid, 'location': location,
+             'base_location_suffix': base_location_suffix, 'assoc_location_suffix': assoc_location_suffix,
+             'STP_Indicator': stp_indicator, 'start_date': start_date})
 
     if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_DATE:
         assoc_on_date_collection.insert_one(
-            {'main_train_uid': main_train_uid, 'assoc_train_uid': assoc_train_uid, 'start_date': start_date,
-             'STP_Indicator': stp_indicator})
+            {'main_train_uid': main_train_uid, 'assoc_train_uid': assoc_train_uid, 'location': location,
+             'base_location_suffix': base_location_suffix, 'assoc_location_suffix': assoc_location_suffix,
+             'STP_Indicator': stp_indicator, 'start_date': start_date})
 
 
 def add_assoc_to_yesterday_db(assoc_record: dict, transaction_type: str):
@@ -173,25 +176,33 @@ def add_assoc_to_db(assoc_record: dict, transaction_type: str, db):
             # find original and input the activity
             current_record = db.find_one({'main_train_uid': assoc_record['main_train_uid'],
                                      'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                     'start_date': assoc_record['start_date'],
+                                     'location': assoc_record['location'],
+                                     'base_location_suffix': assoc_record['base_location_suffix'],
+                                     'assoc_location_suffix': assoc_record['assoc_location_suffix'],
                                      'STP_Indicator': 'P'})
 
             if current_record is not None:
                 assoc_record['activity'] = current_record['activity']
                 db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                          'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                         'start_date': assoc_record['start_date'],
+                                         'location': assoc_record['location'],
+                                         'base_location_suffix': assoc_record['base_location_suffix'],
+                                         'assoc_location_suffix': assoc_record['assoc_location_suffix'],
                                          'STP_Indicator': assoc_record['STP_Indicator']}, assoc_record, upsert=True)
         else:
             db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                      'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                     'start_date': assoc_record['start_date'],
+                                     'location': assoc_record['location'],
+                                     'base_location_suffix': assoc_record['base_location_suffix'],
+                                     'assoc_location_suffix': assoc_record['assoc_location_suffix'],
                                      'STP_Indicator': assoc_record['STP_Indicator']}, assoc_record, upsert=True)
 
     elif transaction_type == 'R':
         db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                  'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                 'start_date': assoc_record['start_date'],
+                                 'location': assoc_record['location'],
+                                 'base_location_suffix': assoc_record['base_location_suffix'],
+                                 'assoc_location_suffix': assoc_record['assoc_location_suffix'],
                                  'STP_Indicator': assoc_record['STP_Indicator']}, assoc_record, upsert=True)
     else:
         # must be a new one
@@ -257,6 +268,9 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                 stp_indicator = line[79:80].strip()
                 main_train_uid = line[3:9].strip()
                 assoc_train_uid = line[9:15].strip()
+                location = line[37:44].strip()
+                base_location_suffix = line[44:45].strip()
+                assoc_location_suffix = line[45:46].strip()
 
                 if transaction_type == 'D':
                     if is_update is False:
@@ -275,9 +289,9 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                              'days_run': line[27:34].strip(),
                              'activity': line[34:36].strip(),
                              'date_indicator': line[36:37].strip(),
-                             'location': line[37:44].strip(),
-                             'base_location_suffix': line[44:45].strip(),
-                             'assoc_location_suffix': line[45:46].strip(),
+                             'location': location,
+                             'base_location_suffix': base_location_suffix,
+                             'assoc_location_suffix': assoc_location_suffix,
                              'STP_Indicator': stp_indicator}
 
                 if date_runs == RUNS_ON_PREV_DATE or date_runs == RUNS_ON_BOTH_DATES:
@@ -427,6 +441,52 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
         if i % 1000 == 0:
             print(f"Imported to line {i}")
     f.close()
+
+
+def clean_dbs():
+    """
+    Will go through the dbs and remove any records that don't apply to the day i.e. ones cancelled or overlays
+    """
+
+    schedule_collections = [schedules_on_date_collection, schedules_on_previous_date_collection]
+    assoc_collections = [assoc_on_date_collection, assoc_on_previous_date_collection]
+    stp_indicators = ['O', 'P']
+
+    for collection in schedule_collections:
+        # cancels
+        for cancellation in collection.find({'STP_Indicator': 'C'}):
+            for stp in stp_indicators:
+                collection.delete_many({'uid': cancellation['uid'], 'STP_Indicator': stp})
+        # overlays
+        for overlay in collection.find({'STP_Indicator': 'O'}):
+            collection.delete_many({'uid': overlay['uid'], 'STP_Indicator': 'P'})
+
+    for collection in assoc_collections:
+        for cancellation in collection.find({'STP_Indicator': 'C'}):
+            for stp in stp_indicators:
+                collection.delete_many({'main_train_uid': cancellation['main_train_uid'],
+                                 'assoc_train_uid': cancellation['assoc_train_uid'],
+                                 'location': cancellation['location'],
+                                 'base_location_suffix': cancellation['base_location_suffix'],
+                                 'assoc_location_suffix': cancellation['assoc_location_suffix'],
+                                 'STP_Indicator': stp})
+        for overlay in collection.find({'STP_Indicator': 'O'}):
+            collection.delete_many({'main_train_uid': overlay['main_train_uid'],
+                                 'assoc_train_uid': overlay['assoc_train_uid'],
+                                 'location': overlay['location'],
+                                 'base_location_suffix': overlay['base_location_suffix'],
+                                 'assoc_location_suffix': overlay['assoc_location_suffix'],
+                                 'STP_Indicator': 'P'})
+
+
+
+
+
+def find_sched_in_current_and_update(uid, assoc):
+
+    schedules_on_date_collection.find_one_and_update({})
+    pass
+
 
 def apply_associations_to_schedules():
     # For reference
