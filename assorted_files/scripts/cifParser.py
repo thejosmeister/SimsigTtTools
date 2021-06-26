@@ -13,11 +13,20 @@ date_of_tt_as_datetime = datetime.datetime(int(f'20{date_of_tt[0:2]}'), int(date
 readable_date_of_tt = "{:%d %B %Y}".format(date_of_tt_as_datetime).replace(' ', '_')
 
 mongo_client = MongoClient('mongodb://localhost:27017/')
+
+if readable_date_of_tt in mongo_client.list_database_names():
+    drop = input('db is already present, y to drop')
+    if drop in 'yY':
+        mongo_client.drop_database(readable_date_of_tt)
+    else:
+        raise Exception('Did not drop db so no parse will occur')
+
 mongo_db = mongo_client[readable_date_of_tt]
 schedules_on_date_collection = mongo_db['sched_on_day']
 schedules_on_previous_date_collection = mongo_db['sched_previous_day']
 assoc_on_date_collection = mongo_db['assoc_on_day']
 assoc_on_previous_date_collection = mongo_db['assoc_previous_day']
+tiploc_collection = mongo_db['tiploc']
 
 
 def dates_and_days_apply(date_of_tt_as_int: int, day_of_date: int, start_date: str, end_date: str,
@@ -126,7 +135,7 @@ def add_schedule_to_db(current_schedule: dict, transaction_type: str, db):
     if transaction_type == 'R' or current_schedule['STP_Indicator'] == 'O':
         # try to replace existing schedule
         # TODO don't find by start date, workout fields
-        db.find_one_and_replace({'uid': current_schedule['uid'], 'Start_Date': current_schedule['Start_Date'],
+        db.find_one_and_replace({'uid': current_schedule['uid'],
                                  'STP_Indicator': current_schedule['STP_Indicator']}, current_schedule, upsert=True)
     else:
         # must be a new one
@@ -170,19 +179,21 @@ def add_assoc_to_today_db(assoc_record: dict, transaction_type: str):
 
 
 def add_assoc_to_db(assoc_record: dict, transaction_type: str, db):
-
     if assoc_record['STP_Indicator'] == 'O':
-        if assoc_record['activity'] == '':
+        if assoc_record['activity'] == '' or assoc_record['date_indicator'] == '':
             # find original and input the activity
             current_record = db.find_one({'main_train_uid': assoc_record['main_train_uid'],
-                                     'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                     'location': assoc_record['location'],
-                                     'base_location_suffix': assoc_record['base_location_suffix'],
-                                     'assoc_location_suffix': assoc_record['assoc_location_suffix'],
-                                     'STP_Indicator': 'P'})
+                                          'assoc_train_uid': assoc_record['assoc_train_uid'],
+                                          'location': assoc_record['location'],
+                                          'base_location_suffix': assoc_record['base_location_suffix'],
+                                          'assoc_location_suffix': assoc_record['assoc_location_suffix'],
+                                          'STP_Indicator': 'P'})
 
             if current_record is not None:
-                assoc_record['activity'] = current_record['activity']
+                if assoc_record['activity'] == '':
+                    assoc_record['activity'] = current_record['activity']
+                if assoc_record['date_indicator'] == '':
+                    assoc_record['date_indicator'] = current_record['date_indicator']
                 db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                          'assoc_train_uid': assoc_record['assoc_train_uid'],
                                          'location': assoc_record['location'],
@@ -217,14 +228,11 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
 
     import_tiploc = 'import_tiploc' in kwargs and kwargs['import_tiploc'] is True
     import_associations = 'import_associations' in kwargs and kwargs['import_associations'] is True
-    import_atoc_schedule = 'import_full_atoc_schedule' in kwargs and kwargs['import_full_atoc_schedule'] is True
-    is_update = 'import_update_atoc_schedule' in kwargs and kwargs['import_update_atoc_schedule'] is True
-
-    if is_update is True:
-        import_atoc_schedule = True
+    import_atoc_schedule = 'import_schedules' in kwargs and kwargs['import_schedules'] is True
+    is_update = 'is_update' in kwargs and kwargs['is_update'] is True
 
     if sum([import_tiploc, import_associations, import_atoc_schedule]) != 1:
-        raise Exception('Wrong boolean args')
+        raise Exception('Only allowed to import one type at a time')
 
     current_schedule = {}
     date_runs = DOES_NOT_RUN
@@ -240,10 +248,6 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
             if import_tiploc is True:
                 db_values = {'tiploc': line[2:9].strip(),
                              'tps_description': capwords(line[18:44]).strip()}
-
-                for value in db_values.values():
-                    if value == '':
-                        value = None
 
                 # Insert into db
                 print(db_values)
@@ -278,9 +282,8 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                     remove_assoc_from_db(main_train_uid, assoc_train_uid, start_date, date_runs, stp_indicator)
 
                 if stp_indicator == 'C':
-                    if is_update is False:
-                        continue
-                    temporarily_cancel_assoc(main_train_uid, assoc_train_uid, start_date, date_runs, stp_indicator)
+                    temporarily_cancel_assoc(main_train_uid, assoc_train_uid, start_date, date_runs, location,
+                                             base_location_suffix, assoc_location_suffix, stp_indicator)
 
                 db_values = {'main_train_uid': main_train_uid,
                              'assoc_train_uid': assoc_train_uid,
@@ -324,9 +327,6 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                     remove_basic_schedule_from_db(uid, start_date, date_runs, stp_indicator)
 
                 if stp_indicator == 'C':
-                    if is_update is False:
-                        continue
-                    # Update so we want to move original sched to cancelled
                     temporarily_cancel_schedule(uid, start_date, date_runs, stp_indicator)
 
                 # not a train
@@ -455,81 +455,136 @@ def clean_dbs():
     for collection in schedule_collections:
         # cancels
         for cancellation in collection.find({'STP_Indicator': 'C'}):
+            print('Sorting cancellation for ', cancellation['uid'])
             for stp in stp_indicators:
                 collection.delete_many({'uid': cancellation['uid'], 'STP_Indicator': stp})
         # overlays
         for overlay in collection.find({'STP_Indicator': 'O'}):
+            print('Sorting overlay for ', overlay['uid'])
             collection.delete_many({'uid': overlay['uid'], 'STP_Indicator': 'P'})
 
     for collection in assoc_collections:
         for cancellation in collection.find({'STP_Indicator': 'C'}):
+            print('Sorting cancellation for ', cancellation['main_train_uid'], cancellation['assoc_train_uid'])
             for stp in stp_indicators:
                 collection.delete_many({'main_train_uid': cancellation['main_train_uid'],
-                                 'assoc_train_uid': cancellation['assoc_train_uid'],
-                                 'location': cancellation['location'],
-                                 'base_location_suffix': cancellation['base_location_suffix'],
-                                 'assoc_location_suffix': cancellation['assoc_location_suffix'],
-                                 'STP_Indicator': stp})
+                                        'assoc_train_uid': cancellation['assoc_train_uid'],
+                                        'location': cancellation['location'],
+                                        'base_location_suffix': cancellation['base_location_suffix'],
+                                        'assoc_location_suffix': cancellation['assoc_location_suffix'],
+                                        'STP_Indicator': stp})
         for overlay in collection.find({'STP_Indicator': 'O'}):
+            print('Sorting overlay for ', overlay['main_train_uid'], overlay['assoc_train_uid'])
             collection.delete_many({'main_train_uid': overlay['main_train_uid'],
-                                 'assoc_train_uid': overlay['assoc_train_uid'],
-                                 'location': overlay['location'],
-                                 'base_location_suffix': overlay['base_location_suffix'],
-                                 'assoc_location_suffix': overlay['assoc_location_suffix'],
-                                 'STP_Indicator': 'P'})
+                                    'assoc_train_uid': overlay['assoc_train_uid'],
+                                    'location': overlay['location'],
+                                    'base_location_suffix': overlay['base_location_suffix'],
+                                    'assoc_location_suffix': overlay['assoc_location_suffix'],
+                                    'STP_Indicator': 'P'})
 
 
+def find_and_update_in_db(uid_to_update: str, uid_to_assoc: str, assoc: dict, activity: str, db):
+    """
+    Will attempt to add the activity to the schedule, if there is no schedule satisfying the criteria then None is returned
+    """
+    location = assoc['location']
+    base_suffix = assoc['base_location_suffix']
+    out = None
+    if activity == 'JJ':
+        assoc_suffix = assoc['assoc_location_suffix']
+        if uid_to_update == assoc['main_train_uid']:
+            out = db.find_one_and_update({'uid': uid_to_update, 'locations': {
+                '$elemMatch': {'location': location, 'Location_Instance': base_suffix}}},
+                                         {'$set': {
+                                             f'locations.$.activities.{ASSOCIATION_DICT[activity]}': f'{uid_to_assoc}*'}})
+        elif uid_to_update == assoc['assoc_train_uid']:
+            out = db.find_one_and_update({'uid': uid_to_update, 'locations': {
+                '$elemMatch': {'location': location, 'Location_Instance': assoc_suffix}}},
+                                         {'$set': {
+                                             f'locations.$.activities.{ASSOCIATION_DICT[activity]}': f'{uid_to_assoc}*'}})
+    else:
+        # activity is divide or new train
+        out = db.find_one_and_update({'uid': uid_to_update,
+                                      'locations': {
+                                          '$elemMatch': {'location': location, 'Location_Instance': base_suffix}}},
+                                     {'$set': {
+                                         f'locations.$.activities.{ASSOCIATION_DICT[activity]}': f'{uid_to_assoc}*'}})
 
-
-
-def find_sched_in_current_and_update(uid, assoc):
-
-    schedules_on_date_collection.find_one_and_update({})
-    pass
+    return out
 
 
 def apply_associations_to_schedules():
-    # For reference
-    a = {'main_train_uid': main_train_uid,
-                             'assoc_train_uid': assoc_train_uid,
-                             'start_date': line[15:21].strip(),
-                             'end_date': line[21:27].strip(),
-                             'days_run': line[27:34].strip(),
-                             'activity': line[34:36].strip(),
-                             'date_indicator': line[36:37].strip(),
-                             'location': line[37:44].strip(),
-                             'base_location_suffix': line[44:45].strip(),
-                             'assoc_location_suffix': line[45:46].strip(),
-                             'STP_Indicator': stp_indicator}
-
-
-    # TODO implement this
-
+    """
+    Will apply associations by adding activities to relevant schedules
+    """
     for assoc in assoc_on_date_collection.find():
         # check activity type
+        if assoc['STP_Indicator'] == 'C':
+            continue
         activity = assoc['activity']
+        main_uid = assoc['main_train_uid']
+        assoc_uid = assoc['assoc_train_uid']
+        print('Sorting on day assoc ', main_uid, assoc_uid, activity)
         if activity == 'JJ':
-            # need to find both schedules
-            main_uid = assoc['main_train_uid']
-            assoc_uid = assoc['assoc_train_uid']
-
-            main_train = find_sched_in_current(main_uid)
-            if main_train is not None:
-                assoc_train = find_sched_in_current(assoc_uid)
-
-            schedules_on_date_collection
-            schedules_on_previous_date_collection
-            # if we can find both then will disregard
-
-            # now update schedules
+            if assoc['date_indicator'] == 'S':
+                # both on same day
+                find_and_update_in_db(main_uid, assoc_uid, assoc, activity, schedules_on_date_collection)
+                find_and_update_in_db(assoc_uid, main_uid, assoc, activity, schedules_on_date_collection)
+            elif assoc['date_indicator'] == 'P':
+                # find main on the day and assoc on previous
+                find_and_update_in_db(main_uid, assoc_uid, assoc, activity, schedules_on_date_collection)
+                find_and_update_in_db(assoc_uid, main_uid, assoc, activity, schedules_on_previous_date_collection)
+            else:
+                # join occurs the next day so don't care
+                pass
 
         if activity == 'VV':
-            #
+            # find main in today
+            find_and_update_in_db(main_uid, assoc_uid, assoc, activity, schedules_on_date_collection)
 
         if activity == 'NP':
+            # find main in today
+            find_and_update_in_db(main_uid, assoc_uid, assoc, activity, schedules_on_date_collection)
+
+    for assoc in assoc_on_previous_date_collection.find():
+        if assoc['STP_Indicator'] == 'C':
+            continue
+        activity = assoc['activity']
+        main_uid = assoc['main_train_uid']
+        assoc_uid = assoc['assoc_train_uid']
+        print('Sorting yesterday assoc ', main_uid, assoc_uid, activity)
+
+        if assoc['date_indicator'] == 'N':
+            if activity == 'JJ':
+                find_and_update_in_db(main_uid, assoc_uid, assoc, activity, schedules_on_previous_date_collection)
+                find_and_update_in_db(assoc_uid, main_uid, assoc, activity, schedules_on_date_collection)
+
+            if activity == 'VV':
+                # find main in yesterday
+                find_and_update_in_db(main_uid, assoc_uid, assoc, activity, schedules_on_previous_date_collection)
+            if activity == 'NP':
+                # find main in yesterday
+                find_and_update_in_db(main_uid, assoc_uid, assoc, activity, schedules_on_previous_date_collection)
+
 
 if __name__ == "__main__":
-    parse_cif_file('23-full.cif', date_of_tt, import_full_atoc_schedule=True)
-    parse_cif_file('23-update.cif', date_of_tt, import_update_atoc_schedule=True)
-    parse_cif_file('24-update.cif', date_of_tt, import_update_atoc_schedule=True)
-    parse_cif_file('25-update.cif', date_of_tt, import_update_atoc_schedule=True)
+    # Parse files
+
+    parse_cif_file('23-full.cif', date_of_tt, import_schedules=True)
+    # parse_cif_file('23-update.cif', date_of_tt, import_update_atoc_schedule=True)
+    parse_cif_file('24-update.cif', date_of_tt, import_schedules=True)
+    parse_cif_file('25-update.cif', date_of_tt, import_schedules=True)
+    parse_cif_file('26-update.cif', date_of_tt, import_schedules=True)
+
+    # Parse Associations
+    parse_cif_file('23-full.cif', date_of_tt, import_associations=True)
+    parse_cif_file('24-update.cif', date_of_tt, import_associations=True)
+    parse_cif_file('25-update.cif', date_of_tt, import_associations=True)
+    parse_cif_file('26-update.cif', date_of_tt, import_associations=True)
+
+    # Parse Tiploc
+    parse_cif_file('23-full.cif', date_of_tt, import_tiploc=True)
+
+    # Run cleanup and apply assocs
+    clean_dbs()
+    apply_associations_to_schedules()
