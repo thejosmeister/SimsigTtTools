@@ -837,9 +837,6 @@ def parse_rtt_train_locations(locations_object):
             is_1st_loc = False
             dicts_of_locations.append(location)
 
-    # TODO Will possibly need to sort these by time SO TEST
-    # Later note: seems to work OK with no sorting
-
     return dicts_of_locations
 
 
@@ -1040,8 +1037,10 @@ def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, sch
     start_as_float = float(start_time)
     end_as_float = float(end_time)
 
-    # fetch all trains from sched on day that match location
-    scheds_on_date = list(schedules_on_date_collection.find({'locations': {'$elemMatch': {'location': tiploc_location}}}))
+    # fetch all trains from sched on day that match location and are not cancelled
+    scheds_on_date = list(schedules_on_date_collection.find({'locations': {'$elemMatch': {'location': tiploc_location}},
+                                                             'STP_Indicator': {'$ne': 'C'}}))
+
     # filter by times that were input
     scheds_on_date = list(filter(lambda x: any(
         location_in_time_window(start_as_float, end_as_float, tiploc_location, l) for l in x['locations']),
@@ -1051,9 +1050,9 @@ def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, sch
 
     final_list_of_scheds = []
 
-    # fetch all trains from sched on previous day that match location
+    # fetch all trains from sched on previous day that match location and are not cancelled
     scheds_on_prev_date = list(schedules_on_previous_date_collection.find(
-        {'locations': {'$elemMatch': {'Tiploc_Code': tiploc_location}}}))
+        {'locations': {'$elemMatch': {'Tiploc_Code': tiploc_location}}, 'STP_Indicator': {'$ne': 'C'}}))
     # filter out any which cross midnight with the location only on the previous side of midnight
     scheds_on_prev_date = list(filter(lambda x: any(
         location_in_time_window(start_as_float, end_as_float, tiploc_location, l) for l in x['locations']),
@@ -1073,33 +1072,17 @@ def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, sch
 
     # want to filter any cancelled ones
     for s in scheds_on_date:
-        # check if cancelled
-        if schedules_on_date_collection.find({'uid': s['uid'], 'STP_Indicator': 'C'}).count() == 0:
-            # check if overlay
-            if schedules_on_date_collection.find({'uid': s['uid'], 'STP_Indicator': 'O'}).count() > 0:
-                if s['STP_Indicator'] == 'O':
-                    final_list_of_scheds.append(s['uid'] + '_OD_' + s['STP_Indicator'])
-            else:
-                # no overlay so can just add
-                final_list_of_scheds.append(s['uid'] + '_OD_' + s['STP_Indicator'])
+        final_list_of_scheds.append(s['uid'] + '_OD_' + s['STP_Indicator'])
 
     for s in new_scheds_on_prev_date:
-        # check if cancelled
-        if schedules_on_previous_date_collection.find({'uid': s['uid'], 'STP_Indicator': 'C'}).count() == 0:
-            # check if overlay
-            if schedules_on_previous_date_collection.find({'uid': s['uid'], 'STP_Indicator': 'O'}).count() > 0:
-                if s['STP_Indicator'] == 'O':
-                    final_list_of_scheds.append(s['uid'] + '_PD_' + s['STP_Indicator'])
-            else:
-                # no overlay so can just add
-                final_list_of_scheds.append(s['uid'] + '_PD_' + s['STP_Indicator'])
+        final_list_of_scheds.append(s['uid'] + '_PD_' + s['STP_Indicator'])
 
     return [tiploc_location, final_list_of_scheds]
 
 
 def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
                     source_location: str, schedules_on_date_collection,
-                       schedules_on_previous_date_collection, train_id: str) -> dict:
+                       schedules_on_previous_date_collection, tiploc_collection, train_id: str) -> dict:
 
     [uid, day, stp] = train_id.split('_')
 
@@ -1108,12 +1091,10 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
     else:
         schedule = schedules_on_previous_date_collection.find_one({'uid': uid, 'STP_Indicator': stp})
 
-    # TODO translate tiploc for origin and dest
-
-    schedule['origin_name'] = schedule['locations'][0]['location']
-    schedule['origin_name'] = schedule['locations'][-1]['location']
-    schedule['origin_name'] = schedule['locations'][0]['dep']
-    schedule['origin_name'] = schedule['locations'][-1]['arr']
+    schedule['origin_name'] = common.translate_tiploc(schedule['locations'][0]['location'], tiploc_collection)
+    schedule['destination_name'] = common.translate_tiploc(schedule['locations'][-1]['location'], tiploc_collection)
+    schedule['origin_time'] = schedule['locations'][0]['dep']
+    schedule['destination_time'] = schedule['locations'][-1]['arr']
 
 
     print(

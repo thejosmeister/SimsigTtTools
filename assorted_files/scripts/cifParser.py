@@ -134,7 +134,6 @@ def add_schedule_to_today_db(current_schedule: dict, transaction_type: str):
 def add_schedule_to_db(current_schedule: dict, transaction_type: str, db):
     if transaction_type == 'R' or current_schedule['STP_Indicator'] == 'O':
         # try to replace existing schedule
-        # TODO don't find by start date, workout fields
         db.find_one_and_replace({'uid': current_schedule['uid'],
                                  'STP_Indicator': current_schedule['STP_Indicator']}, current_schedule, upsert=True)
     else:
@@ -231,8 +230,8 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
     import_atoc_schedule = 'import_schedules' in kwargs and kwargs['import_schedules'] is True
     is_update = 'is_update' in kwargs and kwargs['is_update'] is True
 
-    if sum([import_tiploc, import_associations, import_atoc_schedule]) != 1:
-        raise Exception('Only allowed to import one type at a time')
+    # if sum([import_tiploc, import_associations, import_atoc_schedule]) != 1:
+    #     raise Exception('Only allowed to import one type at a time')
 
     current_schedule = {}
     date_runs = DOES_NOT_RUN
@@ -569,21 +568,11 @@ def apply_associations_to_schedules():
 
 if __name__ == "__main__":
     # Parse files
+    parse_cif_file('23-full.cif', date_of_tt, import_schedules=True, import_associations=True, import_tiploc=True)
+    parse_cif_file('24-update.cif', date_of_tt, import_schedules=True, import_associations=True, is_update=True)
+    parse_cif_file('25-update.cif', date_of_tt, import_schedules=True, import_associations=True, is_update=True)
+    parse_cif_file('26-update.cif', date_of_tt, import_schedules=True, import_associations=True, is_update=True)
 
-    parse_cif_file('23-full.cif', date_of_tt, import_schedules=True)
-    # parse_cif_file('23-update.cif', date_of_tt, import_update_atoc_schedule=True)
-    parse_cif_file('24-update.cif', date_of_tt, import_schedules=True)
-    parse_cif_file('25-update.cif', date_of_tt, import_schedules=True)
-    parse_cif_file('26-update.cif', date_of_tt, import_schedules=True)
-
-    # Parse Associations
-    parse_cif_file('23-full.cif', date_of_tt, import_associations=True)
-    parse_cif_file('24-update.cif', date_of_tt, import_associations=True)
-    parse_cif_file('25-update.cif', date_of_tt, import_associations=True)
-    parse_cif_file('26-update.cif', date_of_tt, import_associations=True)
-
-    # Parse Tiploc
-    parse_cif_file('23-full.cif', date_of_tt, import_tiploc=True)
 
     # Run cleanup and apply assocs
     clean_dbs()

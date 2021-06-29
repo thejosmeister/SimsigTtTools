@@ -3,7 +3,7 @@ A file containing common functions used in multiple files.
 """
 import math
 import re
-
+from pymongo import MongoClient
 import yaml
 
 def create_location_map_from_file(sim_id: str) -> list:
@@ -175,6 +175,19 @@ def make_id_key_category_map(categories_map: dict) -> dict:
         out[id].pop('id')
 
     return out
+
+
+def translate_tiploc(tiploc_code: str, tiploc_collection):
+    """
+    Will return the translation of a tiploc code according to the map provided.
+    If no translation found then code is returned.
+    """
+    translation = tiploc_collection.find_one({'tiploc': tiploc_code})
+
+    if translation is not None:
+        return translation['tps_description']
+    else:
+        return tiploc_code
 
 
 

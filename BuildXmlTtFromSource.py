@@ -72,6 +72,7 @@ def determine_sources(spec_data: dict, categories_map: dict, location_maps: list
         mongo_db = mongo_client[db_name]
         schedules_on_date_collection = mongo_db['sched_on_day']
         schedules_on_previous_date_collection = mongo_db['sched_previous_day']
+        tiploc_collection = mongo_db['tiploc']
         # assoc_on_date_collection = mongo_db['assoc_on_day']
         # assoc_on_previous_date_collection = mongo_db['assoc_previous_day']
 
@@ -80,7 +81,8 @@ def determine_sources(spec_data: dict, categories_map: dict, location_maps: list
                                          schedules_on_previous_date_collection)
         train_parsing_funct = lambda train_link, location: \
             parseData.Parse_Cif_Train(categories_map, location_maps, custom_location_logic, location,
-                                      schedules_on_date_collection, schedules_on_previous_date_collection, train_link)
+                                      schedules_on_date_collection, schedules_on_previous_date_collection,
+                                      tiploc_collection, train_link)
 
     return [sources, location_parsing_funct, train_parsing_funct]
 
