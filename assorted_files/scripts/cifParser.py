@@ -19,7 +19,9 @@ if readable_date_of_tt in mongo_client.list_database_names():
     if drop in 'yY':
         mongo_client.drop_database(readable_date_of_tt)
     else:
-        raise Exception('Did not drop db so no parse will occur')
+        _continue = input('do you want to continue with present db, y to continue')
+        if _continue not in 'yY':
+            raise Exception('Did not drop db so no parse will occur')
 
 mongo_db = mongo_client[readable_date_of_tt]
 schedules_on_date_collection = mongo_db['sched_on_day']
@@ -249,7 +251,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                              'tps_description': capwords(line[18:44]).strip()}
 
                 # Insert into db
-                print(db_values)
+                tiploc_collection.insert_one(db_values)
 
         elif line[0:2] == 'TA':  # TIPLOC Delete
             continue
@@ -566,7 +568,31 @@ def apply_associations_to_schedules():
                 find_and_update_in_db(main_uid, assoc_uid, assoc, activity, schedules_on_previous_date_collection)
 
 
+# if __name__ == "__main__":
+#     # Parse files
+#
+#     parse_cif_file('23-full.cif', date_of_tt, import_schedules=True)
+#     # parse_cif_file('23-update.cif', date_of_tt, import_update_atoc_schedule=True)
+#     parse_cif_file('24-update.cif', date_of_tt, import_schedules=True)
+#     parse_cif_file('25-update.cif', date_of_tt, import_schedules=True)
+#     parse_cif_file('26-update.cif', date_of_tt, import_schedules=True)
+#
+#     # Parse Associations
+#     parse_cif_file('23-full.cif', date_of_tt, import_associations=True)
+#     parse_cif_file('24-update.cif', date_of_tt, import_associations=True)
+#     parse_cif_file('25-update.cif', date_of_tt, import_associations=True)
+#     parse_cif_file('26-update.cif', date_of_tt, import_associations=True)
+#
+#     # Parse Tiploc
+#     parse_cif_file('23-full.cif', date_of_tt, import_tiploc=True)
+#
+#     # Run cleanup and apply assocs
+#     clean_dbs()
+#     apply_associations_to_schedules()
+
 if __name__ == "__main__":
+    # Parse Tiploc
+    parse_cif_file('23-full.cif', date_of_tt, import_tiploc=True)
     # Parse files
     parse_cif_file('23-full.cif', date_of_tt, import_schedules=True, import_associations=True, import_tiploc=True)
     parse_cif_file('24-update.cif', date_of_tt, import_schedules=True, import_associations=True, is_update=True)
