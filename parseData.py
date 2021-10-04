@@ -1096,15 +1096,11 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
     schedule['origin_time'] = schedule['locations'][0]['dep']
     schedule['destination_time'] = schedule['locations'][-1]['arr']
 
-
-    print(
-        f"parsing train {schedule['origin_time']} {schedule['origin_name']} - {schedule['destination_name']}")
+    print(f"parsing train {schedule['origin_time']} {schedule['origin_name']} - {schedule['destination_name']}")
 
     # Sort headcode
     if 'headcode' not in schedule or schedule['headcode'] == '':
         schedule['headcode'] = refine_headcode(schedule)
-
-
 
     # Fetch location data from sched table
     initial_locations = schedule['locations']
