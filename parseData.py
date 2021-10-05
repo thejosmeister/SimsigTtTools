@@ -323,8 +323,12 @@ def complete_charlwood_train_info(categories_map: dict, train_info: dict) -> dic
 
 
 def do_times_cross_midnight(location1: dict, location2: dict) -> bool:
-    if location1['location'] == location2['location']:
-        return False
+    if 'location' in location1:
+        if location1['location'] == location2['location']:
+            return False
+    else:
+        if location1['Location'] == location2['Location']:
+            return False
 
     time1dep = ''
     time1arr = ''
@@ -964,7 +968,7 @@ def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor,
 
 
 def location_in_time_window(start_time: float, end_time: float, tiploc_location: str, l: dict):
-    if l['location'] != tiploc_location:
+    if l['Location'] != tiploc_location:
         return False
 
     if 'dep' in l:
@@ -1038,7 +1042,7 @@ def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, sch
     end_as_float = float(end_time)
 
     # fetch all trains from sched on day that match location and are not cancelled
-    scheds_on_date = list(schedules_on_date_collection.find({'locations': {'$elemMatch': {'location': tiploc_location}},
+    scheds_on_date = list(schedules_on_date_collection.find({'locations': {'$elemMatch': {'Location': tiploc_location}},
                                                              'STP_Indicator': {'$ne': 'C'}}))
 
     # filter by times that were input
@@ -1080,6 +1084,17 @@ def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, sch
     return [tiploc_location, final_list_of_scheds]
 
 
+def sort_blanks_in_locations(locations: dict):
+    for l in locations:
+        props_to_remove = []
+        for prop in l:
+            if prop != 'activities':
+              if l[prop].strip() == '':
+                props_to_remove.append(prop)
+        [l.pop(p) for p in props_to_remove]
+    return locations
+
+
 def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
                     source_location: str, schedules_on_date_collection,
                        schedules_on_previous_date_collection, tiploc_collection, train_id: str) -> dict:
@@ -1091,12 +1106,26 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
     else:
         schedule = schedules_on_previous_date_collection.find_one({'uid': uid, 'STP_Indicator': stp})
 
-    schedule['origin_name'] = common.translate_tiploc(schedule['locations'][0]['location'], tiploc_collection)
-    schedule['destination_name'] = common.translate_tiploc(schedule['locations'][-1]['location'], tiploc_collection)
+    # Remove _id prop present
+    schedule.pop('_id')
+
+    schedule['origin_name'] = common.translate_tiploc(schedule['locations'][0]['Location'], tiploc_collection)
+    schedule['destination_name'] = common.translate_tiploc(schedule['locations'][-1]['Location'], tiploc_collection)
     schedule['origin_time'] = schedule['locations'][0]['dep']
     schedule['destination_time'] = schedule['locations'][-1]['arr']
 
     print(f"parsing train {schedule['origin_time']} {schedule['origin_name']} - {schedule['destination_name']}")
+
+    # Want to remove blank values from train and locations
+    props_to_remove = []
+
+    for prop in schedule:
+        if prop == 'locations':
+            schedule['locations'] = sort_blanks_in_locations(schedule['locations'])
+        elif schedule[prop].strip() == '':
+            props_to_remove.append(prop)
+
+    [schedule.pop(p) for p in props_to_remove]
 
     # Sort headcode
     if 'headcode' not in schedule or schedule['headcode'] == '':
@@ -1122,6 +1151,7 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
                                                                                                 source_location)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
+    print('Custom logic', potential_entry_point, potential_entry_time, readable_locations)
     entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
                                                                                               potential_entry_point,
                                                                                               potential_entry_time)

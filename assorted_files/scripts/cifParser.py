@@ -160,13 +160,13 @@ def temporarily_cancel_assoc(main_train_uid: str, assoc_train_uid: str, start_da
                              base_location_suffix: str, assoc_location_suffix: str, stp_indicator: str):
     if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_PREV_DATE:
         assoc_on_previous_date_collection.insert_one(
-            {'main_train_uid': main_train_uid, 'assoc_train_uid': assoc_train_uid, 'location': location,
+            {'main_train_uid': main_train_uid, 'assoc_train_uid': assoc_train_uid, 'Location': location,
              'base_location_suffix': base_location_suffix, 'assoc_location_suffix': assoc_location_suffix,
              'STP_Indicator': stp_indicator, 'start_date': start_date})
 
     if date_runs == RUNS_ON_BOTH_DATES or date_runs == RUNS_ON_DATE:
         assoc_on_date_collection.insert_one(
-            {'main_train_uid': main_train_uid, 'assoc_train_uid': assoc_train_uid, 'location': location,
+            {'main_train_uid': main_train_uid, 'assoc_train_uid': assoc_train_uid, 'Location': location,
              'base_location_suffix': base_location_suffix, 'assoc_location_suffix': assoc_location_suffix,
              'STP_Indicator': stp_indicator, 'start_date': start_date})
 
@@ -185,7 +185,7 @@ def add_assoc_to_db(assoc_record: dict, transaction_type: str, db):
             # find original and input the activity
             current_record = db.find_one({'main_train_uid': assoc_record['main_train_uid'],
                                           'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                          'location': assoc_record['location'],
+                                          'Location': assoc_record['Location'],
                                           'base_location_suffix': assoc_record['base_location_suffix'],
                                           'assoc_location_suffix': assoc_record['assoc_location_suffix'],
                                           'STP_Indicator': 'P'})
@@ -197,14 +197,14 @@ def add_assoc_to_db(assoc_record: dict, transaction_type: str, db):
                     assoc_record['date_indicator'] = current_record['date_indicator']
                 db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                          'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                         'location': assoc_record['location'],
+                                         'Location': assoc_record['Location'],
                                          'base_location_suffix': assoc_record['base_location_suffix'],
                                          'assoc_location_suffix': assoc_record['assoc_location_suffix'],
                                          'STP_Indicator': assoc_record['STP_Indicator']}, assoc_record, upsert=True)
         else:
             db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                      'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                     'location': assoc_record['location'],
+                                     'Location': assoc_record['Location'],
                                      'base_location_suffix': assoc_record['base_location_suffix'],
                                      'assoc_location_suffix': assoc_record['assoc_location_suffix'],
                                      'STP_Indicator': assoc_record['STP_Indicator']}, assoc_record, upsert=True)
@@ -212,7 +212,7 @@ def add_assoc_to_db(assoc_record: dict, transaction_type: str, db):
     elif transaction_type == 'R':
         db.find_one_and_replace({'main_train_uid': assoc_record['main_train_uid'],
                                  'assoc_train_uid': assoc_record['assoc_train_uid'],
-                                 'location': assoc_record['location'],
+                                 'Location': assoc_record['Location'],
                                  'base_location_suffix': assoc_record['base_location_suffix'],
                                  'assoc_location_suffix': assoc_record['assoc_location_suffix'],
                                  'STP_Indicator': assoc_record['STP_Indicator']}, assoc_record, upsert=True)
@@ -293,7 +293,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                              'days_run': line[27:34].strip(),
                              'activity': line[34:36].strip(),
                              'date_indicator': line[36:37].strip(),
-                             'location': location,
+                             'Location': location,
                              'base_location_suffix': base_location_suffix,
                              'assoc_location_suffix': assoc_location_suffix,
                              'STP_Indicator': stp_indicator}
@@ -363,7 +363,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
 
         elif line[0:2] == 'LO':  # Location Origin
             if date_runs > 0 and import_atoc_schedule is True and len(current_schedule) > 0:
-                location = {'location': line[2:9].strip(),
+                location = {'Location': line[2:9].strip(),
                             'Location_Instance': line[9:10].strip(),
                             'dep': line[10:15].strip().replace('H', '.5'),
                             'plat': line[19:22].strip(),
@@ -382,7 +382,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                 _pass = line[20:25].strip().replace('H', '.5')
                 if (arr == '' or dep == '') and _pass != '':
                     dep = _pass
-                    location = {'location': line[2:9].strip(),
+                    location = {'Location': line[2:9].strip(),
                                 'Location_Instance': line[9:10],
                                 'arr': arr,
                                 'dep': dep,
@@ -395,7 +395,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
                                 'prf allow': line[58:60].strip().replace('H', '.5'),
                                 'is_pass_time': '-1'}
                 else:
-                    location = {'location': line[2:9].strip(),
+                    location = {'Location': line[2:9].strip(),
                                 'Location_Instance': line[9:10],
                                 'arr': arr,
                                 'dep': dep,
@@ -411,7 +411,7 @@ def parse_cif_file(filename: str, date_of_tt: str, **kwargs):
 
         elif line[0:2] == 'LT':  # Location Terminus
             if date_runs > 0 and import_atoc_schedule is True and len(current_schedule) > 0:
-                location = {'location': line[2:9].strip(),
+                location = {'Location': line[2:9].strip(),
                             'Location_Instance': line[9:10],
                             'arr': line[10:15].strip().replace('H', '.5'),
                             'plat': line[19:22].strip(),
@@ -470,7 +470,7 @@ def clean_dbs():
             for stp in stp_indicators:
                 collection.delete_many({'main_train_uid': cancellation['main_train_uid'],
                                         'assoc_train_uid': cancellation['assoc_train_uid'],
-                                        'location': cancellation['location'],
+                                        'Location': cancellation['Location'],
                                         'base_location_suffix': cancellation['base_location_suffix'],
                                         'assoc_location_suffix': cancellation['assoc_location_suffix'],
                                         'STP_Indicator': stp})
@@ -478,7 +478,7 @@ def clean_dbs():
             print('Sorting overlay for ', overlay['main_train_uid'], overlay['assoc_train_uid'])
             collection.delete_many({'main_train_uid': overlay['main_train_uid'],
                                     'assoc_train_uid': overlay['assoc_train_uid'],
-                                    'location': overlay['location'],
+                                    'Location': overlay['Location'],
                                     'base_location_suffix': overlay['base_location_suffix'],
                                     'assoc_location_suffix': overlay['assoc_location_suffix'],
                                     'STP_Indicator': 'P'})
@@ -488,26 +488,26 @@ def find_and_update_in_db(uid_to_update: str, uid_to_assoc: str, assoc: dict, ac
     """
     Will attempt to add the activity to the schedule, if there is no schedule satisfying the criteria then None is returned
     """
-    location = assoc['location']
+    location = assoc['Location']
     base_suffix = assoc['base_location_suffix']
     out = None
     if activity == 'JJ':
         assoc_suffix = assoc['assoc_location_suffix']
         if uid_to_update == assoc['main_train_uid']:
             out = db.find_one_and_update({'uid': uid_to_update, 'locations': {
-                '$elemMatch': {'location': location, 'Location_Instance': base_suffix}}},
+                '$elemMatch': {'Location': location, 'Location_Instance': base_suffix}}},
                                          {'$set': {
                                              f'locations.$.activities.{ASSOCIATION_DICT[activity]}': f'{uid_to_assoc}*'}})
         elif uid_to_update == assoc['assoc_train_uid']:
             out = db.find_one_and_update({'uid': uid_to_update, 'locations': {
-                '$elemMatch': {'location': location, 'Location_Instance': assoc_suffix}}},
+                '$elemMatch': {'Location': location, 'Location_Instance': assoc_suffix}}},
                                          {'$set': {
                                              f'locations.$.activities.{ASSOCIATION_DICT[activity]}': f'{uid_to_assoc}*'}})
     else:
         # activity is divide or new train
         out = db.find_one_and_update({'uid': uid_to_update,
                                       'locations': {
-                                          '$elemMatch': {'location': location, 'Location_Instance': base_suffix}}},
+                                          '$elemMatch': {'Location': location, 'Location_Instance': base_suffix}}},
                                      {'$set': {
                                          f'locations.$.activities.{ASSOCIATION_DICT[activity]}': f'{uid_to_assoc}*'}})
 
