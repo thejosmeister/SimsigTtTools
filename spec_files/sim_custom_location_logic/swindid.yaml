@@ -83,7 +83,7 @@ location_rules:
         other_conditions:
           - entry_point: '!ECOCKU'
         location_conditions:
-          - { 'location':'HGHWTHJ', '!line': 'no line', '!path': 'no path' }
+          - { 'location':'HGHWTHJ', '!arr': 'no stop' }
           - OR
           - { 'location':'HGHWTHJ', 'line': 'ML' }
           - OR
