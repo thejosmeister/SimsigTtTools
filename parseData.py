@@ -1151,7 +1151,6 @@ def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: Cus
                                                                                                 source_location)
 
     # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
-    print('Custom logic', potential_entry_point, potential_entry_time, readable_locations)
     entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
                                                                                               potential_entry_point,
                                                                                               potential_entry_time)
