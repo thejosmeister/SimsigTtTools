@@ -2,11 +2,14 @@
 Will be a pretty long file for taking TT data from a list of location sources, fetching all trains within a window,
 parsing them and creating Json TTs to put into a DB. This file will pass back a list of Json TTs for parsing.
 """
-import requests
+from functools import reduce
+from pymongo import MongoClient
 from bs4 import BeautifulSoup
+import requests
 import re
-import common
+
 from customLocationLogic import CustomLogicExecutor
+import common
 
 CAPITALS = 'ABCDEFGHIJ'
 RTT_OPERATORS_MAP = {'Alliance Rail': 'AR', 'Transport for Wales': 'AW', 'c2c': 'CC', 'Chiltern Railways': 'CH',
@@ -320,8 +323,12 @@ def complete_charlwood_train_info(categories_map: dict, train_info: dict) -> dic
 
 
 def do_times_cross_midnight(location1: dict, location2: dict) -> bool:
-    if location1['location'] == location2['location']:
-        return False
+    if 'location' in location1:
+        if location1['location'] == location2['location']:
+            return False
+    else:
+        if location1['Location'] == location2['Location']:
+            return False
 
     time1dep = ''
     time1arr = ''
@@ -710,7 +717,8 @@ def parse_rtt_train_header(header_string: str) -> dict:
     if first_half.group(1) is not None:
         return {'headcode': first_half.group(1).strip(), 'origin_time': first_half.group(2),
                 'origin_name': first_half.group(3).strip(), 'destination_name': dest_name}
-    return {'origin_time': first_half.group(2), 'origin_name': first_half.group(3).strip(), 'destination_name': dest_name}
+    return {'origin_time': first_half.group(2), 'origin_name': first_half.group(3).strip(),
+            'destination_name': dest_name}
 
 
 def parse_rtt_train_info(train_page, allox_train):
@@ -761,7 +769,8 @@ def parse_rtt_train_info(train_page, allox_train):
                     timing_load_parts = line.find_all('div')
                     timing_load_string = ' '.join([t.get_text() for t in timing_load_parts])
                     if 'max' in timing_load_string:
-                        t_l_match_obj = re.search('(?:Pathed|Starts) as (.+) (?:p|P)lanned (?:for|at) (.+)mph max', timing_load_string)
+                        t_l_match_obj = re.search('(?:Pathed|Starts) as (.+) (?:p|P)lanned (?:for|at) (.+)mph max',
+                                                  timing_load_string)
                         train_info['Timing_Load'] = t_l_match_obj.group(1)
                         train_info['max_speed'] = t_l_match_obj.group(2)
                     else:
@@ -832,10 +841,6 @@ def parse_rtt_train_locations(locations_object):
             is_1st_loc = False
             dicts_of_locations.append(location)
 
-
-    # TODO Will possibly need to sort these by time SO TEST
-    # Later note: seems to work OK with no sorting
-
     return dicts_of_locations
 
 
@@ -875,7 +880,8 @@ def complete_rtt_train_info(train_cat: dict, train_info: dict) -> dict:
     if 'Allocation' not in train_info:
         out['description'] = '$template'
     else:
-        out['description'] = f'{out["origin_time"]} {out["origin_name"]} - {out["destination_name"]} ({train_info["Allocation"]})'
+        out[
+            'description'] = f'{out["origin_time"]} {out["origin_name"]} - {out["destination_name"]} ({train_info["Allocation"]})'
     return out
 
 
@@ -961,7 +967,225 @@ def Parse_Rtt_Train(train_cat, location_maps, custom_logic: CustomLogicExecutor,
     return train_to_return
 
 
+def location_in_time_window(start_time: float, end_time: float, tiploc_location: str, l: dict):
+    if l['Location'] != tiploc_location:
+        return False
+
+    if 'dep' in l:
+        time_at_loc = float(l['dep'])
+    elif 'arr' in l:
+        time_at_loc = float(l['arr'])
+    else:
+        return False
+
+    return start_time <= time_at_loc <= end_time
+
+
+def partition(l, p):
+    return reduce(lambda x, y: (x[0] + [y], x[1]) if p(y) else (x[0], x[1] + [y]), l, ([], []))
+
+
+def times_cross_midnight(locations: list) -> bool:
+    flattened_times = []
+    for l in locations:
+        if 'arr' in l and l['arr'] != '':
+            flattened_times.append(int(l['arr'][0:4]))
+        if 'dep' in l and l['dep'] != '':
+            flattened_times.append(int(l['dep'][0:4]))
+
+    for i in range(len(flattened_times) - 1):
+        if flattened_times[i] > flattened_times[i + 1]:
+            return True
+
+    return False
+
+
+def does_sched_not_cross_midnight(x: dict):
+    return not times_cross_midnight(x['locations'])
+
+
+def sort_scheds_across_midnight(start_time: float, end_time: float, tiploc_location: str, scheds_on_date: list):
+    [scheds_all_on_day, scheds_over_midnight] = partition(scheds_on_date, lambda x: does_sched_not_cross_midnight(x))
+
+    out = scheds_all_on_day
+
+    for s in scheds_over_midnight:
+
+        locations = s['locations']
+
+        for i in range(len(locations) - 1):
+
+            past_midnight = do_times_cross_midnight(locations[i], locations[i + 1])
+
+            if location_in_time_window(start_time, end_time, tiploc_location, locations[i]):
+                out.append(s)
+                break
+
+            if past_midnight is True:
+                break
+
+    return out
+
+
+def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, schedules_on_date_collection,
+                       schedules_on_previous_date_collection) -> list:
+    """
+    :param start_time: start of period to look for trains in format hhmm
+    :param end_time: end of period to look for trains in format hhmm
+    :param tiploc_location: location to find trains for.
+    :param schedules_on_date_collection: name of mongo db instance with trains in for the day
+    :param schedules_on_previous_date_collection: name of mongo db instance with trains in for the previous day
+    :return: location and list of schedule IDs.
+    """
+
+    start_as_float = float(start_time)
+    end_as_float = float(end_time)
+
+    # fetch all trains from sched on day that match location and are not cancelled
+    scheds_on_date = list(schedules_on_date_collection.find({'locations': {'$elemMatch': {'Location': tiploc_location}},
+                                                             'STP_Indicator': {'$ne': 'C'}}))
+
+    # filter by times that were input
+    scheds_on_date = list(filter(lambda x: any(
+        location_in_time_window(start_as_float, end_as_float, tiploc_location, l) for l in x['locations']),
+                                 scheds_on_date))
+    # filter out any which cross midnight with the location only on the other side of midnight
+    scheds_on_date = sort_scheds_across_midnight(start_as_float, end_as_float, tiploc_location, scheds_on_date)
+
+    final_list_of_scheds = []
+
+    # fetch all trains from sched on previous day that match location and are not cancelled
+    scheds_on_prev_date = list(schedules_on_previous_date_collection.find(
+        {'locations': {'$elemMatch': {'Tiploc_Code': tiploc_location}}, 'STP_Indicator': {'$ne': 'C'}}))
+    # filter out any which cross midnight with the location only on the previous side of midnight
+    scheds_on_prev_date = list(filter(lambda x: any(
+        location_in_time_window(start_as_float, end_as_float, tiploc_location, l) for l in x['locations']),
+                                      scheds_on_prev_date))
+
+    new_scheds_on_prev_date = []
+
+    for s in scheds_on_prev_date:
+        locations = s['locations']
+        for i in range(len(locations) - 1):
+            past_midnight = do_times_cross_midnight(locations[i], locations[i + 1])
+
+            if past_midnight is True and location_in_time_window(start_as_float, end_as_float, tiploc_location,
+                                                                 locations[i]):
+                new_scheds_on_prev_date.append(s)
+                break
+
+    # want to filter any cancelled ones
+    for s in scheds_on_date:
+        final_list_of_scheds.append(s['uid'] + '_OD_' + s['STP_Indicator'])
+
+    for s in new_scheds_on_prev_date:
+        final_list_of_scheds.append(s['uid'] + '_PD_' + s['STP_Indicator'])
+
+    return [tiploc_location, final_list_of_scheds]
+
+
+def sort_blanks_in_locations(locations: dict):
+    for l in locations:
+        props_to_remove = []
+        for prop in l:
+            if prop != 'activities':
+              if l[prop].strip() == '':
+                props_to_remove.append(prop)
+        [l.pop(p) for p in props_to_remove]
+    return locations
+
+
+def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
+                    source_location: str, schedules_on_date_collection,
+                       schedules_on_previous_date_collection, tiploc_collection, train_id: str) -> dict:
+    """
+    :param categories_map: Map of train categories to use
+    :param location_maps: Map of locations for sim
+    :param custom_logic: Custom logic for sim
+    :param source_location: used if we have times spanning more than one day.
+    :param schedules_on_date_collection: Mongodb collection for scheds on date
+    :param schedules_on_previous_date_collection: Mongodb collection for scheds on prev. date
+    :param tiploc_collection: Mongodb collection for tiploc map
+    :param train_id: Schedule identifier UID_DAY_STPindicator
+    :return: JSON schedule for writing to TT.
+    """
+
+    [uid, day, stp] = train_id.split('_')
+
+    if day == 'OD':
+        schedule = schedules_on_date_collection.find_one({'uid': uid, 'STP_Indicator': stp})
+    else:
+        schedule = schedules_on_previous_date_collection.find_one({'uid': uid, 'STP_Indicator': stp})
+
+    # Remove _id prop present
+    schedule.pop('_id')
+
+    schedule['origin_name'] = common.translate_tiploc(schedule['locations'][0]['Location'], tiploc_collection)
+    schedule['destination_name'] = common.translate_tiploc(schedule['locations'][-1]['Location'], tiploc_collection)
+    schedule['origin_time'] = schedule['locations'][0]['dep']
+    schedule['destination_time'] = schedule['locations'][-1]['arr']
+
+    print(f"parsing train {schedule['origin_time']} {schedule['origin_name']} - {schedule['destination_name']}")
+
+    # Want to remove blank values from train and locations
+    props_to_remove = []
+
+    for prop in schedule:
+        if prop == 'locations':
+            schedule['locations'] = sort_blanks_in_locations(schedule['locations'])
+        elif schedule[prop].strip() == '':
+            props_to_remove.append(prop)
+
+    [schedule.pop(p) for p in props_to_remove]
+
+    # Sort headcode
+    if 'headcode' not in schedule or schedule['headcode'] == '':
+        schedule['headcode'] = refine_headcode(schedule)
+
+    # Fetch location data from sched table
+    initial_locations = schedule['locations']
+
+    if len(initial_locations) == 0:
+        return None
+
+    if schedule['Train_Status'] in ['P', '1']:
+        schedule['is_freight'] = '0'
+    else:
+        schedule['is_freight'] = '-1'
+
+    # Work out other fields for train from train cat dict
+    train_info = complete_charlwood_train_info(categories_map, schedule)
+
+    # Filter locations out via sim locations and translate TIPLOC to readable
+    [readable_locations, potential_entry_point, potential_entry_time] = convert_train_locations(initial_locations,
+                                                                                                location_maps,
+                                                                                                source_location)
+
+    # Send locations in to sim specific location logic, **this will give entry point and time if applic.**
+    entry_point, entry_time, tt_template, final_locations = custom_logic.Perform_Custom_Logic(readable_locations,
+                                                                                              potential_entry_point,
+                                                                                              potential_entry_time)
+    train_to_return = {}
+
+    for field in train_info:
+        train_to_return[field] = train_info[field]
+
+    if entry_point is not None:
+        train_to_return['entry_point'] = entry_point
+        train_to_return['entry_time'] = entry_time
+
+    train_to_return['tt_template'] = tt_template
+    train_to_return['locations'] = final_locations
+
+    train_to_return['as_required_percent'] = '50'
+    train_to_return['seeding_gap'] = '15'
+
+    return train_to_return
+
+
 if __name__ == '__main__':
-    Parse_Rtt_Train(common.create_categories_map_from_yaml('default_rtt_categories_map.yaml'), common.create_location_map_from_file('swindid'),
-                    CustomLogicExecutor('swindid',common.create_location_map_from_file('swindid')[1], common.create_location_map_from_file('swindid')[0]), 'SDON',
+    Parse_Rtt_Train(common.create_categories_map_from_yaml('default_rtt_categories_map.yaml'),
+                    common.create_location_map_from_file('swindid'),
+                    CustomLogicExecutor('swindid', common.create_location_map_from_file('swindid')[1],
+                                        common.create_location_map_from_file('swindid')[0]), 'SDON',
                     train_link='https://www.realtimetrains.co.uk/train/H07479/2021-04-10/detailed')

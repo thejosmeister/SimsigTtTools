@@ -223,7 +223,9 @@ class CustomLogicExecutor:
             return c_entry == entry_point
 
         if 'location' in condition:
-            condition['location'] = common.find_readable_location(condition['location'], self.locations_map)
+            readable_location = common.find_readable_location(condition['location'], self.locations_map)
+            if readable_location != '':
+                condition['location'] = readable_location
         for location in train_locations:
             if all(self.is_property_in_condition_satisfied(prop, condition[prop], location) for prop in
                    condition) is True:
@@ -265,14 +267,10 @@ class CustomLogicExecutor:
                                                                          entry_time)
             if 'remove_1st_of' in clause:
                 for l_to_remove in clause['remove_1st_of']:
-                    train_locations = self.remove_nth_location(
-                        common.find_readable_location(l_to_remove, self.locations_map), 1
-                        , train_locations)
+                    train_locations = self.remove_nth_location(l_to_remove, 1, train_locations)
             if 'remove_all_of' in clause:
                 for l_to_remove in clause['remove_all_of']:
-                    train_locations = self.remove_all_of_location(
-                        common.find_readable_location(l_to_remove, self.locations_map)
-                        , train_locations)
+                    train_locations = self.remove_all_of_location(l_to_remove, train_locations)
             if 'modify_location' in clause:
                 train_locations = self.modify_location(clause['modify_location'], train_locations)
             if 'remove_props_from_location' in clause:
@@ -372,14 +370,10 @@ class CustomLogicExecutor:
         for clause in then_clauses:
             if 'remove_1st_of' in clause:
                 for l_to_remove in clause['remove_1st_of']:
-                    train_locations = self.remove_nth_location(
-                        common.find_readable_location(l_to_remove, self.locations_map), 1
-                        , train_locations)
+                    train_locations = self.remove_nth_location(l_to_remove, 1, train_locations)
             if 'remove_all_of' in clause:
                 for l_to_remove in clause['remove_all_of']:
-                    train_locations = self.remove_all_of_location(
-                        common.find_readable_location(l_to_remove, self.locations_map)
-                        , train_locations)
+                    train_locations = self.remove_all_of_location(l_to_remove, train_locations)
             if 'modify_location' in clause:
                 train_locations = self.modify_location(clause['modify_location'], train_locations)
             if 'remove_props_from_location' in clause:
