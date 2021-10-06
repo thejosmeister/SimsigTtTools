@@ -1035,7 +1035,7 @@ def Parse_Cif_Location(start_time: str, end_time: str, tiploc_location: str, sch
     :param tiploc_location: location to find trains for.
     :param schedules_on_date_collection: name of mongo db instance with trains in for the day
     :param schedules_on_previous_date_collection: name of mongo db instance with trains in for the previous day
-    :return: list of links to charlwoodhouse train pages.
+    :return: location and list of schedule IDs.
     """
 
     start_as_float = float(start_time)
@@ -1098,6 +1098,17 @@ def sort_blanks_in_locations(locations: dict):
 def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
                     source_location: str, schedules_on_date_collection,
                        schedules_on_previous_date_collection, tiploc_collection, train_id: str) -> dict:
+    """
+    :param categories_map: Map of train categories to use
+    :param location_maps: Map of locations for sim
+    :param custom_logic: Custom logic for sim
+    :param source_location: used if we have times spanning more than one day.
+    :param schedules_on_date_collection: Mongodb collection for scheds on date
+    :param schedules_on_previous_date_collection: Mongodb collection for scheds on prev. date
+    :param tiploc_collection: Mongodb collection for tiploc map
+    :param train_id: Schedule identifier UID_DAY_STPindicator
+    :return: JSON schedule for writing to TT.
+    """
 
     [uid, day, stp] = train_id.split('_')
 

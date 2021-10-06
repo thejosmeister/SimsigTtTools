@@ -73,8 +73,6 @@ def determine_sources(spec_data: dict, categories_map: dict, location_maps: list
         schedules_on_date_collection = mongo_db['sched_on_day']
         schedules_on_previous_date_collection = mongo_db['sched_previous_day']
         tiploc_collection = mongo_db['tiploc']
-        # assoc_on_date_collection = mongo_db['assoc_on_day']
-        # assoc_on_previous_date_collection = mongo_db['assoc_previous_day']
 
         location_parsing_funct = lambda start, end, location_page: \
             parseData.Parse_Cif_Location(start, end, location_page, schedules_on_date_collection,
