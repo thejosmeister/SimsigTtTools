@@ -23,8 +23,8 @@ def check_overwrite(spec_data):
                 raise Exception('TT already exists and flag is set to not overwrite.')
 
 
-def create_dbs(sim_id: str) -> list:
-    return [dbClient.MainHeaderDb(sim_id), dbClient.TrainTtDb(sim_id), dbClient.RulesDb(sim_id)]
+def create_dbs(tt_name: str) -> list:
+    return [dbClient.MainHeaderDb(tt_name), dbClient.TrainTtDb(tt_name), dbClient.RulesDb(tt_name)]
 
 
 def determine_sources(spec_data: dict, categories_map: dict, location_maps: list, custom_location_logic) -> list:

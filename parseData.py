@@ -721,6 +721,25 @@ def parse_rtt_train_header(header_string: str) -> dict:
             'destination_name': dest_name}
 
 
+def determine_rtt_allocation(line):
+    """
+    Find all mentions of a unit/loco in the allocation section and create comma separated list of set of units
+    """
+
+    alloc_texts = []
+
+    if line.find('span') is not None:
+        for element in line.find_all('span'):
+            alloc_texts.append(re.search('(\\d+(?: \\+ \\d+)*)', element.get_text()).group(1))
+    else:
+        for element in line.find_all('li'):
+            alloc_texts.append(re.search('(\\d+(?: \\+ \\d+)*)', element.get_text()).group(1))
+
+    units = list(set(sum([text.split(' + ') for text in alloc_texts], [])))
+    ordered_units = sorted([int(u) for u in units])
+    return ', '.join([str(n) for n in ordered_units])
+
+
 def parse_rtt_train_info(train_page, allox_train):
     train_info = {}
 
@@ -741,13 +760,7 @@ def parse_rtt_train_info(train_page, allox_train):
                 if line.find('i', class_='glyphicons-database') is not None:
                     train_info['uid'] = re.search('UID ([0-9A-Z]+),', line.get_text()).group(1)
                 if line.find('div', class_='allocation') is not None:
-                    if line.find('span') is not None:
-                        alloc_text = re.search('(\\d+(?: \\+ \\d+)*)', line.find('span').get_text()).group(1)
-                    else:
-                        alloc_text = re.search('(\\d+(?: \\+ \\d+)*)', line.find('li').get_text()).group(1)
-                    units = alloc_text.split(' + ')
-                    ordered_units = sorted([int(u) for u in units])
-                    train_info['Allocation'] = ', '.join([str(n) for n in ordered_units])
+                    train_info['Allocation'] = determine_rtt_allocation(line)
                 if line.find('i', class_='glyphicons-folder-open') is not None:
                     train_info['is_freight'] = '0'
                 else:
@@ -881,7 +894,7 @@ def complete_rtt_train_info(train_cat: dict, train_info: dict) -> dict:
         out['description'] = '$template'
     else:
         out[
-            'description'] = f'{out["origin_time"]} {out["origin_name"]} - {out["destination_name"]} ({train_info["Allocation"]})'
+            'description'] = f'{out["origin_time"]} {out["origin_name"]} - {out["destination_name"]} {out["operator_code"]} ({train_info["Allocation"]})'
     return out
 
 
@@ -1089,15 +1102,15 @@ def sort_blanks_in_locations(locations: dict):
         props_to_remove = []
         for prop in l:
             if prop != 'activities':
-              if l[prop].strip() == '':
-                props_to_remove.append(prop)
+                if l[prop].strip() == '':
+                    props_to_remove.append(prop)
         [l.pop(p) for p in props_to_remove]
     return locations
 
 
 def Parse_Cif_Train(categories_map: dict, location_maps: list, custom_logic: CustomLogicExecutor,
                     source_location: str, schedules_on_date_collection,
-                       schedules_on_previous_date_collection, tiploc_collection, train_id: str) -> dict:
+                    schedules_on_previous_date_collection, tiploc_collection, train_id: str) -> dict:
     """
     :param categories_map: Map of train categories to use
     :param location_maps: Map of locations for sim
