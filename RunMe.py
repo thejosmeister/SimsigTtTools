@@ -15,3 +15,7 @@ import ParseXmlTt
 # Provide the filepath and name of the file you wish to parse and whether you want to overwrite existing trains in the DB if present.
 if __name__ == "__main__":
     ParseXmlTt.Parse_Full_Xml_Tt('newport_test.WTT', True, True)
+
+# Add allocation info to an existing TT, need spec file for this
+# if __name__ == "__main__":
+#     AddAlloxToTt('test_allox_swindon')

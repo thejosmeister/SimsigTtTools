@@ -1,5 +1,6 @@
 import dbClient
 import parseData
+import common
 import yaml
 import re
 import requests
@@ -31,6 +32,7 @@ def AddAlloxToTt(name_of_spec_file: str):
     tt_name = spec_data['tt_name']
     locations = spec_data['locations']
     train_db = dbClient.TrainTtDb(tt_name)
+    categories_map = common.create_categories_map_from_yaml(spec_data['train_categories_file'])
 
     # Specify locations and times to extract allox from
     list_of_trains = []
@@ -55,6 +57,18 @@ def AddAlloxToTt(name_of_spec_file: str):
         if train_tt is not None:
             print(f'Updating TT for {uid} with allox: {allox}')
             train_tt['description'] = f'{train_tt["origin_time"]} {train_tt["origin_name"]} - {train_tt["destination_name"]} {train_tt["operator_code"]} ({allox})'
+
+            # Now update train category and subsequent details
+            train_tt['Allocation'] = allox
+            category_name, matched_category = parseData.match_category(train_tt, categories_map, True)
+
+            # If category returned is std diesel freight then don't update category
+            if category_name != 'standard diesel freight':
+                train_tt['category'] = category_name
+
+                for prop in matched_category:
+                    if 'criteria' in prop.lower() or 'id' in prop.lower() or 'allox_criteria' in prop.lower():
+                        continue
+                    train_tt[prop] = matched_category[prop]
+
             train_db.put_tt_by_uid(uid, train_tt)
-
-

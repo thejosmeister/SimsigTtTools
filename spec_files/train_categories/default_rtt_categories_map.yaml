@@ -177,6 +177,9 @@ Class 399 Supertram:
   electrification: 'T'
 
 'GWR Class 158 (2 car)':
+  allox_criteria:
+    operator_code: 'GW'
+    Allocation: '1587.{2}'
   criteria:
     # Standard class 158 timing load
     Timing_Load: '^Class 158/168/170/175 DMU.*'
@@ -307,7 +310,10 @@ Class 399 Supertram:
     crew_change: '120'
   electrification: 'D'
 
-'GWR Class 80x (5 car)':
+'GWR Class 800 (5 car)':
+  allox_criteria:
+    operator_code: 'GW'
+    Allocation: '8000.{2}'
   criteria:
     Timing_Load: '^Class 80x.*$'
     operator_code: 'GW'
@@ -325,6 +331,96 @@ Class 399 Supertram:
     divide: '240'
     crew_change: '120'
   electrification: 'OD'
+
+'GWR Class 802 (5 car)':
+  allox_criteria:
+    operator_code: 'GW'
+    Allocation: '8020.{2}'
+  id: 'C4000002'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '130'
+  speed_class: '24'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'OD'
+
+'GWR Class 800 (10 car)':
+  allox_criteria:
+    operator_code: 'GW'
+    Allocation: '8000.{2}, 8000.{2}'
+  id: 'C1000002'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '247'
+  speed_class: '24'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
+'GWR Class 802 (10 car)':
+  allox_criteria:
+    operator_code: 'GW'
+    Allocation: '8020.{2}, 8020.{2}'
+  id: 'C3000002'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '247'
+  speed_class: '24'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
+'GWR 800/3 9 Car':
+  allox_criteria:
+    operator_code: 'GW'
+    Allocation: '8003.{2}'
+  id: C2000002
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '234'
+  speed_class: '24'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
+'GWR 802/1 9 Car':
+  allox_criteria:
+    operator_code: 'GW'
+    Allocation: '8021.{2}'
+  id: C5000002
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '234'
+  speed_class: '24'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
 
 'LNER 800/2 5 Car':
   criteria:
