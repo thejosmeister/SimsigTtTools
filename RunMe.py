@@ -1,6 +1,7 @@
 import BuildXmlTtFromSource
 import WriteXmlTt
 import ParseXmlTt
+import AddAlloxToTt
 
 # Provide the name of the spec file you wish to use.
 # if __name__ == "__main__":
@@ -18,4 +19,4 @@ if __name__ == "__main__":
 
 # Add allocation info to an existing TT, need spec file for this
 # if __name__ == "__main__":
-#     AddAlloxToTt('test_allox_swindon')
+#     AddAlloxToTt.AddAlloxToTt('test_allox_swindon')
