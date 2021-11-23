@@ -176,10 +176,234 @@ Class 399 Supertram:
   power_to_weight_category: '0'
   electrification: 'T'
 
+'SWR Class 158 (2 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '15888.'
+  criteria:
+    # Standard class 158 timing load
+    Timing_Load: '^Class 158/168/170/175 DMU.*'
+    operator_code: 'SW'
+    max_speed: '90'
+  id: 'ADB31E18'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '46'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'SWR Class 158 (2+2 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '15888., 15888.'
+  id: 'ADB31E19'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '92'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'SWR Class 158 (2+2+2 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '15888., 15888., 15888.'
+  id: 'ADB31E20'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '138'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'SWR Class 159 (3 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '159.{3}'
+  id: 'ADB31E21'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '70'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'SWR Class 158+159 (2+3 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '15888., 159.{3}'
+  id: 'ADB31E22'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '116'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'SWR Class 159 (3+3 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '159.{3}, 159.{3}'
+  id: 'ADB31E23'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '140'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'SWR Class 158+158+159 (2+2+3 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '15888., 15888., 159.{3}'
+  id: 'ADB31E25'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '162'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'SWR Class 158+159+159 (2+3+3 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '15888., 159.{3}, 159.{3}'
+  id: 'ADB31E26'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '186'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+'SWR Class 159+159+159 (3+3+3 car)':
+  allox_criteria:
+    operator_code: 'SW'
+    Allocation: '159.{3}, 159.{3}, 159.{3}'
+  id: 'ADB31E27'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '210'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+GWR Class 150/2 (2 car):
+  allox_criteria:
+    Allocation: '1502.{2}'
+    operator_code: 'GW'
+  criteria:
+    Timing_Load: 'Class 150.*'
+    operator_code: 'GW'
+  id: C10AF01E
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '40'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
+GWR Class 150/2 (2+2 car):
+  allox_criteria:
+    Allocation: '1502.{2}, 1502.{2}'
+    operator_code: 'GW'
+  id: C10AF02E
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '80'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
+GWR Class 150/2 (2+2+2 car):
+  allox_criteria:
+    Allocation: '1502.{2}, 1502.{2}, 1502.{2}'
+    operator_code: 'GW'
+  id: C10AF03E
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '120'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
 'GWR Class 158 (2 car)':
   allox_criteria:
     operator_code: 'GW'
-    Allocation: '1587.{2}'
+    Allocation: '1587[456].'
   criteria:
     # Standard class 158 timing load
     Timing_Load: '^Class 158/168/170/175 DMU.*'
@@ -190,7 +414,7 @@ Class 399 Supertram:
   is_freight: '0'
   can_use_goods_lines: '0'
   max_speed: '90'
-  train_length: '47'
+  train_length: '46'
   speed_class: '16'
   power_to_weight_category: '0'
   dwell_times:
@@ -198,6 +422,389 @@ Class 399 Supertram:
     divide: '240'
     crew_change: '120'
   electrification: 'D'
+
+GWR Class 158 (3 car):
+  allox_criteria:
+    Allocation: '158(798|9.{2})'
+    operator_code: 'GW'
+  id: B1000002
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '70'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
+'GWR Class 158 (2+2 car)':
+  allox_criteria:
+    operator_code: 'GW'
+    Allocation: '1587[456]., 1587[456].'
+  id: 'B2000002'
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '92'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+  electrification: 'D'
+
+GWR Class 158 (2+3 car):
+  allox_criteria:
+    Allocation: '1587[456]., 158(798|9.{2})'
+    operator_code: 'GW'
+  id: B3000002
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '116'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
+GWR Class 158 (3+3 car):
+  allox_criteria:
+    Allocation: '158(798|9.{2}), 158(798|9.{2})'
+    operator_code: 'GW'
+  id: B4000002
+  accel_brake_index: '2'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '140'
+  speed_class: '16'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+
+GWR Class 165 (2 car):
+  allox_criteria:
+    Allocation: '1651(1[89]|[23].)'
+    operator_code: 'GW'
+  id: 7279D057
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '46'
+  speed_class: '32'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR Class 165/6 (3 car):
+  allox_criteria:
+    Allocation: '16(51(1[0-7]|0.)|62.{2})'
+    operator_code: 'GW'
+  id: 7279D058
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '69'
+  speed_class: '32'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR Class 165 (2+2 car):
+  allox_criteria:
+    Allocation: '1651(1[89]|[23].), 1651(1[89]|[23].)'
+    operator_code: 'GW'
+  id: 7279D059
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '92'
+  speed_class: '32'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR Class 165/6 (2+3 car):
+  allox_criteria:
+    Allocation: '1651(1[89]|[23].), 16(51(1[0-7]|0.)|62.{2})'
+    operator_code: 'GW'
+  id: 7279D060
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '115'
+  speed_class: '32'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR Class 165/6 (3+3 car):
+  allox_criteria:
+    Allocation: '16(51(1[0-7]|0.)|62.{2}), 16(51(1[0-7]|0.)|62.{2})'
+    operator_code: 'GW'
+  id: 7279D061
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '90'
+  train_length: '115'
+  speed_class: '32'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR Class 387 (4 car):
+  allox_criteria:
+    Allocation: '3871([5-7].|4[3-9])'
+  id: 7279D0A1
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '82'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+HX Class 387 (4 car):
+  allox_criteria:
+    Allocation: '3871(3.|4[0-2])'
+  id: 7279D1A1
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '82'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GX Class 387 (4 car):
+  allox_criteria:
+    Allocation: '3872.{2}'
+  id: 7279D2A1
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '82'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+C2C Class 387 (4 car):
+  allox_criteria:
+    Allocation: '3873.{2}'
+  id: 7279D3A1
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '82'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR Class 387 (8 car):
+  allox_criteria:
+    Allocation: '3871([5-7].|4[3-9]), 3871([5-7].|4[3-9])'
+  id: 7279D0A2
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '164'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+HX Class 387 (8 car):
+  allox_criteria:
+    Allocation: '3871(3.|4[0-2]), 3871(3.|4[0-2])'
+  id: 7279D1A2
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '82'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR+GX Class 387 (8 car):
+  allox_criteria:
+    Allocation: '3871([5-7].|4[3-9]), 3872.{2}'
+  id: 7279D2A2
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '164'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GX Class 387 (8 car):
+  allox_criteria:
+    Allocation: '3872.{2}, 3872.{2}'
+  id: 7279D3A2
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '164'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR+C2C Class 387 (8 car):
+  allox_criteria:
+    Allocation: '3871([5-7].|4[3-9]), 3873.{2}'
+  id: 7279D4A2
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '164'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR Class 387 (12 car):
+  allox_criteria:
+    Allocation: '3871([5-7].|4[3-9]), 3871([5-7].|4[3-9]), 3871([5-7].|4[3-9])'
+  id: 7279D0A3
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '246'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR+GWR+GX Class 387 (12 car):
+  allox_criteria:
+    Allocation: '3871([5-7].|4[3-9]), 3871([5-7].|4[3-9]), 3872.{2}'
+  id: 7279D1A3
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '246'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR+GX+GX Class 387 (12 car):
+  allox_criteria:
+    Allocation: '3871([5-7].|4[3-9]), 3872.{2}, 3872.{2}'
+  id: 7279D3A3
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '246'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
+
+GWR+GWR+C2C Class 387 (12 car):
+  allox_criteria:
+    Allocation: '3871([5-7].|4[3-9]), 3871([5-7].|4[3-9]), 3873.{2}'
+  id: 7279D4A3
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '110'
+  train_length: '246'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '15'
+    divide: '120'
+    crew_change: '30'
 
 'TFW Class 175 (2 car)':
   criteria:
@@ -293,6 +900,9 @@ Class 399 Supertram:
   electrification: 'D'
 
 'HST - 2 + 4 Castle':
+  allox_criteria:
+    Allocation: '43.{3}, 43.{3}'
+    operator_code: 'GW'
   criteria:
     Timing_Load: '^Castle Class HST.*$'
     max_speed: '110'
