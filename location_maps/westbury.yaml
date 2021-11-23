@@ -31,14 +31,14 @@ entry_points:
     readable_names: Westbury Down T.C., Westbury Down Tc Gbrf
     assoc_sim_location: WSTBRDY
   EWDS2: # Down sidings 2
-    readable_names:
+    readable_names: Westbury Down T.C. 7-12
     assoc_sim_location:
   EWNS:
-    readable_names:
+    readable_names: Westbury Down T.C. New sdgs
     assoc_sim_location:
   # Engine sdgs in?
   EWEI:
-    readable_names:
+    readable_names: Engine sdgs in
     assoc_sim_location:
   EWEO:
     readable_names: Westbury Dmu Sidings

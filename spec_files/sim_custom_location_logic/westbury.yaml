@@ -1,0 +1,20 @@
+# Westbury location logic, has nothing in it yet
+
+entry_point_rules:
+  EFAKE:
+    if_entry_location_matching:
+      conditions:
+        - { 'location':'Swinton', 'arr': '!arr is present' }
+      then:
+        - entry_point: 'ESWINTNS'
+        - remove_1st_of: [ 'Swinton' ]
+
+
+location_rules:
+  FAKE:
+    - if_particular_present:
+        conditions:
+          - { 'location': 'COPHWJN' }
+          - { 'location': 'HOLBJCN' }
+        then:
+          - remove_1st_of: [ 'HOLBJCN' ]
