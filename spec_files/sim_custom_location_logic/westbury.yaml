@@ -1,20 +1,22 @@
 # Westbury location logic, has nothing in it yet
 
 entry_point_rules:
-  EFAKE:
+  EUPWSX:
+    # don't want to remove yeovil stop if entering from here
     if_entry_location_matching:
       conditions:
-        - { 'location':'Swinton', 'arr': '!arr is present' }
+        - { 'location':'Yeovil Pen Mill' }
       then:
-        - entry_point: 'ESWINTNS'
-        - remove_1st_of: [ 'Swinton' ]
+        - entry_point: 'EUPWSX'
+
 
 
 location_rules:
-  FAKE:
-    - if_particular_present:
-        conditions:
-          - { 'location': 'COPHWJN' }
-          - { 'location': 'HOLBJCN' }
+  NEWBE:
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'NEWBURY', 'line': 'DW' }
+        location_2_conditions:
+          - { 'location': 'NEWBE' }
         then:
-          - remove_1st_of: [ 'HOLBJCN' ]
+          - modify_location: { old_location: 'NEWBE', new_location: 'NEWBW' }

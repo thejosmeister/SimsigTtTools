@@ -82,7 +82,7 @@ locations:
   MERHDQ: Merehead Quarry (Fhh)
   MERHDQJ: Merehead Quarry Jn
   MIDGHAM: Midgham, Midgham [MDG]
-  NEWBE: Newbury East Rev
+  NEWBE: Newbury East Rev, NEWB867, NEWB865
   NEWBRYR: Newbury Racecourse, Newbury Racecourse [NRC]
   NEWBURY: Newbury, Newbury [NBY]
   NEWBW: Newbury West Rev
@@ -95,9 +95,9 @@ locations:
   THEALFY: Theale Foster Yeoman, Theale A.R.C, Theale Hope Cement, Theale Lafarge Fhh, Theale Murco
   THNGLYJ: Thingley Jn, THNGLEJ
   TROW720: Westbury Up Trowbridge Sdg
-  TROW798: Westbury Dn Trowbridge Sdg
+  TROW798: Westbury Dn Trowbridge Sdg, WSTBDTS
   TRWBRDG: Trowbridge, Trowbridge [TRO]
-  WAR769: Westbury Ground Signal 753
+  WAR769: Westbury Ground Signal 753, WSTB753
   WAR771: Beechgrove Gf
   WBORO: Woodborough
   WENGINE: Westbury Dmu Sidings

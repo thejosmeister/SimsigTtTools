@@ -33,6 +33,7 @@ def AddAlloxToTt(name_of_spec_file: str):
     locations = spec_data['locations']
     train_db = dbClient.TrainTtDb(tt_name)
     categories_map = common.create_categories_map_from_yaml(spec_data['train_categories_file'])
+    tt_categories = dbClient.MainHeaderDb(tt_name).get_categories_map()
 
     # Specify locations and times to extract allox from
     list_of_trains = []
@@ -65,6 +66,9 @@ def AddAlloxToTt(name_of_spec_file: str):
             # If category returned is std diesel freight then don't update category
             if category_name != 'standard diesel freight':
                 train_tt['category'] = category_name
+                if category_name not in tt_categories:
+                    tt_categories[category_name] = categories_map[category_name]
+                    dbClient.MainHeaderDb(tt_name).add_categories_map(tt_categories)
 
                 for prop in matched_category:
                     if 'criteria' in prop.lower() or 'id' in prop.lower() or 'allox_criteria' in prop.lower():
