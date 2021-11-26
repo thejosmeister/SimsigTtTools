@@ -44,7 +44,7 @@
     Timing_Load: '!43**!68**!802**^\d+$'
     Power_type: '^E$'
     Train_Status: '.*(F|f)reight.*'
-  id: 'F0000001'
+  id: B0000002
   accel_brake_index: '1'
   is_freight: '-1'
   can_use_goods_lines: '-1'
@@ -64,7 +64,7 @@
     Power_type: '^D$'
     max_speed: '75'
     Train_Status: '.*(F|f)reight.*'
-  id: 'F0000002'
+  id: B0000003
   accel_brake_index: '1'
   is_freight: '-1'
   can_use_goods_lines: '-1'
@@ -84,7 +84,7 @@
     Power_type: '^D$'
     max_speed: '60'
     Train_Status: '.*(F|f)reight.*'
-  id: 'F0000003'
+  id: B0000004
   accel_brake_index: '1'
   is_freight: '-1'
   can_use_goods_lines: '-1'
@@ -104,7 +104,7 @@
     Power_type: '^D$'
     max_speed: '45'
     Train_Status: '.*(F|f)reight.*'
-  id: 'F0000004'
+  id: B0000005
   accel_brake_index: '1'
   is_freight: '-1'
   can_use_goods_lines: '-1'
@@ -124,7 +124,7 @@
     Timing_Load: '^E.*'
     operator_code: '!GW**!AW**.*'
     max_speed: '90'
-  id: 'B0000001'
+  id: B0000006
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -144,7 +144,7 @@
     Timing_Load: '^E.*'
     operator_code: 'GW'
     max_speed: '90'
-  id: 'B0000002'
+  id: B0000007
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -164,7 +164,7 @@
     Timing_Load: '^E.*'
     operator_code: 'AW'
     max_speed: '100'
-  id: 'B0000003'
+  id: B0000008
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -183,7 +183,7 @@
     Timing_Load: '^E.*'
     operator_code: 'XC'
     max_speed: '100'
-  id: 'B0000004'
+  id: B0000009
   accel_brake_index: '3'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -202,7 +202,7 @@
     Timing_Load: '^S.*'
     operator_code: 'AW'
     max_speed: '75'
-  id: 'B0000005'
+  id: B000000A
   accel_brake_index: '3'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -220,7 +220,7 @@
   criteria:
     Timing_Load: '^43$'
     max_speed: '110'
-  id: 'C0000001'
+  id: B000000B
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -238,7 +238,7 @@
   criteria:
     Timing_Load: '^802$'
     max_speed: '125'
-  id: 'C0000002'
+  id: B000000C
   accel_brake_index: '2'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -256,7 +256,7 @@
   criteria:
     Timing_Load: '^V.*'
     max_speed: '125'
-  id: 'C0000003'
+  id: B000000D
   accel_brake_index: '3'
   is_freight: '0'
   can_use_goods_lines: '0'
@@ -269,3 +269,1883 @@
     divide: '240'
     crew_change: '120'
   electrification: 'D'
+
+# Extra categories for assigning to freight etc.
+"(1) - NMT 43 + 5 + 43 - 152m":
+  id: B000000E
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '152'
+  speed_class: '4'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 66 + 30 Flats - 640m":
+  id: B000000F
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '640'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 29 Flats - 623m":
+  id: B0000010
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '623'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 22 F*A + IKA - 600m":
+  id: B0000011
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '600'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 86 x 2 + 28 Flats - 615m":
+  id: B0000012
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '615'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 20 F*A - 629m":
+  id: B0000013
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '629'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 66 + 28 Flats - 600m":
+  id: B0000014
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '600'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 70 + 30 Flats - 644m":
+  id: B0000015
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '644'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 86 x 2 + 21 Flats - 452m":
+  id: B0000016
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '452'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 66 + 24 Flats - 531m":
+  id: B0000017
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '531'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 86 x 2 + 24 Flats - 546m":
+  id: B0000018
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '546'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 86 x 2 + 20 Flats - 451m":
+  id: B0000019
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '451'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 70 + 26 Flats - 475m":
+  id: B000001A
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '475'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 14 JPA - 277m":
+  id: B000001B
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '277'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 90 x 2 + 11 FKA - 441m":
+  id: B000001C
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '441'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 90 x 2 + 10 FKA - 416m":
+  id: B000001D
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '416'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 90 x 2 + 15 IKA/FLA - 587m":
+  id: B000001E
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '587'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DRS - 88 + 15 IDA/IKA - 541m":
+  id: B000001F
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '541'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 13 FKA - 513m":
+  id: B0000020
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '513'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 7 FXA / 4 KFA - 433m":
+  id: B0000021
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '433'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 66 + 29 Flats - 634m":
+  id: B0000022
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '634'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 70 + 27 Flats - 471m":
+  id: B0000023
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '471'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 14 IKA - 538m":
+  id: B0000024
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '538'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 66 + 16 Flats - 349m":
+  id: B0000025
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '349'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 70 + 15 FEA / IKA - 474m":
+  id: B0000026
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '474'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 90 + 14 Flats - 368m":
+  id: B0000027
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '368'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 17 JPA - 383m":
+  id: B0000028
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '383'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLHH - 66 + 3 IKA - 131m":
+  id: B0000029
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '131'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 66 + 10 IKA - 387m":
+  id: B000002A
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '387'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 66 + 28 Flats - 562m":
+  id: B000002B
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '562'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 66 + 27 Flats - 558m":
+  id: B000002C
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '558'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 23 HYA - 444m":
+  id: B000002D
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '444'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DRS - 88 + 16 IKA/FLA/5 IDA - 764m":
+  id: B000002E
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '764'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DRS - 88 + 19 IDA/IKA - 679m":
+  id: B000002F
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '679'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - FLIM - 90 x 2 + 15 IKA/FLA - 587m":
+  id: B0000030
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '587'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DRS - 88 + 15 IKA - 569m":
+  id: B0000031
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '569'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 90 + 11 FKA - 441m":
+  id: B0000032
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '441'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 14 FKA - 538m":
+  id: B0000033
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '538'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 10 FCA - 275m":
+  id: B0000034
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '275'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 19 JRA - 300m":
+  id: B0000035
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '300'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 22 IOA - 350m":
+  id: B0000036
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '350'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - Colas  - 70 + 20 MRA - 363m":
+  id: B0000037
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '363'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - FLHH - 66 + KFA/ZOA/YWA - 74m":
+  id: B0000038
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '74'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - FLHH - 66 + 23 JPA - 393m":
+  id: B0000039
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '393'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 10 IFA/IPA - 518m":
+  id: B000003A
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '518'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 20 IFA/IPA - 744m":
+  id: B000003B
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '744'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 20 HOA - 327m":
+  id: B000003C
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '327'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 14 IFA/IWB/FIA - 429m":
+  id: B000003D
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '429'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 10 IPA - 564m":
+  id: B000003E
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '564'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 20 ICA - 310m":
+  id: B000003F
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '310'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DRS - 68 x 2 + 2 FNA - 66m":
+  id: B0000040
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '66'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 17 JPA - 296":
+  id: B0000041
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '296'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 20 IFA/IPA - 750m":
+  id: B0000042
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '750'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 17 IFA/IPA - 725m":
+  id: B0000043
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '725'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DRS - 68 + 1 KFA - 42m":
+  id: B0000044
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '42'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 20 IOA - 302m":
+  id: B0000045
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '313'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 20 JGA - 313m":
+  id: B0000046
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '313'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(3) - FLHH - 68 + 5 Mk5 - 132m":
+  id: B0000047
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '100'
+  train_length: '132'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 66":
+  id: B0000048
+  accel_brake_index: '3'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '21'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 68":
+  id: B0000049
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '21'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 70":
+  id: B000004A
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '22'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 90":
+  id: B000004B
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '19'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 88":
+  id: B000004C
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '21'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 37":
+  id: B000004D
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '19'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 90 x 2":
+  id: B000004E
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '38'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 325":
+  id: B000004F
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '80'
+  speed_class: '536'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 47":
+  id: B0000050
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '20'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 20 x 2":
+  id: B0000051
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '30'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 92":
+  id: B0000052
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '22'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O3
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 60":
+  id: B0000053
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '22'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 57":
+  id: B0000054
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '20'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 56":
+  id: B0000055
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '20'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 73":
+  id: B0000056
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '17'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: 3D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 86":
+  id: B0000057
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '18'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(0) - Class 86 x 2":
+  id: B0000058
+  accel_brake_index: '3'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '36'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 22 HTA - 412m":
+  id: B0000059
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '412'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(3)   Colas  - 37 + 3 - UTU-R":
+  id: B000005A
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '30'
+  train_length: '100'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(3)   Colas  - 37 + 3 - UTU-T":
+  id: B000005B
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '100'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 26 FEA / 2 ECO - 669m":
+  id: B000005C
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '669'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 13 IKA - 203m":
+  id: B000005D
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '203'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 23 HTA - 429m":
+  id: B000005E
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '429'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 23 HTA - 447m":
+  id: B000005F
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '447'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 18 JPA - 404m":
+  id: B0000060
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '404'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - FL66 + 42 JHA/HOA/IIA/HTA - 685m":
+  id: B0000061
+  accel_brake_index: '0'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '685'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 19 FEA / 5 ECO - 647m":
+  id: B0000062
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '647'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 10 FKA/ 6 FXA /4KFA - 600m":
+  id: B0000063
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '600'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 9 FKA/ 8 FXA /5 KFA - 623m":
+  id: B0000064
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '623'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 10 FKA/ 6 FXA /5 KFA - 621m":
+  id: B0000065
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '621'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 12 FKA/ 6 FXA /1 KFA - 614m":
+  id: B0000066
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '614'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 10 IKAJ - 386m":
+  id: B0000067
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '386'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DRS - 66 + 15 IKA - 569m":
+  id: B0000068
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '569'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 18 ICA - 281m":
+  id: B0000069
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '281'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 18 JNAT - 273m":
+  id: B000006A
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '273'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 20 JGA/JRA - 311m":
+  id: B000006B
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '311'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 18 MMA - 273m":
+  id: B000006C
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '273'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 + 22 MWA - 329m":
+  id: B000006D
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '329'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - FLHH - 66 + 22 MWA - 329m":
+  id: B000006E
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '329'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DRS - 88 x 2 + 15 IKA - 587m":
+  id: B000006F
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '587'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: OD
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 23  JNA JXA KEA - 400m":
+  id: B0000070
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '400'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 - MOD VAR - 15 - 323m":
+  id: B0000071
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '323'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - FLHH - 66 + 23 HIA/JGA - 329m":
+  id: B0000072
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '329'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - FLHH - 66 + 20 MWA - 301m":
+  id: B0000073
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '301'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 21 BLA - 363m":
+  id: B0000074
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '363'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 60 + 19 TEA - 363m":
+  id: B0000075
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '363'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 22 IWA - 498m":
+  id: B0000076
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '498'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DRS - 66 + 20 MMA - 301m":
+  id: B0000077
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '301'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - DB - 66 + 13 FKA/ 6 FXA /2 KFA - 696m":
+  id: B0000078
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '696'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - GBRF - 66 - SCO VAR - 203mm":
+  id: B0000079
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '203'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DB - 66 + 40 PHA - 338m":
+  id: B000007A
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '338'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - DRS - 66 + 25 MRA - 448m":
+  id: B000007B
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '448'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(6) - Colas  - 70 + 20 MLA - 362m":
+  id: B000007C
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '362'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(3) - TPE - Class 397":
+  id: B000007D
+  accel_brake_index: '1'
+  is_freight: '0'
+  can_use_goods_lines: '0'
+  max_speed: '125'
+  train_length: '118'
+  speed_class: '8'
+  power_to_weight_category: '0'
+  electrification: O
+  dwell_times:
+    join: '240'
+    divide: '240'
+    crew_change: '120'
+"(4) - GBRF - 66 + 24 HTA - 447m":
+  id: B000007E
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '447'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(4) - FL66 + 70 + 30 FEA/FLA/FSA/KTA - 566m":
+  id: B000007F
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '566'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(4)  - FL66 + 30 FEA/FRA/FSA/FTA/KFA - 642m":
+  id: B0000080
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '642'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(4) - DB - 66 + 10 IPA - 628m":
+  id: B0000081
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '628'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(4) - FLIM - 70 + 36 Flats - 527m":
+  id: B0000082
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '527'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+x(4) - DB - 66 + 9 FKA/ 8 FXA /5 KFA - 623m:
+  id: B0000083
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '623'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(7) - FLHH - 66 + 42 JHA/HOA/IIA/HTA - 685m":
+  id: B0000084
+  accel_brake_index: '0'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '45'
+  train_length: '685'
+  speed_class: '512'
+  power_to_weight_category: '2'
+  electrification: D
+"(6) - GBRF - 66 + 18 KVA - 422m":
+  id: B0000085
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '422'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - FLHH - 66 + 24 HIA - 357m":
+  id: B0000086
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '357'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(4) - DB - 66 + 12 FCA - 262m":
+  id: B0000087
+  accel_brake_index: '2'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '262'
+  speed_class: '0'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - FLHH - 66 + 21 JNA (Boxes) - 315m":
+  id: B0000088
+  accel_brake_index: '0'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '315'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - DB - 66 + 12 FCA - 262m":
+  id: B0000089
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '262'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - DB - 66 + 18 MBA - 138m":
+  id: B000008A
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '138'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(4) - DB - 66 +  5 IPA - 326m":
+  id: B000008B
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '326'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - DB - 66 + 21 JNA - 378m":
+  id: B000008C
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '378'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - FLHH - 66 + 21 JNA - 378m":
+  id: B000008D
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '378'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - FLHH - 66 + 19 JNA - 346m":
+  id: B000008E
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '378'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - FLHH - 66 + 18 MRA - 341m":
+  id: B000008F
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '378'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - FLHH - 66 + 17 HHA - 259m":
+  id: B0000090
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '259'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - DB - 66 + 18 YEA - 350m":
+  id: B0000091
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '350'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - FLHH - 66 + 18 YEA - 350m":
+  id: B0000092
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '350'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - DCR - 60 + 21 JRA - 378m":
+  id: B0000093
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '378'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - GBRF - 66 + 20 IHA - 283m":
+  id: B0000094
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '283'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - GBRF - 66 + 17 KVA - 398m":
+  id: B0000095
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '398'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - FLHH - 66 + 18 HIA - 305m":
+  id: B0000096
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '305'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - DB - 66 + 18 YEA + 1 YWA - 445m":
+  id: B0000097
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '445'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - Colas - 66 - SCO VAR - 203mm":
+  id: B0000098
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '445'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(7) - FLHH - 59 + 20 JHA - 315m":
+  id: B0000099
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '45'
+  train_length: '315'
+  speed_class: '512'
+  power_to_weight_category: '2'
+  electrification: D
+"(4) - FLHH - 66 + 15 YEA - 296m":
+  id: B000009A
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '296'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(4) - GBRF - 66 + 15 MJA - 296m":
+  id: B000009B
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '75'
+  train_length: '296'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
+"(6) - DB - 66 + 26 JGA/JNA - 386m":
+  id: B000009C
+  accel_brake_index: '1'
+  is_freight: "-1"
+  can_use_goods_lines: '0'
+  max_speed: '60'
+  train_length: '386'
+  speed_class: '512'
+  power_to_weight_category: '0'
+  electrification: D
