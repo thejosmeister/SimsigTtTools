@@ -25,6 +25,11 @@ def fetch_allox_from_page(train_link):
 
 
 def AddAlloxToTt(name_of_spec_file: str):
+    """
+    This method should ammend an existing TT DB by adding allocation information and altering categories where possible.
+
+    :param name_of_spec_file: the add allox spec file that will have all relevant info.
+    """
     with open(f'spec_files/add_allox_to_tt_specs/{name_of_spec_file}.yaml', 'r') as stream:
         spec_data = yaml.safe_load(stream)
 
@@ -45,12 +50,15 @@ def AddAlloxToTt(name_of_spec_file: str):
             if 'allox_id' in train:
                 list_of_trains.append(train)
 
+    # We have a list of trains from the location page(s), we now want to see if we can get allox for the trains and
+    # if we can then we will attempt to add that info to the corresp. train (by UID).
     set_of_trains = set(list_of_trains)
 
     for train in set_of_trains:
         uid, allox = fetch_allox_from_page(train)
 
         if uid == '' or allox == '':
+            # No info available
             continue
 
         train_tt = train_db.get_tt_by_uid(uid)

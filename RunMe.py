@@ -9,14 +9,15 @@ import AddAlloxToTt
 
 
 # Provide the name of the TT you wish to write from a Json DB, the name of the .WTT file you want to create, whether we use a default category for trains with none.
-# if __name__ == "__main__":
-#     WriteXmlTt.Write_Full_Xml_Tt('Sheffield_-_Spring_2021', 'sheff_test', True)
+if __name__ == "__main__":
+    WriteXmlTt.Write_Full_Xml_Tt('newport_test', 'newport_test', True)
 
 
 # Provide the filepath and name of the file you wish to parse and whether you want to overwrite existing trains in the DB if present.
-if __name__ == "__main__":
-    ParseXmlTt.Parse_Full_Xml_Tt('newport_test.WTT', True, True)
-
-# Add allocation info to an existing TT, need spec file for this
 # if __name__ == "__main__":
-#     AddAlloxToTt.AddAlloxToTt('test_allox_swindon')
+#     ParseXmlTt.Parse_Full_Xml_Tt('newport_test.WTT', True, True)
+
+
+# Add allocation info to an existing TT, pass in the name of the appropriate spec file
+# if __name__ == "__main__":
+#     AddAlloxToTt.AddAlloxToTt('example_add_allox')

@@ -3,7 +3,6 @@ Will be a pretty long file for taking TT data from a list of location sources, f
 parsing them and creating Json TTs to put into a DB. This file will pass back a list of Json TTs for parsing.
 """
 from functools import reduce
-from pymongo import MongoClient
 from bs4 import BeautifulSoup
 import requests
 import re
