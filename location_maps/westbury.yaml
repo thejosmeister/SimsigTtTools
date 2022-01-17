@@ -31,14 +31,14 @@ entry_points:
     readable_names: Westbury Down T.C., Westbury Down Tc Gbrf
     assoc_sim_location: WSTBRDY
   EWDS2: # Down sidings 2
-    readable_names:
+    readable_names: Westbury Down T.C. 7-12
     assoc_sim_location:
   EWNS:
-    readable_names:
+    readable_names: Westbury Down T.C. New sdgs
     assoc_sim_location:
   # Engine sdgs in?
   EWEI:
-    readable_names:
+    readable_names: Engine sdgs in
     assoc_sim_location:
   EWEO:
     readable_names: Westbury Dmu Sidings
@@ -82,7 +82,7 @@ locations:
   MERHDQ: Merehead Quarry (Fhh)
   MERHDQJ: Merehead Quarry Jn
   MIDGHAM: Midgham, Midgham [MDG]
-  NEWBE: Newbury East Rev
+  NEWBE: Newbury East Rev, NEWB867, NEWB865
   NEWBRYR: Newbury Racecourse, Newbury Racecourse [NRC]
   NEWBURY: Newbury, Newbury [NBY]
   NEWBW: Newbury West Rev
@@ -95,9 +95,9 @@ locations:
   THEALFY: Theale Foster Yeoman, Theale A.R.C, Theale Hope Cement, Theale Lafarge Fhh, Theale Murco
   THNGLYJ: Thingley Jn, THNGLEJ
   TROW720: Westbury Up Trowbridge Sdg
-  TROW798: Westbury Dn Trowbridge Sdg
+  TROW798: Westbury Dn Trowbridge Sdg, WSTBDTS
   TRWBRDG: Trowbridge, Trowbridge [TRO]
-  WAR769: Westbury Ground Signal 753
+  WAR769: Westbury Ground Signal 753, WSTB753
   WAR771: Beechgrove Gf
   WBORO: Woodborough
   WENGINE: Westbury Dmu Sidings

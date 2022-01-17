@@ -1,0 +1,22 @@
+# Westbury location logic, has nothing in it yet
+
+entry_point_rules:
+  EUPWSX:
+    # don't want to remove yeovil stop if entering from here
+    if_entry_location_matching:
+      conditions:
+        - { 'location':'Yeovil Pen Mill' }
+      then:
+        - entry_point: 'EUPWSX'
+
+
+
+location_rules:
+  NEWBE:
+    - if_x_y_concurrent:
+        location_1_conditions:
+          - { 'location': 'NEWBURY', 'line': 'DW' }
+        location_2_conditions:
+          - { 'location': 'NEWBE' }
+        then:
+          - modify_location: { old_location: 'NEWBE', new_location: 'NEWBW' }

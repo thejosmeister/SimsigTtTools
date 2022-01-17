@@ -84,7 +84,7 @@ class TrainTtDb:
         :param tt: json TT to add.
         """
         doc_id = generate_id_from_uid(tt['uid'])
-        if self.db.contains(doc_id=doc_id):
+        if self.db.contains(doc_id=doc_id) is True:
             self.db.remove(doc_ids=[doc_id])
         self.db.insert(table.Document(tt, doc_id=doc_id))
 
@@ -94,7 +94,7 @@ class TrainTtDb:
         :param tt: json TT to add.
         """
         doc_id = generate_id_from_uid(tt['uid'])
-        if not self.db.contains(doc_id=doc_id):
+        if self.db.contains(doc_id=doc_id) is not True:
             self.db.insert(table.Document(tt, doc_id=doc_id))
 
     def get_tt_by_uid(self, uid: str) -> dict:
@@ -105,6 +105,18 @@ class TrainTtDb:
         doc_id = generate_id_from_uid(uid)
         return self.db.get(doc_id=doc_id)
 
+    def delete_tt_by_uid(self, uid: str) -> bool:
+        """
+        Removes TT with specified uid.
+        :param uid: uid of the TT.
+        :return: True if successfully deleted, False if no original record.
+        """
+        doc_id = generate_id_from_uid(uid)
+        if self.db.contains(doc_id=doc_id) is True:
+            self.db.remove(doc_ids=[doc_id])
+            return True
+        return False
+
     def put_tt_by_uid(self, uid: str, tt: dict) -> bool:
         """
         Overwrites TT with specified uid.
@@ -113,7 +125,7 @@ class TrainTtDb:
         :return: True if successfully replaced, False if not or no original record.
         """
         doc_id = generate_id_from_uid(uid)
-        if self.db.contains(doc_id=doc_id):
+        if self.db.contains(doc_id=doc_id) is True:
             self.db.remove(doc_ids=[doc_id])
             self.db.insert(table.Document(tt, doc_id=doc_id))
             return True
@@ -128,13 +140,13 @@ class TrainTtDb:
         """
         for uid in uids:
             doc_id = generate_id_from_uid(uid)
-            if self.db.contains(doc_id=doc_id):
+            if self.db.contains(doc_id=doc_id) is True:
                 self.db.update(update, doc_ids=[doc_id])
 
     def update_location_for_uids(self, uids: list, location_to_update: str, keys_to_update: dict):
         for uid in uids:
             doc_id = generate_id_from_uid(uid)
-            if self.db.contains(doc_id=doc_id):
+            if self.db.contains(doc_id=doc_id) is True:
                 tt = self.db.get(doc_id=doc_id)
                 for loc in tt['locations']:
                     if location_to_update in loc['location']:
@@ -146,7 +158,7 @@ class TrainTtDb:
     def update_origin_for_uids(self, uids: list, origin: str, origin_time: str):
         for uid in uids:
             doc_id = generate_id_from_uid(uid)
-            if self.db.contains(doc_id=doc_id):
+            if self.db.contains(doc_id=doc_id) is True:
                 tt = self.db.get(doc_id=doc_id)
                 tt['origin_name'] = origin
                 if origin_time is not None:
@@ -161,7 +173,7 @@ class TrainTtDb:
     def update_category_for_uids(self, uids: list, category: str):
         for uid in uids:
             doc_id = generate_id_from_uid(uid)
-            if self.db.contains(doc_id=doc_id):
+            if self.db.contains(doc_id=doc_id) is True:
                 tt = self.db.get(doc_id=doc_id)
                 tt['category'] = category
 
@@ -173,7 +185,7 @@ class TrainTtDb:
     def update_destination_for_uids(self, uids: list, destination: str):
         for uid in uids:
             doc_id = generate_id_from_uid(uid)
-            if self.db.contains(doc_id=doc_id):
+            if self.db.contains(doc_id=doc_id) is True:
                 tt = self.db.get(doc_id=doc_id)
                 tt['destination_name'] = destination
                 tt['description'] = tt['description'].split('- ')[0] + destination
@@ -208,7 +220,7 @@ class TrainTtDb:
 
     def modify_tt_time(self, uid: str, amount: str):
         doc_id = generate_id_from_uid(uid)
-        if self.db.contains(doc_id=doc_id):
+        if self.db.contains(doc_id=doc_id) is True:
             if amount[0] == '-':
                 amount_to_add = int(isodate.parse_duration(amount[1:]).seconds) * -1
             else:
@@ -259,7 +271,7 @@ class RulesDb:
         """
         doc_id = generate_rule_id(rule)
 
-        if self.db.contains(doc_id=doc_id):
+        if self.db.contains(doc_id=doc_id) is True:
             self.db.remove(doc_ids=[doc_id])
         self.db.insert(table.Document(rule, doc_id=doc_id))
 
@@ -270,7 +282,7 @@ class RulesDb:
         """
         doc_id = generate_rule_id(rule)
 
-        if not self.db.contains(doc_id=doc_id):
+        if self.db.contains(doc_id=doc_id) is not True:
             self.db.insert(table.Document(rule, doc_id=doc_id))
 
 
@@ -296,7 +308,7 @@ class MainHeaderDb:
         Adds the TT header to the main header DB overwriting one if present.
         :param header: Header to add.
         """
-        if self.db.contains(doc_id=1):
+        if self.db.contains(doc_id=1) is True:
             self.db.remove(doc_ids=[1])
         self.db.insert(table.Document(header, doc_id=1))
 
@@ -305,7 +317,7 @@ class MainHeaderDb:
         Adds the map of xml train categories to the main header DB overwriting one if present.
         :param cat_map: map of train categories to add.
         """
-        if self.db.contains(doc_id=2):
+        if self.db.contains(doc_id=2) is True:
             self.db.remove(doc_ids=[2])
         self.db.insert(table.Document({'categories_map': cat_map}, doc_id=2))
 
@@ -314,7 +326,7 @@ class MainHeaderDb:
         Adds the seed groups to the main header DB overwriting any if present.
         :param seed_groups: list of seed groups to add.
         """
-        if self.db.contains(doc_id=3):
+        if self.db.contains(doc_id=3) is True:
             self.db.remove(doc_ids=[3])
         self.db.insert(table.Document({'seed_groups': seed_groups}, doc_id=3))
 
@@ -334,6 +346,6 @@ class MainHeaderDb:
         """
         :return: seed groups list if stored, empty list if not.
         """
-        if self.db.contains(doc_id=3):
+        if self.db.contains(doc_id=3) is True:
             return self.db.get(doc_id=3)['seed_groups']
         return []

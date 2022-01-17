@@ -18,7 +18,7 @@ timetable_header:
   v_minor: '0'
   v_build: '1'
   # The template given for train descriptions, will be applied if the train has a description of $template.
-  train_description_template: '$originTime $originName-$destName $operator ($stock)'
+  train_description_template: '$originTime $originName-$destName $operator $stock'
 
 
 

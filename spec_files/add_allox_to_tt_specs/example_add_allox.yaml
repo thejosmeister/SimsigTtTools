@@ -1,0 +1,12 @@
+# Name of the TT we wish to add the allox info for.
+tt_name: 'newport_test'
+
+# Name of the train categories map which will update the categories using allox info.
+train_categories_file: 'default_rtt_categories_map.yaml'
+
+# List the locations for which we want to fetch the allox info. The time period can generally be anything up to the
+# whole 24h as the UID matching should cover the whole day.
+locations:
+  'https://www.realtimetrains.co.uk/search/detailed/gb-nr:NWP/2021-11-24/0000-2359?stp=WVS&show=all&order=wtt':
+    start: '0000'
+    end: '2400'
